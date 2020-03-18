@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spaceMarginSmall">
+
+        <TextView
+            android:id="@+id/metadataNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/metadataNameLabel" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:contentDescription="@string/metadataNameLabel"
+            android:src="@drawable/ic_arrow_forward"
+            android:tint="@color/theoCello" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

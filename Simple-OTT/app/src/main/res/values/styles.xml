@@ -1,0 +1,39 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+
+    <color name="theoWhite">#FFFFFF</color>
+    <color name="theoGray">#999999</color>
+    <color name="theoCello">#344A5E</color>
+    <color name="theoSkyBlue">#9cb9c9</color>
+    <color name="theoWhiteTransparent">#99ffffff</color>
+    <color name="theoYellow">#ffc713</color>
+    <color name="theoBlueGray">#7293a4</color>
+    <color name="theoDark">#344a5e</color>
+    <attr name="colorControlActivated" format="color">#ffc713</attr>
+
+    <style name="TheoTheme.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:navigationBarColor" tools:targetApi="21">@color/theoCello</item>
+        <item name="android:statusBarColor" tools:targetApi="21">@color/theoCello</item>
+        <item name="android:windowBackground">@color/theoCello</item>
+
+        <item name="colorPrimary">@color/theoYellow</item>
+        <item name="colorPrimaryDark">@color/theoCello</item>
+        <item name="colorPrimaryVariant">@color/theoCello</item>
+        <item name="colorOnPrimary">@color/theoWhite</item>
+        <item name="colorOnSecondary">@color/theoGray</item>
+        <item name="colorAccent">@color/theoYellow</item>
+
+        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
+    </style>
+
+    <style name="TheoTheme.SplashScreen" parent="TheoTheme.Base">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+    <style name="TheoTheme.ListView" parent="TheoTheme.Base">
+        <item name="android:dividerHeight">1px</item>
+        <item name="android:divider">@color/theoGray</item>
+    </style>
+
+    <attr name="materialProgressSpinnerStyle" format="reference" />
+
+</resources>

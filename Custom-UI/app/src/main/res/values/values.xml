@@ -1,0 +1,17 @@
+<resources>
+    <string name="appName">CustomUI</string>
+    <string name="appDisplayName">THEO Custom UI</string>
+
+    <integer name="skipForwardInSeconds">10</integer>
+    <integer name="skipBackwardInSeconds">10</integer>
+
+    <string name="noTimeText">00:00</string>
+    <string name="timeSeparatorText">" / "</string>
+
+    <string name="skipBackwardButtonDescription">Skip backward</string>
+    <string name="skipForwardButtonDescription">Skip forward</string>
+    <string name="playPauseButtonDescription">Toggle playback</string>
+
+    <string name="defaultPosterUrl">https://cdn.theoplayer.com/video/elephants-dream/playlist.png</string>
+    <string name="defaultSourceUrl">https://cdn.theoplayer.com/video/elephants-dream/playlist.m3u8</string>
+</resources>

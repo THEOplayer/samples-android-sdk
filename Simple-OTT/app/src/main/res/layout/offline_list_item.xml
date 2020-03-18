@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.theoplayer.demo.simpleott.datamodel.OfflineSource" />
+
+    </data>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:background="@color/theoWhite">
+
+        <TableRow
+            android:id="@+id/listRow"
+            android:layout_height="@dimen/itemHeight"
+            android:layout_margin="0dp"
+            android:background="?selectableItemBackground">
+
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="@dimen/listImageSize"
+                android:layout_height="@dimen/listImageSize"
+                android:layout_marginStart="@dimen/smallPadding"
+                android:layout_marginLeft="@dimen/smallPadding"
+                android:layout_marginTop="@dimen/smallPadding"
+                android:contentDescription="@string/assetLogo"
+                android:scaleType="centerInside"
+                app:imageResource="@{viewmodel.imageId}" />
+
+            <LinearLayout
+                android:id="@+id/lines_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/smallPadding"
+                android:layout_marginLeft="@dimen/smallPadding"
+                android:layout_marginRight="@dimen/smallPadding"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/smallPadding"
+                android:paddingBottom="@dimen/smallPadding">
+
+                <TextView
+                    android:id="@+id/name"
+                    style="@style/TextAppearance.AppCompat.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@{viewmodel.name}" />
+
+                <TextView
+                    android:id="@+id/description"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@{viewmodel.description}"
+                    android:textColor="@color/theoGray" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/action_area"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <FrameLayout
+                    android:id="@+id/progress_area"
+                    android:layout_width="76dp"
+                    android:layout_height="76dp"
+                    android:layout_gravity="end|center"
+                    android:layout_marginEnd="13dp"
+                    android:layout_marginRight="12dp"
+                    android:visibility="visible">
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/circular"
+                        android:secondaryProgress="100"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/progress_percent"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:gravity="center"
+                        android:text="0%"
+                        android:textSize="10sp"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/download_button"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="end|center"
+                        android:layout_marginEnd="@dimen/standardPadding"
+                        android:layout_marginRight="@dimen/standardPadding"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:text="@string/downloadIcon"
+                        android:textColor="@color/theoBlueGray"
+                        android:textSize="14sp"
+                        android:visibility="visible" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/delete_button"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="end|center"
+                        android:layout_marginEnd="@dimen/standardPadding"
+                        android:layout_marginRight="@dimen/standardPadding"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:text="@string/trashIcon"
+                        android:textColor="@color/theoBlueGray"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/pause_button"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="end|center"
+                        android:layout_marginEnd="@dimen/standardPadding"
+                        android:layout_marginRight="@dimen/standardPadding"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:text="@string/pauseIcon"
+                        android:textColor="@color/theoBlueGray"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+
+                </FrameLayout>
+
+
+            </FrameLayout>
+
+        </TableRow>
+
+    </TableLayout>
+
+</layout>
+

@@ -1,0 +1,86 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+
+    <color name="theoWhite">#FFFFFF</color>
+    <color name="theoCello">#344A5E</color>
+    <color name="theoLightningYellow">#FFC713</color>
+
+    <dimen name="spaceMarginSmall">6dp</dimen>
+    <dimen name="spaceMargin">12dp</dimen>
+    <dimen name="strokeSize">3dp</dimen>
+    <dimen name="loadingSpinnerSize">48dp</dimen>
+    <dimen name="buttonSize">60dp</dimen>
+    <dimen name="buttonCornerRadius">30dp</dimen>
+    <dimen name="bigButtonMargin">40dp</dimen>
+    <dimen name="bigButtonSize">100dp</dimen>
+    <dimen name="bigButtonCornerRadius">50dp</dimen>
+
+    <attr name="materialImageButtonStyle" format="reference" />
+    <attr name="materialBigImageButtonStyle" format="reference" />
+    <attr name="materialSpinnerStyle" format="reference" />
+    <attr name="materialSliderStyle" format="reference" />
+    <attr name="materialTimeLabelStyle" format="reference" />
+
+    <style name="TheoTheme.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:navigationBarColor" tools:targetApi="21">@color/theoCello</item>
+        <item name="android:statusBarColor" tools:targetApi="21">@color/theoCello</item>
+        <item name="android:windowBackground">@color/theoCello</item>
+
+        <item name="colorPrimary">@color/theoCello</item>
+        <item name="colorPrimaryDark">@color/theoCello</item>
+        <item name="colorPrimaryVariant">@color/theoCello</item>
+        <item name="colorOnPrimary">@color/theoWhite</item>
+        <item name="colorSecondary">@color/theoLightningYellow</item>
+        <item name="colorSecondaryVariant">@color/theoLightningYellow</item>
+        <item name="colorOnSecondary">@color/theoCello</item>
+        <item name="colorSurface">@color/theoWhite</item>
+        <item name="colorOnSurface">@color/theoCello</item>
+
+        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
+        <item name="materialImageButtonStyle">@style/TheoWidget.Button.Image</item>
+        <item name="materialBigImageButtonStyle">@style/TheoWidget.Button.Image.Big</item>
+        <item name="materialSpinnerStyle">@style/TheoWidget.ProgressBar.Spinner</item>
+        <item name="materialSliderStyle">@style/TheoWidget.Slider</item>
+        <item name="materialTimeLabelStyle">@style/TheoWidget.TextView.TimeLabel</item>
+    </style>
+
+
+    <style name="TheoWidget.Button.Image" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="iconTint">?attr/colorSecondary</item>
+        <item name="android:minWidth">@dimen/buttonSize</item>
+        <item name="android:minHeight">@dimen/buttonSize</item>
+        <item name="android:insetTop">@null</item>
+        <item name="android:insetBottom">@null</item>
+        <item name="android:padding">0dp</item>
+        <item name="iconPadding">@null</item>
+        <item name="iconSize">@dimen/buttonSize</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="cornerRadius">@dimen/buttonCornerRadius</item>
+    </style>
+    <style name="TheoWidget.Button.Image.Big" parent="TheoWidget.Button.Image">
+        <item name="iconSize">@dimen/bigButtonSize</item>
+        <item name="cornerRadius">@dimen/bigButtonCornerRadius</item>
+    </style>
+
+
+    <style name="TheoWidget.TextView.TimeLabel" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+
+
+    <style name="TheoWidget.ProgressBar.Spinner" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:theme">@style/TheoWidget.ProgressBar.Spinner</item>
+    </style>
+
+
+    <style name="TheoWidget.Slider" parent="">
+        <item name="colorPrimary">@color/theoLightningYellow</item>
+        <item name="android:theme">@style/TheoWidget.Slider</item>
+    </style>
+
+
+    <style name="TheoTheme.SplashScreen" parent="TheoTheme.Base">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+</resources>

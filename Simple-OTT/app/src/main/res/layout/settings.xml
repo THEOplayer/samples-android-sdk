@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/itemHeight"
+            android:background="@color/theoWhite"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/name"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/standardPadding"
+                android:paddingLeft="@dimen/standardPadding"
+                android:paddingEnd="0dp"
+                android:paddingRight="0dp"
+                android:singleLine="true"
+                android:text="@string/onlyOnWifi" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/wifi_switch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:paddingStart="0dp"
+                android:paddingLeft="0dp"
+                android:paddingEnd="@dimen/standardPadding"
+                android:paddingRight="@dimen/standardPadding" />
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/clear_cache_btn"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/bigButtonHeight"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="@dimen/standardPadding"
+            android:text="@string/clearAllDownloads"
+            android:textColor="@color/theoDark" />
+
+    </FrameLayout>
+
+</layout>

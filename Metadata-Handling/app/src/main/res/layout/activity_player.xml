@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".PlayerActivity">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/layout_toolbar" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainConstraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <TextView
+                    android:id="@+id/headerTextView"
+                    style="?attr/materialTextViewHeaderStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spaceMargin"
+                    android:text="@string/metadataNameLabel"
+                    app:layout_constraintBottom_toTopOf="@id/theoPlayerView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <com.theoplayer.android.api.THEOplayerView
+                    android:id="@+id/theoPlayerView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="@dimen/spaceMargin"
+                    app:hlsDateRange="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="H,16:9"
+                    app:layout_constraintEnd_toEndOf="@id/headerTextView"
+                    app:layout_constraintStart_toStartOf="@id/headerTextView"
+                    app:layout_constraintTop_toBottomOf="@id/headerTextView" />
+
+                <TextView
+                    android:id="@+id/metadataLabelTextView"
+                    style="?attr/materialTextViewLabelStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spaceMargin"
+                    android:layout_marginLeft="@dimen/spaceMargin"
+                    android:layout_marginTop="@dimen/spaceMargin"
+                    android:layout_marginEnd="@dimen/spaceMargin"
+                    android:layout_marginRight="@dimen/spaceMargin"
+                    android:text="@string/metadataContentLabel"
+                    app:layout_constraintBottom_toTopOf="@id/metadataCardView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/theoPlayerView"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/metadataCardView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="@dimen/spaceMargin"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/metadataLabelTextView"
+                    app:layout_constraintStart_toStartOf="@id/metadataLabelTextView"
+                    app:layout_constraintTop_toBottomOf="@id/metadataLabelTextView">
+
+                    <ScrollView
+                        android:id="@+id/metadataScrollView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fadeScrollbars="false"
+                        android:scrollbars="vertical">
+
+                        <TextView
+                            android:id="@+id/metadataTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </ScrollView>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

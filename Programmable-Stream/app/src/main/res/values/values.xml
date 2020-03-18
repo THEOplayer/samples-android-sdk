@@ -1,0 +1,76 @@
+<resources>
+    <string name="appName">RemoteJSON</string>
+    <string name="appDisplayName">THEO Programmable Stream</string>
+
+    <string name="defaultJsonConfigUrl">https://cdn.theoplayer.com/referenceapps/theo_drm_ad_android.json</string>
+
+    <string name="configJsonUrl">Config JSON file URL</string>
+    <string name="playLabel">Play</string>
+    <string name="incorrectJsonConfiguration">Incorrect JSON configuration.</string>
+
+    <string name="tabTracks">Tracks info</string>
+    <string name="tabTime">Time info</string>
+    <string name="tabState">State &amp; logs</string>
+    <string name="tabAds">Ads</string>
+
+    <string name="playerLabel">Video</string>
+    <string name="metadataContentLabel">Info</string>
+
+    <string name="audioTracksHeader">Audio tracks:%n</string>
+    <string name="audioTrackDesc">Audio track id: %s \'%s\':%n</string>
+    <string name="audioTrackLanguage">Language: %s%n</string>
+    <string name="audioTrackActiveQuality">Active audio quality is: %d: %dkbps (%s)%n</string>
+    <string name="audioQualitiesHeader">Audio qualities are:%n</string>
+    <string name="audioQualityDesc">%d (%s): %dkbps (%s) %n</string>
+
+    <string name="videoTracksHeader">Video tracks:%n</string>
+    <string name="videoTrackDesc">Video track id: %s \'%s\':%n</string>
+    <string name="activeVideoQuality">Active video quality is: %dx%d@%dkbps%n</string>
+    <string name="videoQualitiesHeader">Video qualities are:%n</string>
+    <string name="videoQualityDesc">%d: %dx%d@%dkbps (%s)%n</string>
+    <string name="textTracksHeader">Text tracks:%n</string>
+    <string name="textTrackDesc">Text track id: %s \'%s\'%n</string>
+    <string name="activeCuesHeader">\tActive cues:%n</string>
+    <string name="cueStartTime">\tStart Time: %.2f%n</string>
+    <string name="cueEndTime">\tEnd Time: %.2f%n</string>
+
+    <string name="currentTime">Current time: %.2fs%n</string>
+    <string name="duration">Duration: %.2fs%n</string>
+    <string name="currentProgramTime">Current Program Date Time: %s%n</string>
+    <string name="bufferedRangesLength">Buffered ranges, length: %d%n</string>
+    <string name="rangeFormat">\t%.2f - %.2f%n</string>
+    <string name="playedRangesLength">Played ranges, length: %d%n</string>
+    <string name="seekableRangesLength">Seekable ranges, length: %d%n</string>
+
+    <string name="currentAdsLength">Current ads, length: %d%n</string>
+    <string name="currentAds">Current ads%n</string>
+    <string name="scheduledAdsLength">Scheduled ads, length: %d%n</string>
+    <string name="scheduledAds">Scheduled ads%n</string>
+
+    <string name="integration">\tIntegration: %s%n</string>
+    <string name="adId">\tID: %s%n</string>
+    <string name="width">Width: %d%n</string>
+    <string name="height">Height: %d%n</string>
+    <string name="skipOffset">\tSkip Offset: %d%n</string>
+    <string name="offset">\tOffset: %d%n</string>
+    <string name="resourceURI">Resource URI: %d%n</string>
+    <string name="maxDuration">\tMax Duration: %d%n</string>
+    <string name="maxRemainingDuration">\tMax Remaining Duration: %d%n</string>
+    <string name="enabled">\tEnabled: %b%n</string>
+    <string name="label">\tLabel: %s%n</string>
+    <string name="id">\tID: %s%n</string>
+
+    <string name="playerState">The player is %s.%n</string>
+    <string name="playerStatePlaying">playing</string>
+    <string name="playerStatePaused">paused</string>
+    <string name="playerStateEnded">ended</string>
+    <string name="playerStateSeeking">seeking</string>
+
+
+    <string name="preload">Preload is set to: %s.%n</string>
+
+    <string name="event">Event: %s</string>
+    <string name="eventWithTimestamp">Event: %s, currentTime=%.2f</string>
+    <string name="eventWithError">Event: %s, error=%s</string>
+
+</resources>
