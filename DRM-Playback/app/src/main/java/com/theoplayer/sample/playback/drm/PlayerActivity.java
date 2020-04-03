@@ -14,11 +14,6 @@ import com.theoplayer.android.api.source.drm.DRMConfiguration;
 import com.theoplayer.android.api.source.drm.KeySystemConfiguration;
 import com.theoplayer.sample.playback.drm.databinding.ActivityPlayerBinding;
 
-import static com.theoplayer.android.api.source.SourceDescription.Builder.sourceDescription;
-import static com.theoplayer.android.api.source.TypedSource.Builder.typedSource;
-import static com.theoplayer.android.api.source.drm.DRMConfiguration.Builder.widevineDrm;
-import static com.theoplayer.android.api.source.drm.KeySystemConfiguration.Builder.keySystemConfiguration;
-
 public class PlayerActivity extends AppCompatActivity {
 
     private static final String TAG = PlayerActivity.class.getSimpleName();
@@ -52,21 +47,24 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Creating a KeySystemConfiguration builder that contains license acquisition URL used
         // during the licensing process with a DRM server.
-        KeySystemConfiguration.Builder keySystemConfig =
-                keySystemConfiguration(getString(R.string.defaultLicenseUrl));
+        KeySystemConfiguration.Builder keySystemConfig = KeySystemConfiguration.Builder
+                .keySystemConfiguration(getString(R.string.defaultLicenseUrl));
 
         // Creating a DRMConfiguration builder that contains license acquisition parameters
         // for integration with a Widevine license server.
-        DRMConfiguration.Builder drmConfiguration = widevineDrm(keySystemConfig.build());
+        DRMConfiguration.Builder drmConfiguration = DRMConfiguration.Builder
+                .widevineDrm(keySystemConfig.build());
 
         // Creating a TypedSource builder that defines the location of a single stream source
         // and has Widevine DRM parameters applied.
-        TypedSource.Builder typedSource = typedSource(getString(R.string.defaultSourceUrl))
+        TypedSource.Builder typedSource = TypedSource.Builder
+                .typedSource(getString(R.string.defaultSourceUrl))
                 .drm(drmConfiguration.build());
 
         // Creating a SourceDescription builder that contains the settings to be applied as a new
         // THEOplayer source.
-        SourceDescription.Builder sourceDescription = sourceDescription(typedSource.build())
+        SourceDescription.Builder sourceDescription = SourceDescription.Builder
+                .sourceDescription(typedSource.build())
                 .poster(getString(R.string.defaultPosterUrl));
 
         // Configuring THEOplayer with defined SourceDescription object.

@@ -8,7 +8,14 @@
     <color name="theoYellow">#ffc713</color>
     <color name="theoBlueGray">#7293a4</color>
     <color name="theoDark">#344a5e</color>
-    <attr name="colorControlActivated" format="color">#ffc713</attr>
+
+    <dimen name="tabHeight">16dp</dimen>
+    <dimen name="standardPadding">20dp</dimen>
+    <dimen name="smallPadding">16dp</dimen>
+    <dimen name="smallerPadding">12dp</dimen>
+    <dimen name="itemHeight">72dp</dimen>
+    <dimen name="bigButtonHeight">64dp</dimen>
+    <dimen name="listImageSize">48dp</dimen>
 
     <style name="TheoTheme.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:navigationBarColor" tools:targetApi="21">@color/theoCello</item>

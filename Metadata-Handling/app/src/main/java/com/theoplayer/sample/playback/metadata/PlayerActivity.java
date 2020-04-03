@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.style.AlignmentSpan;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -33,9 +34,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.Iterator;
 
 import static android.util.Base64.NO_WRAP;
-import static android.util.Base64.encodeToString;
-import static com.theoplayer.android.api.source.SourceDescription.Builder.sourceDescription;
-import static com.theoplayer.android.api.source.TypedSource.Builder.typedSource;
 
 public class PlayerActivity extends AppCompatActivity {
 
@@ -99,7 +97,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Configuring THEOplayer with appropriate stream source.
         configureTHEOplayer(
-                typedSource(getString(R.string.hlsWithID3MetadataSourceUrl))
+                TypedSource.Builder.typedSource(getString(R.string.hlsWithID3MetadataSourceUrl))
         );
 
         // Listening to 'addtrack' events to find text track of type 'id3'.
@@ -112,7 +110,7 @@ public class PlayerActivity extends AppCompatActivity {
                 event.getTrack().addEventListener(TextTrackEventTypes.EXITCUE, cueEvent -> {
                     Log.i(TAG, "Event: EXITCUE, cue=" + cueEvent.getCue());
 
-                    // Here you can decode ID3 metadata.  In this example, the data received
+                    // Decoding ID3 metadata. In this example, the data received
                     // is in the form: '{"content":{"id":"TXXX","description":"","text":"..."}}}'.
                     JSONObject cueContent = cueEvent.getCue().getContent();
                     try {
@@ -134,7 +132,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Configuring THEOplayer with appropriate stream source.
         configureTHEOplayer(
-                typedSource(getString(R.string.hlsWithProgramDateTimeMetadataSourceUrl))
+                TypedSource.Builder.typedSource(getString(R.string.hlsWithProgramDateTimeMetadataSourceUrl))
         );
 
         // Listening to 'timeupdate' events that are triggered every time EXT-X-PROGRAM-DATE-TIME
@@ -159,7 +157,9 @@ public class PlayerActivity extends AppCompatActivity {
         // Configuring THEOplayer with appropriate stream source. Note that logic that exposes date
         // ranges parsed from HLS manifest needs to be enabled.
         configureTHEOplayer(
-                typedSource(getString(R.string.hlsWithDateRangeMetadataSourceUrl)).hlsDateRange(true)
+                TypedSource.Builder
+                        .typedSource(getString(R.string.hlsWithDateRangeMetadataSourceUrl))
+                        .hlsDateRange(true)
         );
 
         // Listening to 'addtrack' events to find text track of type 'daterange'.
@@ -174,14 +174,14 @@ public class PlayerActivity extends AppCompatActivity {
 
                     Log.i(TAG, "Event: ADDCUE, cue=" + cue);
 
-                    // Here you can decode date range metadata. For demo purposes we are displaying
+                    // Decoding date range metadata. For demo purposes we are displaying
                     // content as it is encoding byte arrays with base64.
                     appendMetadata("StartDate: " + cue.getStartDate() +
                             "\nEndDate: " + cue.getEndDate() +
                             "\nDuration: " + cue.getDuration() +
-                            "\nScte35Cmd: " + (cue.getScte35Cmd() != null ? encodeToString(cue.getScte35Cmd(), NO_WRAP) : "N/A") +
-                            "\nScte35In: " + (cue.getScte35In() != null ? encodeToString(cue.getScte35In(), NO_WRAP) : "N/A") +
-                            "\nScte35Out: " + (cue.getScte35Out() != null ? encodeToString(cue.getScte35Out(), NO_WRAP) : "N/A"));
+                            "\nScte35Cmd: " + (cue.getScte35Cmd() != null ? Base64.encodeToString(cue.getScte35Cmd(), NO_WRAP) : "N/A") +
+                            "\nScte35In: " + (cue.getScte35In() != null ? Base64.encodeToString(cue.getScte35In(), NO_WRAP) : "N/A") +
+                            "\nScte35Out: " + (cue.getScte35Out() != null ? Base64.encodeToString(cue.getScte35Out(), NO_WRAP) : "N/A"));
                 });
             }
 
@@ -196,7 +196,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Configuring THEOplayer with appropriate stream source.
         configureTHEOplayer(
-                typedSource(getString(R.string.dashWithEmsgMetadataSourceUrl))
+                TypedSource.Builder.typedSource(getString(R.string.dashWithEmsgMetadataSourceUrl))
         );
 
         // Listening to 'addtrack' events to find text track of type 'emsg'.
@@ -209,7 +209,7 @@ public class PlayerActivity extends AppCompatActivity {
                 event.getTrack().addEventListener(TextTrackEventTypes.ADDCUE, cueEvent -> {
                     Log.i(TAG, "Event: ADDCUE, cue=" + cueEvent.getCue());
 
-                    // Here you can decode date range metadata. In this example, the data received
+                    // Decoding EMSG metadata. In this example, the data received
                     // is in the form: '{"content":{"0":73,"1":68,"2":51,"3":4,"4":0,"5":32,...}'.
                     JSONObject cueContent = cueEvent.getCue().getContent();
                     try {
@@ -237,7 +237,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Configuring THEOplayer with appropriate stream source.
         configureTHEOplayer(
-                typedSource(getString(R.string.dashWithEventStreamMetadataSourceUrl))
+                TypedSource.Builder.typedSource(getString(R.string.dashWithEventStreamMetadataSourceUrl))
         );
 
         // Listening to 'addtrack' events to find text track of type 'eventstream'.
@@ -250,8 +250,7 @@ public class PlayerActivity extends AppCompatActivity {
                 event.getTrack().addEventListener(TextTrackEventTypes.ADDCUE, cueEvent -> {
                     Log.i(TAG, "Event: ADDCUE, cue=" + cueEvent.getCue());
 
-                    // Here you can decode ID3 metadata. For demo purposes we are displaying whole
-                    // content as it is.
+                    // For demo purposes we are displaying whole content as it is.
                     appendMetadata(cueEvent.getCue().getContent().toString());
                 });
             }
@@ -261,7 +260,8 @@ public class PlayerActivity extends AppCompatActivity {
     private void configureTHEOplayer(TypedSource.Builder typedSource) {
         // Creating a SourceDescription builder that contains the settings to be applied as a new
         // THEOplayer source.
-        SourceDescription.Builder sourceDescription = sourceDescription(typedSource.build());
+        SourceDescription.Builder sourceDescription = SourceDescription.Builder
+                .sourceDescription(typedSource.build());
 
         // Configuring THEOplayer with defined SourceDescription object.
         theoPlayer.setSource(sourceDescription.build());

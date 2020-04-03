@@ -1,0 +1,68 @@
+{
+  "live": [
+    {
+      "title": "Channel 1",
+      "description": "LIVE",
+      "image": "@drawable/image_live",
+      "source": "https://b028.wpc.azureedge.net/80B028/Samples/a38e6323-95e9-4f1f-9b38-75eba91704e4/5f2ce531-d508-49fb-8152-647eba422aec.ism/Manifest(format=m3u8-aapl-v3)"
+    },
+    {
+      "title": "Channel 2",
+      "description": "LIVE",
+      "image": "@drawable/image_live",
+      "source": "https://b028.wpc.azureedge.net/80B028/Samples/0e8848ca-1db7-41a3-8867-fe911144c045/d34d8807-5597-47a1-8408-52ec5fc99027.ism/Manifest(format=m3u8-aapl-v3)"
+    }
+  ],
+  "onDemand": [
+    {
+      "title": "Big Buck Bunny",
+      "description": "2008 ‧ Short/Comedy ‧ 12 mins",
+      "image": "@drawable/image_big_buck_bunny",
+      "source": "https://cdn.theoplayer.com/video/big_buck_bunny/big_buck_bunny_metadata.m3u8"
+    },
+    {
+      "title": "Sintel",
+      "description": "2010 ‧ Fantasy/Short ‧ 15 mins",
+      "image": "@drawable/image_sintel",
+      "source": "https://cdn.theoplayer.com/video/sintel/nosubs.m3u8"
+    },
+    {
+      "title": "Tears of Steel",
+      "description": "2012 ‧ Short/Sci-fi ‧ 12 mins",
+      "image": "@drawable/image_tears_of_steel",
+      "source": "https://cdn.theoplayer.com/video/tears_of_steel/index.m3u8"
+    },
+    {
+      "title": "Elephant's Dream",
+      "description": "2006 ‧ Sci-fi/Short ‧ 11 mins",
+      "image": "@drawable/image_elephants_dream",
+      "source": "https://cdn.theoplayer.com/video/elephants-dream/playlist.m3u8"
+    },
+    {
+      "title": "Caminandes Llama Drama",
+      "description": "2013 ‧ Short/Comedy ‧ 3 mins",
+      "image": "@drawable/image_caminandes_llama_drama",
+      "source": "https://amssamples.streaming.mediaservices.windows.net/634cd01c-6822-4630-8444-8dd6279f94c6/CaminandesLlamaDrama4K.ism/manifest(format=m3u8-aapl-v3)"
+    }
+  ],
+  "offline": [
+    {
+      "title": "Big Buck Bunny",
+      "description": "2008 ‧ Short/Comedy ‧ 12 mins",
+      "image": "@drawable/image_big_buck_bunny",
+      "source": "https://cdn.theoplayer.com/video/big_buck_bunny/big_buck_bunny_metadata.m3u8"
+    },
+    {
+      "title": "Sintel",
+      "description": "2010 ‧ Fantasy/Short ‧ 15 mins",
+      "image": "@drawable/image_sintel",
+      "source": "https://cdn.theoplayer.com/video/sintel/nosubs.m3u8"
+    },
+    {
+      "title": "Caminandes Llama Drama",
+      "description": "2013 ‧ Short/Comedy ‧ 3 mins",
+      "image": "@drawable/image_caminandes_llama_drama",
+      "source": "https://amssamples.streaming.mediaservices.windows.net/634cd01c-6822-4630-8444-8dd6279f94c6/CaminandesLlamaDrama4K.ism/manifest(format=m3u8-aapl-v3)"
+    }
+  ]
+}

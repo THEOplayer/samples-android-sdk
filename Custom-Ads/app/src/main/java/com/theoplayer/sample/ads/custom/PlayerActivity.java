@@ -16,10 +16,6 @@ import com.theoplayer.android.api.source.TypedSource;
 import com.theoplayer.android.api.source.addescription.GoogleImaAdDescription;
 import com.theoplayer.sample.ads.custom.databinding.ActivityPlayerBinding;
 
-import static com.theoplayer.android.api.source.SourceDescription.Builder.sourceDescription;
-import static com.theoplayer.android.api.source.TypedSource.Builder.typedSource;
-import static com.theoplayer.android.api.source.addescription.GoogleImaAdDescription.Builder.googleImaAdDescription;
-
 public class PlayerActivity extends AppCompatActivity {
 
     private static final String TAG = PlayerActivity.class.getSimpleName();
@@ -69,16 +65,18 @@ public class PlayerActivity extends AppCompatActivity {
         viewBinding.theoPlayerView.getSettings().setFullScreenOrientationCoupled(true);
 
         // Creating a TypedSource builder that defines the location of a single stream source.
-        TypedSource.Builder typedSource = typedSource(sourceUrl);
+        TypedSource.Builder typedSource = TypedSource.Builder.typedSource(sourceUrl);
 
         // Creating a GoogleImaAdDescription builder that defines the location of an ad and its
         // time offset.
-        GoogleImaAdDescription.Builder adDescription = googleImaAdDescription(adUrl)
+        GoogleImaAdDescription.Builder adDescription = GoogleImaAdDescription.Builder
+                .googleImaAdDescription(adUrl)
                 .timeOffset(adTimeOffset);
 
         // Creating a SourceDescription builder that contains the settings to be applied as a new
         // THEOplayer source including ads configuration.
-        SourceDescription.Builder sourceDescription = sourceDescription(typedSource.build())
+        SourceDescription.Builder sourceDescription = SourceDescription.Builder
+                .sourceDescription(typedSource.build())
                 .ads(adDescription.build());
 
         // Configuring THEOplayer with defined SourceDescription object to be played automatically.

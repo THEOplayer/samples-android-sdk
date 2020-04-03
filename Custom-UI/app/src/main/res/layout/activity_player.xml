@@ -103,11 +103,11 @@
                         android:valueTo="@{viewModel.duration ?? 0.1F}"
                         android:visibility="@{viewModel.isSeekable ? View.VISIBLE : View.GONE}"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/timelineView"
+                        app:layout_constraintEnd_toStartOf="@id/timeLabelLayout"
                         app:layout_constraintStart_toStartOf="parent" />
 
                     <LinearLayout
-                        android:id="@+id/timelineView"
+                        android:id="@+id/timeLabelLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"

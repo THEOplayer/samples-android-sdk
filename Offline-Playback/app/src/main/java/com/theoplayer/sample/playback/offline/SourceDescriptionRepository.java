@@ -3,12 +3,10 @@ package com.theoplayer.sample.playback.offline;
 import android.content.Context;
 
 import com.theoplayer.android.api.source.SourceDescription;
+import com.theoplayer.android.api.source.TypedSource;
+import com.theoplayer.android.api.source.drm.DRMConfiguration;
+import com.theoplayer.android.api.source.drm.KeySystemConfiguration;
 import com.theoplayer.android.api.source.drm.LicenseType;
-
-import static com.theoplayer.android.api.source.SourceDescription.Builder.sourceDescription;
-import static com.theoplayer.android.api.source.TypedSource.Builder.typedSource;
-import static com.theoplayer.android.api.source.drm.DRMConfiguration.Builder.widevineDrm;
-import static com.theoplayer.android.api.source.drm.KeySystemConfiguration.Builder.keySystemConfiguration;
 
 public final class SourceDescriptionRepository {
 
@@ -29,13 +27,15 @@ public final class SourceDescriptionRepository {
     }
 
     private static SourceDescription getBigBuckBunnySourceDescription(Context context) {
-        return sourceDescription(
-                typedSource(context.getString(R.string.bigBuckBunnySourceUrl))
+        return SourceDescription.Builder.sourceDescription(
+                TypedSource.Builder
+                        .typedSource(context.getString(R.string.bigBuckBunnySourceUrl))
                         .drm(
-                                widevineDrm(
+                                DRMConfiguration.Builder.widevineDrm(
                                         // Note that license has to have PERSISTENT type configured
                                         // to be cached and to allow offline playback.
-                                        keySystemConfiguration(context.getString(R.string.bigBuckBunnyLicenseUrl))
+                                        KeySystemConfiguration.Builder
+                                                .keySystemConfiguration(context.getString(R.string.bigBuckBunnyLicenseUrl))
                                                 .licenseType(LicenseType.PERSISTENT)
                                                 .build()
                                 ).build()
@@ -46,20 +46,26 @@ public final class SourceDescriptionRepository {
     }
 
     private static SourceDescription getSintelSourceDescription(Context context) {
-        return sourceDescription(
-                typedSource(context.getString(R.string.sintelSourceUrl)).build()
+        return SourceDescription.Builder.sourceDescription(
+                TypedSource.Builder.typedSource(
+                        context.getString(R.string.sintelSourceUrl)
+                ).build()
         ).build();
     }
 
     private static SourceDescription getTearsOfSteelSourceDescription(Context context) {
-        return sourceDescription(
-                typedSource(context.getString(R.string.tearsOfStealSourceUrl)).build()
+        return SourceDescription.Builder.sourceDescription(
+                TypedSource.Builder.typedSource(
+                        context.getString(R.string.tearsOfStealSourceUrl)
+                ).build()
         ).build();
     }
 
     private static SourceDescription getElephantsDreamSourceDescription(Context context) {
-        return sourceDescription(
-                typedSource(context.getString(R.string.elephantsDreamSourceUrl)).build()
+        return SourceDescription.Builder.sourceDescription(
+                TypedSource.Builder.typedSource(
+                        context.getString(R.string.elephantsDreamSourceUrl)
+                ).build()
         ).build();
     }
 

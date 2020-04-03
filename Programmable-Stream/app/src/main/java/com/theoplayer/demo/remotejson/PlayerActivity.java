@@ -1,11 +1,17 @@
 package com.theoplayer.demo.remotejson;
 
+import android.app.PictureInPictureParams;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Layout;
+import android.text.SpannableString;
+import android.text.style.AlignmentSpan;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,23 +52,26 @@ public class PlayerActivity extends AppCompatActivity {
 
     private static final String TAG = PlayerActivity.class.getSimpleName();
 
+    private static final String PLAYER_PARAM__CONFIG_JSON = "CONFIG_JSON";
+    private static final String PLAYER_PARAM__SOURCE_URL = "SOURCE_URL";
+
+    private static boolean SUPPORTS_PIP = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
+
     private ActivityPlayerBinding viewBinding;
     private THEOplayerView theoPlayerView;
     private Player theoPlayer;
-    private final MutableLiveData<TimeRanges> bufferedMutableLiveData = new MutableLiveData<>();
-    private final MutableLiveData<Date> dateTimeMutableLiveData = new MutableLiveData<>();
-    private final MutableLiveData<TimeRanges> playedMutableLiveData = new MutableLiveData<>();
-    private final MutableLiveData<TimeRanges> seekableMutableLiveData = new MutableLiveData<>();
-    private final MutableLiveData<List<Ad>> currentAdsLiveData = new MutableLiveData<>();
-    private final MutableLiveData<List<Ad>> scheduledAdsLiveData = new MutableLiveData<>();
+
+    private MutableLiveData<TimeRanges> bufferedMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<Date> dateTimeMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<TimeRanges> playedMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<TimeRanges> seekableMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<Ad>> currentAdsLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<Ad>> scheduledAdsLiveData = new MutableLiveData<>();
 
     private TimeUpdateEvent latestTimeUpdateEvent;
 
     private String playerState;
-    private final StringBuilder eventLog = new StringBuilder();
-
-    private static final String PLAYER_PARAM__CONFIG_JSON = "CONFIG_JSON";
-    private static final String PLAYER_PARAM__SOURCE_URL = "SOURCE_URL";
+    private StringBuilder eventLog = new StringBuilder();
 
     public static void play(Context context, String playerConfigJson, String sourceJson) {
         Intent playIntent = new Intent(context, PlayerActivity.class);
@@ -89,7 +98,7 @@ public class PlayerActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Configuring UI
-        PagerAdapter pagerAdapter = new PSAPageAdapter(this);
+        PagerAdapter pagerAdapter = new TabbedPagerAdapter(this);
         viewBinding.viewPager.setAdapter(pagerAdapter);
         viewBinding.viewPager.setOffscreenPageLimit(4);
 
@@ -151,36 +160,12 @@ public class PlayerActivity extends AppCompatActivity {
         theoPlayer.addEventListener(PlayerEventTypes.ERROR, onErrorEventListener);
     }
 
-
-    // In order to work properly and in sync with the activity lifecycle changes (e.g. device
-    // is rotated, new activity is started or app is moved to background) we need to call
-    // the "onResume", "onPause" and "onDestroy" methods of the THEOplayerView when the matching
-    // activity methods are called.
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        theoPlayerView.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        theoPlayerView.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        theoPlayerView.onDestroy();
-    }
-
     private String formatAllTracks() {
         StringBuilder sb = new StringBuilder();
 
         // getting information about video tracks
         if (theoPlayer.getVideoTracks() != null && theoPlayer.getVideoTracks().length() > 0) {
-            sb.append(getString(R.string.videoTracksHeader));
+            sb.append(String.format(getString(R.string.videoTracksHeader)));
             for (MediaTrack videoTrack : theoPlayer.getVideoTracks()) {
                 sb.append(String.format(getString(R.string.id), videoTrack.getId()));
                 sb.append(String.format(getString(R.string.label), videoTrack.getLabel()));
@@ -191,7 +176,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         // getting information about audio tracks
         if (theoPlayer.getAudioTracks() != null && theoPlayer.getAudioTracks().length() > 0) {
-            sb.append(getString(R.string.audioTracksHeader));
+            sb.append(String.format(getString(R.string.audioTracksHeader)));
             for (MediaTrack audioTrack : theoPlayer.getAudioTracks()) {
                 sb.append(String.format(getString(R.string.id), audioTrack.getId()));
                 sb.append(String.format(getString(R.string.label), audioTrack.getLabel()));
@@ -202,12 +187,12 @@ public class PlayerActivity extends AppCompatActivity {
 
         // getting information about text tracks
         if (theoPlayer.getTextTracks() != null && theoPlayer.getTextTracks().length() > 0) {
-            sb.append(getString(R.string.textTracksHeader));
+            sb.append(String.format(getString(R.string.textTracksHeader)));
             for (TextTrack textTrack : theoPlayer.getTextTracks()) {
                 sb.append(String.format(getString(R.string.id), textTrack.getId()));
                 sb.append(String.format(getString(R.string.label), textTrack.getLabel()));
                 if (textTrack.getActiveCues() != null && textTrack.getActiveCues().length() > 0) {
-                    sb.append(getString(R.string.activeCuesHeader));
+                    sb.append(String.format(getString(R.string.activeCuesHeader)));
                     for (TextTrackCue cue : textTrack.getActiveCues()) {
                         sb.append(String.format(getString(R.string.id), cue.getId()));
                         sb.append(String.format(getString(R.string.cueStartTime), cue.getStartTime()));
@@ -264,7 +249,7 @@ public class PlayerActivity extends AppCompatActivity {
         List<Ad> currentAds = currentAdsLiveData.getValue();
         // displaying current ads info
         if (currentAds != null && currentAds.size() > 0) {
-            sb.append(R.string.currentAds);
+            sb.append(String.format(getString(R.string.currentAds)));
             for (Ad currentAd : currentAds) {
                 sb.append(String.format(getString(R.string.integration), currentAd.getIntegration().toString()));
                 if (currentAd.getId() != null)
@@ -281,7 +266,7 @@ public class PlayerActivity extends AppCompatActivity {
         List<Ad> scheduledAds = scheduledAdsLiveData.getValue();
         // displaying scheduled ads info
         if (scheduledAds != null && scheduledAds.size() > 0) {
-            sb.append(R.string.scheduledAds);
+            sb.append(String.format(getString(R.string.scheduledAds)));
             for (Ad scheduledAd : scheduledAds) {
                 sb.append(String.format(getString(R.string.integration), scheduledAd.getIntegration().toString()));
                 if (scheduledAd.getId() != null)
@@ -410,61 +395,115 @@ public class PlayerActivity extends AppCompatActivity {
     };
 
     @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
+        if (isInPictureInPictureMode) {
+            getSupportActionBar().hide();
+        } else {
+            getSupportActionBar().show();
+        }
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
+    }
+
+    @Override
+    protected void onUserLeaveHint() {
+        if (SUPPORTS_PIP) {
+            if (!theoPlayer.isPaused()) {
+                enterPictureInPictureMode(new PictureInPictureParams.Builder().build());
+            }
+        } else {
+            SpannableString toastMessage = SpannableString.valueOf(getString(R.string.pipNotSupported));
+            toastMessage.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, toastMessage.length(), 0);
+            Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(viewBinding.mainConstraintLayout);
+        if (!SUPPORTS_PIP || !isInPictureInPictureMode()) {
+            ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(viewBinding.mainConstraintLayout);
 
-        int theoPlayerViewId = viewBinding.theoPlayerView.getId();
-        int pagerViewId = viewBinding.viewPager.getId();
+            int theoPlayerViewId = viewBinding.theoPlayerView.getId();
+            int pagerViewId = viewBinding.viewPager.getId();
 
-        // setting layout for portrait without redrawing
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            constraintSet.clear(theoPlayerViewId, ConstraintSet.START);
-            constraintSet.clear(theoPlayerViewId, ConstraintSet.END);
-            constraintSet.clear(theoPlayerViewId, ConstraintSet.BOTTOM);
-            constraintSet.clear(theoPlayerViewId, ConstraintSet.TOP);
-
-            constraintSet.clear(pagerViewId, ConstraintSet.START);
-            constraintSet.clear(pagerViewId, ConstraintSet.BOTTOM);
-            constraintSet.clear(pagerViewId, ConstraintSet.END);
-            constraintSet.clear(pagerViewId, ConstraintSet.TOP);
-
-            constraintSet.connect(theoPlayerViewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-            constraintSet.connect(theoPlayerViewId, ConstraintSet.END, pagerViewId, ConstraintSet.START);
-            constraintSet.connect(theoPlayerViewId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-            constraintSet.connect(theoPlayerViewId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-
-            constraintSet.connect(pagerViewId, ConstraintSet.START, theoPlayerViewId, ConstraintSet.END);
-            constraintSet.connect(pagerViewId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-            constraintSet.connect(pagerViewId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-            constraintSet.connect(pagerViewId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-
-        } else {
             // setting layout for portrait without redrawing
-            constraintSet.clear(theoPlayerViewId, ConstraintSet.START);
-            constraintSet.clear(theoPlayerViewId, ConstraintSet.END);
-            constraintSet.clear(theoPlayerViewId, ConstraintSet.BOTTOM);
-            constraintSet.clear(theoPlayerViewId, ConstraintSet.TOP);
+            if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                constraintSet.clear(theoPlayerViewId, ConstraintSet.START);
+                constraintSet.clear(theoPlayerViewId, ConstraintSet.END);
+                constraintSet.clear(theoPlayerViewId, ConstraintSet.BOTTOM);
+                constraintSet.clear(theoPlayerViewId, ConstraintSet.TOP);
 
-            constraintSet.clear(pagerViewId, ConstraintSet.START);
-            constraintSet.clear(pagerViewId, ConstraintSet.BOTTOM);
-            constraintSet.clear(pagerViewId, ConstraintSet.END);
-            constraintSet.clear(pagerViewId, ConstraintSet.TOP);
+                constraintSet.clear(pagerViewId, ConstraintSet.START);
+                constraintSet.clear(pagerViewId, ConstraintSet.BOTTOM);
+                constraintSet.clear(pagerViewId, ConstraintSet.END);
+                constraintSet.clear(pagerViewId, ConstraintSet.TOP);
 
-            constraintSet.setDimensionRatio(theoPlayerViewId, "H,16:9");
+                constraintSet.connect(theoPlayerViewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
+                constraintSet.connect(theoPlayerViewId, ConstraintSet.END, pagerViewId, ConstraintSet.START);
+                constraintSet.connect(theoPlayerViewId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
+                constraintSet.connect(theoPlayerViewId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
 
-            constraintSet.connect(theoPlayerViewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-            constraintSet.connect(theoPlayerViewId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-            constraintSet.connect(theoPlayerViewId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+                constraintSet.connect(pagerViewId, ConstraintSet.START, theoPlayerViewId, ConstraintSet.END);
+                constraintSet.connect(pagerViewId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
+                constraintSet.connect(pagerViewId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
+                constraintSet.connect(pagerViewId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
 
-            constraintSet.connect(pagerViewId, ConstraintSet.START, theoPlayerViewId, ConstraintSet.START);
-            constraintSet.connect(pagerViewId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-            constraintSet.connect(pagerViewId, ConstraintSet.END, theoPlayerViewId, ConstraintSet.END);
-            constraintSet.connect(pagerViewId, ConstraintSet.TOP, theoPlayerViewId, ConstraintSet.BOTTOM);
+            } else {
+                // setting layout for portrait without redrawing
+                constraintSet.clear(theoPlayerViewId, ConstraintSet.START);
+                constraintSet.clear(theoPlayerViewId, ConstraintSet.END);
+                constraintSet.clear(theoPlayerViewId, ConstraintSet.BOTTOM);
+                constraintSet.clear(theoPlayerViewId, ConstraintSet.TOP);
+
+                constraintSet.clear(pagerViewId, ConstraintSet.START);
+                constraintSet.clear(pagerViewId, ConstraintSet.BOTTOM);
+                constraintSet.clear(pagerViewId, ConstraintSet.END);
+                constraintSet.clear(pagerViewId, ConstraintSet.TOP);
+
+                constraintSet.setDimensionRatio(theoPlayerViewId, "H,16:9");
+
+                constraintSet.connect(theoPlayerViewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
+                constraintSet.connect(theoPlayerViewId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
+                constraintSet.connect(theoPlayerViewId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+
+                constraintSet.connect(pagerViewId, ConstraintSet.START, theoPlayerViewId, ConstraintSet.START);
+                constraintSet.connect(pagerViewId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
+                constraintSet.connect(pagerViewId, ConstraintSet.END, theoPlayerViewId, ConstraintSet.END);
+                constraintSet.connect(pagerViewId, ConstraintSet.TOP, theoPlayerViewId, ConstraintSet.BOTTOM);
+            }
+            constraintSet.applyTo(viewBinding.mainConstraintLayout);
         }
-        constraintSet.applyTo(viewBinding.mainConstraintLayout);
     }
+
+
+    // In order to work properly and in sync with the activity lifecycle changes (e.g. device
+    // is rotated, new activity is started or app is moved to background) we need to call
+    // the "onResume", "onPause" and "onDestroy" methods of the THEOplayerView when the matching
+    // activity methods are called.
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (SUPPORTS_PIP && !isInPictureInPictureMode()) {
+            viewBinding.theoPlayerView.onPause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (SUPPORTS_PIP && !isInPictureInPictureMode()) {
+            viewBinding.theoPlayerView.onResume();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        theoPlayerView.onDestroy();
+    }
+
 }
 

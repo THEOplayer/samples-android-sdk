@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.theoplayer.sample.playback.metadata"
-    tools:ignore="GoogleAppIndexingWarning">
+    tools:ignore="LockedOrientationActivity">
 
     <!-- In order to play online streams or ads it is needed to add permissions below -->
     <uses-permission android:name="android.permission.INTERNET" />

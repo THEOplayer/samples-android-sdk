@@ -20,10 +20,6 @@ import com.theoplayer.android.api.source.TypedSource;
 import com.theoplayer.android.api.source.metadata.ChromecastMetadataDescription;
 import com.theoplayer.sample.playback.googlecast.databinding.ActivityPlayerBinding;
 
-import static com.theoplayer.android.api.source.SourceDescription.Builder.sourceDescription;
-import static com.theoplayer.android.api.source.TypedSource.Builder.typedSource;
-import static com.theoplayer.android.api.source.metadata.ChromecastMetadataDescription.Builder.chromecastMetadata;
-
 public class PlayerActivity extends AppCompatActivity {
 
     private static final String TAG = PlayerActivity.class.getSimpleName();
@@ -56,7 +52,7 @@ public class PlayerActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.activity_player, menu);
+        getMenuInflater().inflate(R.menu.activity_player_menu, menu);
         CastButtonFactory.setUpMediaRouteButton(getApplicationContext(), menu, R.id.castMenuItem);
         return true;
     }
@@ -68,17 +64,20 @@ public class PlayerActivity extends AppCompatActivity {
         viewBinding.theoPlayerView.getSettings().setFullScreenOrientationCoupled(true);
 
         // Creating a TypedSource builder that defines the location of a single stream source.
-        TypedSource.Builder typedSource = typedSource(getString(R.string.defaultSourceUrl));
+        TypedSource.Builder typedSource = TypedSource.Builder
+                .typedSource(getString(R.string.defaultSourceUrl));
 
         // Creating a ChromecastMetadataDescription builder that defines stream metadata to be
         // displayed on cast sender and receiver while casting.
-        ChromecastMetadataDescription.Builder chromecastMetadata = chromecastMetadata()
+        ChromecastMetadataDescription.Builder chromecastMetadata = ChromecastMetadataDescription.Builder
+                .chromecastMetadata()
                 .title(getString(R.string.defaultTitle))
                 .images(getString(R.string.defaultPosterUrl));
 
         // Creating a SourceDescription builder that contains the settings to be applied as a new
         // THEOplayer source.
-        SourceDescription.Builder sourceDescription = sourceDescription(typedSource.build())
+        SourceDescription.Builder sourceDescription = SourceDescription.Builder
+                .sourceDescription(typedSource.build())
                 .poster(getString(R.string.defaultPosterUrl))
                 .metadata(chromecastMetadata.build());
 
@@ -103,11 +102,12 @@ public class PlayerActivity extends AppCompatActivity {
             }
         });
 
-        // Some streaming setups require you to cast a different stream to a Chromecast Receiver device
-        // than the one playing on a Chromecast Sender device, e.g. different DRM capabilities.
+        // Some streaming setups requires casting a different stream to a Cast Receiver device
+        // than the one playing on a Cast Sender device, e.g. different DRM capabilities.
         // Code below shows how to configure such different stream to cast.
         //
-        // SourceDescription.Builder otherSourceDescription = sourceDescription(getString(R.string.defaultSourceUrl));
+        // SourceDescription.Builder otherSourceDescription = SourceDescription.Builder
+        //        .sourceDescription(getString(R.string.defaultSourceUrl));
         // theoChromecast.setSource(otherSourceDescription.build());
 
         // Adding listeners to THEOplayer basic playback events.
@@ -124,8 +124,8 @@ public class PlayerActivity extends AppCompatActivity {
         theoPlayer.addEventListener(PlayerEventTypes.ERROR, event -> Log.i(TAG, "Event: ERROR, error=" + event.getError()));
 
         // Adding listeners to THEOplayer cast events.
-        theoChromecast.addEventListener(ChromecastEventTypes.STATECHANGE, event -> Log.i(TAG, "Event: CHROMECAST_STATECHANGE, state=" + event.getState()));
-        theoChromecast.addEventListener(ChromecastEventTypes.ERROR, event -> Log.i(TAG, "Event: CHROMECAST_ERROR, error=" + event.getError()));
+        theoChromecast.addEventListener(ChromecastEventTypes.STATECHANGE, event -> Log.i(TAG, "Event: CAST_STATECHANGE, state=" + event.getState()));
+        theoChromecast.addEventListener(ChromecastEventTypes.ERROR, event -> Log.i(TAG, "Event: CAST_ERROR, error=" + event.getError()));
     }
 
 

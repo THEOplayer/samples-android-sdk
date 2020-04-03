@@ -39,19 +39,17 @@ public class OfflineSource {
         cachingTaskProgress.setValue(cachingTask == null ? 0.0D : cachingTask.getPercentageCached());
 
         if (cachingTask != null) {
-            cachingTask.addEventListener(CachingTaskEventTypes.CACHING_TASK_PROGRESS,
-                    event -> {
-                        Log.i(TAG, "Event: CACHING_TASK_PROGRESS, title='" + title + "', progress=" + cachingTask.getPercentageCached());
-                        cachingTaskProgress.setValue(cachingTask.getPercentageCached());
-                    });
+            cachingTask.addEventListener(CachingTaskEventTypes.CACHING_TASK_PROGRESS, event -> {
+                Log.i(TAG, "Event: CACHING_TASK_PROGRESS, title='" + title + "', progress=" + cachingTask.getPercentageCached());
+                cachingTaskProgress.setValue(cachingTask.getPercentageCached());
+            });
 
-            cachingTask.addEventListener(CachingTaskEventTypes.CACHING_TASK_STATE_CHANGE,
-                    event -> {
-                        Log.i(TAG, "Event: CACHING_TASK_STATE_CHANGE, title='" + title + "', status=" + cachingTask.getStatus() + ", progress=" + cachingTask.getPercentageCached());
-                        cachingTaskStatus.setValue(cachingTask.getStatus());
-                        cachingTaskProgress.setValue(cachingTask.getPercentageCached());
-                        stateUpToDate.setValue(true);
-                    });
+            cachingTask.addEventListener(CachingTaskEventTypes.CACHING_TASK_STATE_CHANGE, event -> {
+                Log.i(TAG, "Event: CACHING_TASK_STATE_CHANGE, title='" + title + "', status=" + cachingTask.getStatus() + ", progress=" + cachingTask.getPercentageCached());
+                cachingTaskStatus.setValue(cachingTask.getStatus());
+                cachingTaskProgress.setValue(cachingTask.getPercentageCached());
+                stateUpToDate.setValue(true);
+            });
         }
         stateUpToDate.setValue(true);
     }

@@ -11,40 +11,17 @@
         android:orientation="vertical">
 
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewpager"
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/theoSkyBlue"
                 app:tabIndicatorColor="@color/theoYellow"
                 app:tabSelectedTextColor="@color/theoWhite"
-                app:tabTextColor="@color/theoWhiteTransparent">
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/tabHeight"
-                    android:text="@string/tabLive" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/tabHeight"
-                    android:text="@string/tabOnDemand" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/tabHeight"
-                    android:text="@string/tabDownloads" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/tabHeight"
-                    android:text="@string/tabSettings" />
-
-            </com.google.android.material.tabs.TabLayout>
+                app:tabTextColor="@color/theoWhiteTransparent" />
 
         </androidx.viewpager.widget.ViewPager>
 

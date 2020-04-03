@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.theoplayer.demo.simpleott.model.StreamSource" />
+
+    </data>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:background="@color/theoWhite">
+
+        <TableRow
+            android:layout_height="@dimen/itemHeight"
+            android:layout_margin="0dp"
+            android:background="?selectableItemBackground">
+
+            <ImageView
+                android:layout_width="@dimen/listImageSize"
+                android:layout_height="@dimen/listImageSize"
+                android:layout_marginStart="@dimen/smallPadding"
+                android:layout_marginLeft="@dimen/smallPadding"
+                android:layout_marginTop="@dimen/smallerPadding"
+                android:layout_marginBottom="@dimen/smallerPadding"
+                android:contentDescription="@string/sourceImage"
+                app:imageResource="@{viewModel.imageResId}" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/smallPadding"
+                android:layout_marginLeft="@dimen/smallPadding"
+                android:layout_marginRight="@dimen/smallPadding"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/smallPadding"
+                android:paddingBottom="@dimen/smallPadding">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@{viewModel.title}" />
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@{viewModel.description}"
+                    android:textColor="@color/theoGray" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+    </TableLayout>
+
+</layout>
+

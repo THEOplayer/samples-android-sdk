@@ -1,176 +1,119 @@
 
 package com.theoplayer.demo.simpleott;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkCapabilities;
-import android.net.NetworkRequest;
-import android.os.Build;
 import android.os.Bundle;
-import android.widget.ListView;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.google.gson.Gson;
-import com.theoplayer.android.api.THEOplayerGlobal;
-import com.theoplayer.android.api.cache.Cache;
 import com.theoplayer.demo.simpleott.databinding.ActivityMainBinding;
-import com.theoplayer.demo.simpleott.datamodel.SimpleOTTConfiguration;
-import com.theoplayer.demo.simpleott.network.SimpleOTTWifiMonitor;
-import com.theoplayer.demo.simpleott.network.WifiMonitor;
-import com.theoplayer.demo.simpleott.network.WifiMonitorLegacy;
+import com.theoplayer.demo.simpleott.databinding.TabOfflineSourceBinding;
+import com.theoplayer.demo.simpleott.databinding.TabSettingsBinding;
+import com.theoplayer.demo.simpleott.databinding.TabStreamSourceBinding;
+import com.theoplayer.demo.simpleott.model.OfflineSourceDownloader;
+import com.theoplayer.demo.simpleott.model.StreamSourceRepository;
+import com.theoplayer.demo.simpleott.network.WiFiNetworkInfo;
+import com.theoplayer.demo.simpleott.view.OfflineSourceAdapter;
+import com.theoplayer.demo.simpleott.view.StreamSourceAdapter;
+import com.theoplayer.demo.simpleott.view.TabbedPagerAdapter;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
+import static android.view.LayoutInflater.from;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SimpleOTTConfiguration simpleOTTConfiguration;
-    private MutableLiveData<Boolean> onlyOnWifi = new MutableLiveData<>();
-    private SharedPreferences sharedPref;
-    private OfflineHandler offlineHandler;
-    private OfflineAssetListAdapter offlineListAdapter;
-    private SimpleOTTWifiMonitor wifiMonitor;
-
-    // Reading configuration from the JSON file embedded in the application.
-    private SimpleOTTConfiguration readConfiguration() {
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
-        try (
-                InputStream is = getResources().openRawResource(R.raw.config);
-                Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"))
-        ) {
-            int n;
-            while ((n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, n);
-            }
-            String jsonString = writer.toString();
-            // Casting JSON config into Java object for future use
-            return new Gson().fromJson(jsonString, SimpleOTTConfiguration.class);
-        } catch (IOException ignored) {
-        }
-        return null;
-    }
+    private WiFiNetworkInfo wiFiNetworkInfo;
+    private StreamSourceRepository streamSourceRepository;
+    private OfflineSourceDownloader offlineSourceDownloader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.TheoTheme_Base);
         super.onCreate(savedInstanceState);
-        readSettings();
-
-        // Choosing a WiFi monitor depending on the SDK version
-        // to be later use by the OfflineHandler
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
-            wifiMonitor = new WifiMonitor();
-            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-            NetworkRequest networkRequestWiFi = (new NetworkRequest.Builder()).addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-                    .build();
-
-            connectivityManager.registerNetworkCallback(networkRequestWiFi, (ConnectivityManager.NetworkCallback) wifiMonitor);
-        } else {
-            IntentFilter filter = new IntentFilter();
-            filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-            wifiMonitor = new WifiMonitorLegacy();
-            registerReceiver((BroadcastReceiver) wifiMonitor, filter);
-        }
 
         // Inflating view and obtaining an instance of the binding class.
         ActivityMainBinding viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        simpleOTTConfiguration = readConfiguration();
 
-        // Initializing page adapter for tabs view
-        SimpleOTTPageAdapter pagerAdapter = new SimpleOTTPageAdapter(this);
-        viewBinding.viewpager.setAdapter(pagerAdapter);
+        // Initiating WiFi network information provider.
+        wiFiNetworkInfo = new WiFiNetworkInfo(this);
 
-        // Loading all pages at once
+        // Initiating repositories that allow to get needed stream sources lists.
+        streamSourceRepository = new StreamSourceRepository(this);
+        offlineSourceDownloader = new OfflineSourceDownloader(this, streamSourceRepository, wiFiNetworkInfo);
 
-        viewBinding.viewpager.setOffscreenPageLimit(4);
-        pagerAdapter.setOnItemsReady(() -> {
+        // Initializing pager adapter for tabs view
+        TabbedPagerAdapter pagerAdapter = new TabbedPagerAdapter(this);
+        pagerAdapter.addTab(R.string.tabLive, this::bindLiveTabView);
+        pagerAdapter.addTab(R.string.tabOnDemand, this::bindOnDemandTabView);
+        pagerAdapter.addTab(R.string.tabOffline, this::bindOfflineTabView);
+        pagerAdapter.addTab(R.string.tabSettings, this::bindSettingsTabView);
 
-            prepareUi();
-
-            // Gathering THEO objects references.
-            Cache theoCache = THEOplayerGlobal.getSharedInstance(this).getCache();
-
-            // Initializing offline handler
-            offlineHandler = new OfflineHandler(
-                    MainActivity.this,
-                    theoCache,
-                    simpleOTTConfiguration.config.offline.vods,
-                    onlyOnWifi,
-                    wifiMonitor.getIsConnectedLiveData());
-
-            // The list adapter for "Offline" tab
-            offlineListAdapter = new OfflineAssetListAdapter(MainActivity.this, offlineHandler.getOfflineSources(), offlineHandler);
-
-            ListView offlineList = findViewById(R.id.offline_list);
-            offlineList.setAdapter(offlineListAdapter);
-
-            offlineHandler.init();
-        });
+        viewBinding.viewPager.setAdapter(pagerAdapter);
+        viewBinding.viewPager.setOffscreenPageLimit(4);
     }
 
-    private void prepareUi() {
-        // Preparing the list adapter for Live tab
-        AssetListAdapter liveListAdapter = new AssetListAdapter(MainActivity.this, simpleOTTConfiguration.config.live.channels);
-        ListView liveList = findViewById(R.id.channel_list);
-        liveList.setAdapter(liveListAdapter);
-        liveList.setOnItemClickListener((parent, view, position, id) ->
-                FullScreenPlayerActivity.play(MainActivity.this, simpleOTTConfiguration.config.live.channels[position].videoSource));
+    /**
+     * Inflates and binds view for LIVE tab.
+     *
+     * @return bound view
+     */
+    private View bindLiveTabView() {
+        TabStreamSourceBinding viewBinding = TabStreamSourceBinding.inflate(from(this), null, false);
 
-        // Preparing the list adapter for On Demand tab
-        AssetListAdapter vodListAdapter = new AssetListAdapter(MainActivity.this, simpleOTTConfiguration.config.onDemand.vods);
-        ListView vodList = findViewById(R.id.vod_list);
-        vodList.setAdapter(vodListAdapter);
-        vodList.setOnItemClickListener((parent, view, position, id) ->
-                FullScreenPlayerActivity.play(MainActivity.this, simpleOTTConfiguration.config.onDemand.vods[position].videoSource));
+        viewBinding.streamSourceList.setAdapter(
+                new StreamSourceAdapter(this, streamSourceRepository.getLiveStreamSources())
+        );
+
+        return viewBinding.getRoot();
+    }
+
+    /**
+     * Inflates and binds view for ON DEMAND tab.
+     *
+     * @return bound view
+     */
+    private View bindOnDemandTabView() {
+        TabStreamSourceBinding viewBinding = TabStreamSourceBinding.inflate(from(this), null, false);
+
+        viewBinding.streamSourceList.setAdapter(
+                new StreamSourceAdapter(this, streamSourceRepository.getOnDemandStreamSources())
+        );
+
+        return viewBinding.getRoot();
+    }
+
+    /**
+     * Inflates nad binds view for OFFLINE tab.
+     *
+     * @return bound view
+     */
+    private View bindOfflineTabView() {
+        TabOfflineSourceBinding viewBinding = TabOfflineSourceBinding.inflate(from(this), null, false);
+
+        viewBinding.offlineSourceList.setAdapter(
+                new OfflineSourceAdapter(this, offlineSourceDownloader)
+        );
+
+        return viewBinding.getRoot();
+    }
+
+    /**
+     * Inflates and binds view for SETTINGS tab.
+     *
+     * @return bound view
+     */
+    private View bindSettingsTabView() {
+        TabSettingsBinding viewBinding = TabSettingsBinding.inflate(from(this), null, false);
 
         // Showing confirmation dialog after hitting clear cache button
-        MaterialButton clearCacheBtn = findViewById(R.id.clear_cache_btn);
-        clearCacheBtn.setOnClickListener(v -> new MaterialAlertDialogBuilder(MainActivity.this)
-                .setMessage(getString(R.string.clearAllDownloadsMessage))
-                .setPositiveButton(getString(R.string.yes), (dialog, which) ->
-                        offlineHandler.deleteAllCachedItems())
-                .setNegativeButton(getString(R.string.no), null)
-                .show());
+        viewBinding.removeAllButton.setOnClickListener(v -> offlineSourceDownloader.removeAllCachingTasks());
 
         // The switch for "Download only on wifi" setting
-        // When this is changed, the `onlyOnWifi` live data gets updated
-        SwitchMaterial wifiSwitch = findViewById(R.id.wifi_switch);
-        wifiSwitch.setChecked(onlyOnWifi.getValue());
-        wifiSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            onlyOnWifi.setValue(isChecked);
-            storeSettings();
-        });
+        viewBinding.downloadOnWiFiSwitch.setChecked(wiFiNetworkInfo.isDownloadOnlyOnWiFi());
+        viewBinding.downloadOnWiFiSwitch.setOnCheckedChangeListener(
+                (button, isChecked) -> wiFiNetworkInfo.setDownloadOnlyOnWiFi(isChecked));
+
+        return viewBinding.getRoot();
     }
 
-
-    // Reading "Download only on wifi" setting from shared preferences
-    private void readSettings() {
-        Context context = this;
-        sharedPref = context.getSharedPreferences(
-                getString(R.string.settings), Context.MODE_PRIVATE);
-        onlyOnWifi.setValue(sharedPref.getBoolean(getString(R.string.settings_wifi), true));
-    }
-
-    // Storing "Download only on wifi" setting in shared preferences
-    private void storeSettings() {
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean(getString(R.string.settings_wifi), onlyOnWifi.getValue());
-        editor.apply();
-    }
 }

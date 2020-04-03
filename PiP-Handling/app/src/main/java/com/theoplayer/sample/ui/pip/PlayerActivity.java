@@ -22,9 +22,6 @@ import com.theoplayer.android.api.source.SourceDescription;
 import com.theoplayer.android.api.source.TypedSource;
 import com.theoplayer.sample.ui.pip.databinding.ActivityPlayerBinding;
 
-import static com.theoplayer.android.api.source.SourceDescription.Builder.sourceDescription;
-import static com.theoplayer.android.api.source.TypedSource.Builder.typedSource;
-
 public class PlayerActivity extends AppCompatActivity {
 
     private static final String TAG = PlayerActivity.class.getSimpleName();
@@ -101,11 +98,13 @@ public class PlayerActivity extends AppCompatActivity {
         viewBinding.theoPlayerView.getSettings().setFullScreenOrientationCoupled(true);
 
         // Creating a TypedSource builder that defines the location of a single stream source.
-        TypedSource.Builder typedSource = typedSource(getString(R.string.defaultSourceUrl));
+        TypedSource.Builder typedSource = TypedSource.Builder
+                .typedSource(getString(R.string.defaultSourceUrl));
 
         // Creating a SourceDescription builder that contains the settings to be applied as a new
         // THEOplayer source.
-        SourceDescription.Builder sourceDescription = sourceDescription(typedSource.build())
+        SourceDescription.Builder sourceDescription = SourceDescription.Builder
+                .sourceDescription(typedSource.build())
                 .poster(getString(R.string.defaultPosterUrl));
 
         // Configuring THEOplayer with defined SourceDescription object.
