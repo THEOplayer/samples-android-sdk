@@ -1,5 +1,11 @@
 # THEOplayer Android Reference Apps
 
+## License
+
+This projects falls under the license as defined in https://github.com/THEOplayer/license-and-disclaimer.
+
+## Introduction
+
 In order to get a common understanding of how the THEOplayer SDKs are to be used, we will include
 rich example apps. These apps will have following characteristics:
 
@@ -48,8 +54,3 @@ over a single sample app showing all different use cases.
 
 The DRM streams are provided by our Partner: [EZ DRM](https://ezdrm.com/) and hold all the rights
 for the content. These streams are DRM protected and cannot be used for any other purposes.
-
-
-## License
-
-This project is licensed under the BSD 3 Clause License - see the [LICENSE](./LICENSE) file for details.
