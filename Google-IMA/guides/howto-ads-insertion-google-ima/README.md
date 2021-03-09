@@ -11,6 +11,7 @@ app all URLs are defined as an Android resource, but they can be inlined as well
 
 ## Table of Contents
 
+  * [Include the IMA SDK](#include-the-ima-sdk)
   * [Enabling Google IMA Integration]
   * [Injecting VAST Ads]
     * [Linear Pre-Roll Ad]
@@ -21,6 +22,13 @@ app all URLs are defined as an Android resource, but they can be inlined as well
   * [Listening to Ad Related Events]
   * [Summary]
 
+
+## Include the IMA SDK
+
+You must include the native Google IMA Android SDK.
+
+* You can include this through Gradle, as demonstrated by the dependencies `app/build.gradle`.
+* You can manually download and install the Google IMA Android SDK, as described at [https://github.com/googleads/googleads-ima-android/releases](https://github.com/googleads/googleads-ima-android/releases).
 
 ## Enabling Google IMA Integration
 
