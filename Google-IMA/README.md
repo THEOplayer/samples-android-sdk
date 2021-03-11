@@ -35,8 +35,10 @@ THEOplayer or Android Studio feel free to check related guides:
 
    Please check [THEOplayer How To's - THEOplayer Android SDK Integration] guide for more information
    about integrating THEOplayer Android SDK.
+   
+3. Confirm that `app/build.gradle` has the Google IMA Android SDK as one of its dependencies.
 
-3. Open _**THEO Google IMA**_ application in Android Studio.
+4. Open _**THEO Google IMA**_ application in Android Studio.
 
    For more information about installing Android Studio please check
    [THEO Knowledge Base - Android Studio Setup] guide.
@@ -45,7 +47,7 @@ THEOplayer or Android Studio feel free to check related guides:
    select **File > Sync Project with Gradle Files** menu item to do it manually. Please note, that
    in very rare cases it will be required to synchronize project twice.
 
-4. Select **Run > Run 'app'** menu item to run application on a device selected by default.
+5. Select **Run > Run 'app'** menu item to run application on a device selected by default.
 
    To change the device please select **Run > Select Device...** menu item. For more information
    about working with Android devices please check [THEO Knowledge Base - Virtual and Physical Devices]
