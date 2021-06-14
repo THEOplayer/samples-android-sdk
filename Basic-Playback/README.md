@@ -31,7 +31,8 @@ to the activity and running the application.
    `implementation ':theoplayer@aar'` dependency in [app-level build.gradle] file accordingly.
 
    Please check [THEOplayer How To's - THEOplayer Android SDK Integration] guide for more information
-   about integrating THEOplayer Android SDK.
+   about integrating THEOplayer Android SDK, for example on configuring 
+   the `INTERNET` permission and `THEOPLAYER_LICENSE` in `AndroidManifest.xml`.
 
 3. Open _**THEO Basic Playback**_ application in Android Studio.
 
