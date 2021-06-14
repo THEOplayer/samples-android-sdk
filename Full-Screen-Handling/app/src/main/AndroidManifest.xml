@@ -31,6 +31,10 @@
             android:name=".CustomFullScreenActivity"
             android:configChanges="orientation|screenSize" />
 
+        <meta-data
+            android:name="THEOPLAYER_LICENSE"
+            android:value="your_license_here" />
+
     </application>
 
 </manifest>

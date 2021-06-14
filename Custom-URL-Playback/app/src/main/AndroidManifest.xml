@@ -33,6 +33,10 @@
             android:parentActivityName=".SetupActivity"
             android:screenOrientation="portrait" />
 
+        <meta-data
+            android:name="THEOPLAYER_LICENSE"
+            android:value="your_license_here" />
+
     </application>
 
 </manifest>
