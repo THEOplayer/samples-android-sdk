@@ -48,7 +48,7 @@ over a single sample app showing all different use cases.
   * [THEO Custom UI](./Custom-UI/README.md)
   * [THEO Simple OTT](./Simple-OTT/README.md)
   * [THEO Programmable Stream](./Programmable-Stream/README.md)
-
+  * [THEO Verizon](./Verizon-Media/README.md)
 
 ## Streams/Content Rights:
 
