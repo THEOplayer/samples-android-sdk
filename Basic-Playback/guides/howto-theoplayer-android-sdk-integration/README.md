@@ -109,6 +109,7 @@ by pressing the **Sync Now** link on the top right corner (this can be also exec
 
 ![Sync Project with Gradle files](images/sync-now.png "Sync Project with Gradle files")
 
+Note: refer to [https://github.com/THEOplayer/theoplayer-sdk-android](https://github.com/THEOplayer/theoplayer-sdk-android) if you want to use Maven / Gradle / Jitpack instead.
 
 ## Importing JavaDocs and Sources
 
@@ -151,6 +152,25 @@ the **[AndroidManifest.xml]** file:
 
 </manifest>
 ```
+
+Next, you must configure your `THEOPLAYER_LICENSE` in the `AndroidManifest.xml`, as demonstrated by the snippet below.
+
+```xml
+<manifest ... >
+    ...
+    <application>
+        <meta-data
+            android:name="THEOPLAYER_LICENSE"
+            android:value="your_license_here" />
+    </application>
+</manifest>
+```
+
+Don't forget to swap `your_license_here` for your license string.
+Your license string is specified on your Android SDK page at the [THEOplayer Developer Portal](https://portal.theoplayer.com),
+as visualized by the screenshot below.
+
+![](https://cdn.theoplayer.com/images/git/theoplayer-android-sdk-license-string.png)
 
 Next, add the **`THEOplayerView`** to the main activity layout **[activity_player.xml]**.
 
