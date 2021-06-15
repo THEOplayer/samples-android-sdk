@@ -1,18 +1,10 @@
 package com.theoplayer.sample.ui.pip;
 
-import android.app.PictureInPictureParams;
-import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Layout;
-import android.text.SpannableString;
-import android.text.style.AlignmentSpan;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -37,6 +29,8 @@ public class PlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Inflating view and obtaining an instance of the binding class.
+        // Pay attention to the app:pip="true" in the activity_player.xml.
+        // Programmatically this can be achieved by passing a PiPConfiguration in the THEOplayerConfig.
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_player);
 
         // Gathering THEO objects references.
@@ -47,6 +41,11 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Configuring THEOplayer playback with default parameters.
         configureTHEOplayer();
+
+        // When using a chromefull player, you can make use of the pip-putton in the UI (for devices that support PiP)
+        // Otherwise, in the case of chromeless, you can trigger pip using:
+        // viewBinding.theoPlayerView.getPiPManager().enterPiP();
+        // viewBinding.theoPlayerView.getPiPManager().exitPiP();
     }
 
     @Override
@@ -54,41 +53,6 @@ public class PlayerActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.activity_player, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (R.id.pipMenuItem == item.getItemId()) {
-            tryEnterPictureInPictureMode();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
-        if (isInPictureInPictureMode) {
-            getSupportActionBar().hide();
-            viewBinding.theoPlayerView.getSettings().setFullScreenOrientationCoupled(false);
-        } else {
-            getSupportActionBar().show();
-            viewBinding.theoPlayerView.getSettings().setFullScreenOrientationCoupled(true);
-        }
-        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
-    }
-
-    @Override
-    protected void onUserLeaveHint() {
-        tryEnterPictureInPictureMode();
-    }
-
-    private void tryEnterPictureInPictureMode() {
-        if (SUPPORTS_PIP) {
-            enterPictureInPictureMode(new PictureInPictureParams.Builder().build());
-        } else {
-            SpannableString toastMessage = SpannableString.valueOf(getString(R.string.pipNotSupported));
-            toastMessage.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, toastMessage.length(), 0);
-            Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
-        }
     }
 
     private void configureTHEOplayer() {
@@ -130,7 +94,7 @@ public class PlayerActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (SUPPORTS_PIP && !isInPictureInPictureMode()) {
+        if (SUPPORTS_PIP && !viewBinding.theoPlayerView.getPiPManager().isInPiP()) {
             viewBinding.theoPlayerView.onPause();
         }
     }
@@ -138,7 +102,7 @@ public class PlayerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (SUPPORTS_PIP && !isInPictureInPictureMode()) {
+        if (SUPPORTS_PIP && !viewBinding.theoPlayerView.getPiPManager().isInPiP()) {
             viewBinding.theoPlayerView.onResume();
         }
     }
