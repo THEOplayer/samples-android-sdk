@@ -2,8 +2,12 @@ package com.theoplayer.sample.ui.pip;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Layout;
+import android.text.SpannableString;
+import android.text.style.AlignmentSpan;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -86,6 +90,20 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onUserLeaveHint() {
+        tryEnterPictureInPictureMode();
+    }
+
+    private void tryEnterPictureInPictureMode() {
+        if (SUPPORTS_PIP) {
+            viewBinding.theoPlayerView.getPiPManager().enterPiP();
+        } else {
+            SpannableString toastMessage = SpannableString.valueOf(getString(R.string.pipNotSupported));
+            toastMessage.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, toastMessage.length(), 0);
+            Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
+        }
+    }
     // In order to work properly and in sync with the activity lifecycle changes (e.g. device
     // is rotated, new activity is started or app is moved to background) we need to call
     // the "onResume", "onPause" and "onDestroy" methods of the THEOplayerView when the matching
