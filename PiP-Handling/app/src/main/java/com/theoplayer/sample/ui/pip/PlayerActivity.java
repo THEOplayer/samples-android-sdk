@@ -112,17 +112,13 @@ public class PlayerActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (SUPPORTS_PIP && !viewBinding.theoPlayerView.getPiPManager().isInPiP()) {
-            viewBinding.theoPlayerView.onPause();
-        }
+        viewBinding.theoPlayerView.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (SUPPORTS_PIP && !viewBinding.theoPlayerView.getPiPManager().isInPiP()) {
-            viewBinding.theoPlayerView.onResume();
-        }
+        viewBinding.theoPlayerView.onResume();
     }
 
     @Override
