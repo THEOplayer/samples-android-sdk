@@ -7,8 +7,10 @@ import android.text.SpannableString;
 import android.text.style.AlignmentSpan;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -89,6 +91,14 @@ public class PlayerActivity extends AppCompatActivity {
         theoPlayer.addEventListener(PlayerEventTypes.PRESENTATIONMODECHANGE, event -> Log.i(TAG, "Event: PRESENTATION_MODE_CHANGE"));
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.pipMenuItem) {
+            tryEnterPictureInPictureMode();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onUserLeaveHint() {
