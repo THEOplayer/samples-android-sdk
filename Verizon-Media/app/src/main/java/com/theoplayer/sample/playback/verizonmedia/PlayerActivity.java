@@ -32,6 +32,7 @@ import com.theoplayer.android.api.verizonmedia.reponses.VerizonMediaPreplayRespo
 import com.theoplayer.sample.playback.verizonmedia.databinding.ActivityPlayerBinding;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class PlayerActivity extends AppCompatActivity {
@@ -167,8 +168,8 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     private VerizonMediaSource createLiveFairPlayStreamWithAds() {
-        Map<String, String> preplayParameters = new HashMap<>();
-        preplayParameters.put("ad", "cleardashnew");
+        LinkedHashMap<String, String> orderedPreplayParameters = new LinkedHashMap<>();
+        orderedPreplayParameters.put("ad", "cleardashnew");
         VerizonMediaPingConfiguration pingConfiguration = new VerizonMediaPingConfiguration.Builder()
                 .linearAdData(true) // Defaults to true if VerizonMediaAssetType is "CHANNEL" or "EVENT", otherwise false.
                 .adImpressions(false) // Defaults to false
@@ -176,7 +177,7 @@ public class PlayerActivity extends AppCompatActivity {
                 .build();
         VerizonMediaSource verizonMediaSource = new VerizonMediaSource.Builder("3c367669a83b4cdab20cceefac253684")
                 .assetType(VerizonMediaAssetType.CHANNEL)
-                .parameters(preplayParameters)
+                .orderedParameters(orderedPreplayParameters)
                 .ping(pingConfiguration)
                 .contentProtected(true)
                 .build();
@@ -193,12 +194,12 @@ public class PlayerActivity extends AppCompatActivity {
                 "a4c40e2a8d5b46338b09d7f863049675",
                 "bcf7d78c4ff94c969b2668a6edc64278"
         };
-        Map<String, String> preplayParameters = new HashMap<>();
-        preplayParameters.put("ad", "adtest");
-        preplayParameters.put("ad.lib", "15_sec_spots");
+        LinkedHashMap<String, String> orderedPreplayParameters = new LinkedHashMap<>();
+        orderedPreplayParameters.put("ad", "adtest");
+        orderedPreplayParameters.put("ad.lib", "15_sec_spots");
         VerizonMediaSource verizonMediaSource = new VerizonMediaSource.Builder(assetIds)
                 .assetType(VerizonMediaAssetType.ASSET)
-                .parameters(preplayParameters)
+                .orderedParameters(orderedPreplayParameters)
                 .contentProtected(false)
                 .build();
         return verizonMediaSource;
