@@ -28,13 +28,15 @@ landscape orientation. THEOplayer supports such feature.
 
 To allow coupling first Android needs to know that the application is going to handle itself
 `orientation` and `screenSize` changes. To do that please update **`<activity>`** tag in the
-**[AndroidManifest.xml]**, by adding **`android:configChanges`** attribute:
+**[AndroidManifest.xml]**, by adding **`android:configChanges`** attribute.
 
+If you would like for the player to go into a particular orientation in fullscreen,
+use the **`android:screenOrientation`** attribute. For all possible values, refer to the [activity documentation](https://developer.android.com/guide/topics/manifest/activity-element).
 ```xml
 <activity
     android:name=".PlayerActivity"
     android:configChanges="orientation|screenSize"
-    android:screenOrientation="portrait"
+    android:screenOrientation="userLandscape"
     android:theme="@style/TheoTheme.SplashScreen">
 
     <!-- ... -->
@@ -166,6 +168,9 @@ public class CustomFullScreenActivity extends FullScreenActivity {
         // ...
         viewBinding.exitFullScreenButton.setOnClickListener((button) -> onFullScreenExit());
 
+        // Lock fullscreen activity to particular orientation
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+        
         // ...
     }
 
