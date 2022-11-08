@@ -32,6 +32,7 @@ To allow coupling first Android needs to know that the application is going to h
 
 If you would like for the player to go into a particular orientation in fullscreen,
 use the **`android:screenOrientation`** attribute. For all possible values, refer to the [activity documentation](https://developer.android.com/guide/topics/manifest/activity-element).
+If you would like to do this programmatically, use the `fullscreenOrientation`flag as of v4.3.0.
 ```xml
 <activity
     android:name=".PlayerActivity"
@@ -57,6 +58,10 @@ public class PlayerActivity extends AppCompatActivity {
         // The player will go fullscreen when the device is rotated to landscape
         // and will also exit fullscreen when the device is rotated back to portrait.
         viewBinding.theoPlayerView.getSettings().setFullScreenOrientationCoupled(true);
+
+        // Always go into a particular orientation when in fullscreen. (as of v4.3.0)
+        // For all possible values see `ScreenOrientation`.
+        viewBinding.theoPlayerView.getSettings().setFullScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
 
         // ...
     }
@@ -169,6 +174,7 @@ public class CustomFullScreenActivity extends FullScreenActivity {
         viewBinding.exitFullScreenButton.setOnClickListener((button) -> onFullScreenExit());
 
         // Lock fullscreen activity to particular orientation, not required if you already specify it in the manifest.
+        // Note: If you only have a custom activity for the orientation logic, use setFullScreenOrientation(...) instead.
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
         
         // ...
