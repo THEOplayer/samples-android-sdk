@@ -38,5 +38,24 @@
         "author": "THEOplayer"
       }
     }
+  },
+  {
+    "name": "soundhelix",
+    "source": {
+      "sources": [
+        {
+          "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+          "type": "audio/mpeg"
+        }
+      ],
+      "metadata": {
+        "title": "SoundHelix Song 1",
+        "displaySubtitle": "MP3 example",
+        "mediaId": "stream03",
+        "mediaUri": "https://theoplayer.com",
+        "album": "THEOplayer test streams",
+        "author": "T. Schürger"
+      }
+    }
   }
 ]
