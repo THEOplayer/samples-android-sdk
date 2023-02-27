@@ -43,5 +43,5 @@ dependencies {
 
     // THEOplayer required dependencies.
     implementation "com.theoplayer.theoplayer-sdk-android:unified:$sdkVersion"
-    implementation "com.theoplayer.theoplayer-sdk-android:mediasession:$sdkVersion"
+    implementation "com.theoplayer.android-connector:mediasession:$sdkVersion"
 }
