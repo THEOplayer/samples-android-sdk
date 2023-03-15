@@ -11,8 +11,9 @@ import com.theoplayer.android.api.source.TypedSource
 import com.theoplayer.sample.playback.basic.databinding.ActivityPlayerBinding
 
 class PlayerActivity : AppCompatActivity() {
-    private var viewBinding: ActivityPlayerBinding? = null
-    private var theoPlayer: Player? = null
+    private lateinit var viewBinding: ActivityPlayerBinding
+    private lateinit var theoPlayer: Player
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.TheoTheme_Base)
         super.onCreate(savedInstanceState)
@@ -34,7 +35,7 @@ class PlayerActivity : AppCompatActivity() {
         // Coupling the orientation of the device with the fullscreen state.
         // The player will go fullscreen when the device is rotated to landscape
         // and will also exit fullscreen when the device is rotated back to portrait.
-        viewBinding!!.theoPlayerView.settings.isFullScreenOrientationCoupled = true
+        viewBinding.theoPlayerView.settings.isFullScreenOrientationCoupled = true
 
         // Creating a TypedSource builder that defines the location of a single stream source.
         val typedSource = TypedSource.Builder(getString(R.string.defaultSourceUrl))
@@ -45,10 +46,10 @@ class PlayerActivity : AppCompatActivity() {
             .poster(getString(R.string.defaultPosterUrl))
 
         // Configuring THEOplayer with defined SourceDescription object.
-        theoPlayer!!.source = sourceDescription.build()
+        theoPlayer.source = sourceDescription.build()
 
         // Configuring video to play whenever THEOplayer is visible to a User.
-        theoPlayer!!.isAutoplay = true
+        theoPlayer.isAutoplay = true
 
         // Adding listeners to THEOplayer basic playback events.
         theoPlayer!!.addEventListener(PlayerEventTypes.PLAY) { event: PlayEvent? ->
@@ -89,17 +90,17 @@ class PlayerActivity : AppCompatActivity() {
     // activity methods are called.
     override fun onPause() {
         super.onPause()
-        viewBinding!!.theoPlayerView.onPause()
+        viewBinding.theoPlayerView.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-        viewBinding!!.theoPlayerView.onResume()
+        viewBinding.theoPlayerView.onResume()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        viewBinding!!.theoPlayerView.onDestroy()
+        viewBinding.theoPlayerView.onDestroy()
     }
 
     companion object {
