@@ -29,6 +29,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Gathering THEO objects references.
         theoPlayer = viewBinding.theoPlayerView.getPlayer();
+        theoPlayer.setAutoplay(true);
 
         // Configuring action bar.
         setSupportActionBar(viewBinding.toolbarLayout.toolbar);
