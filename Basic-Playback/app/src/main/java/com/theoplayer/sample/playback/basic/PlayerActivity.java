@@ -44,13 +44,11 @@ public class PlayerActivity extends AppCompatActivity {
         viewBinding.theoPlayerView.getSettings().setFullScreenOrientationCoupled(true);
 
         // Creating a TypedSource builder that defines the location of a single stream source.
-        TypedSource.Builder typedSource = TypedSource.Builder
-                .typedSource(getString(R.string.defaultSourceUrl));
+        TypedSource.Builder typedSource = new TypedSource.Builder(getString(R.string.defaultSourceUrl));
 
         // Creating a SourceDescription builder that contains the settings to be applied as a new
         // THEOplayer source.
-        SourceDescription.Builder sourceDescription = SourceDescription.Builder
-                .sourceDescription(typedSource.build())
+        SourceDescription.Builder sourceDescription = new SourceDescription.Builder(typedSource.build())
                 .poster(getString(R.string.defaultPosterUrl));
 
         // Configuring THEOplayer with defined SourceDescription object.
