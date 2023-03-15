@@ -29,7 +29,6 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Gathering THEO objects references.
         theoPlayer = viewBinding.theoPlayerView.getPlayer();
-        theoPlayer.setAutoplay(true);
 
         // Configuring action bar.
         setSupportActionBar(viewBinding.toolbarLayout.toolbar);
@@ -54,6 +53,9 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Configuring THEOplayer with defined SourceDescription object.
         theoPlayer.setSource(sourceDescription.build());
+
+        // Configuring video to play whenever THEOplayer is visible to a User.
+        theoPlayer.setAutoplay(true);
 
         // Adding listeners to THEOplayer basic playback events.
         theoPlayer.addEventListener(PlayerEventTypes.PLAY, event -> Log.i(TAG, "Event: PLAY"));
