@@ -52,35 +52,20 @@ class PlayerActivity : AppCompatActivity() {
         theoPlayer.isAutoplay = true
 
         // Adding listeners to THEOplayer basic playback events.
-        theoPlayer!!.addEventListener(PlayerEventTypes.PLAY) { event: PlayEvent? ->
-            Log.i(
-                TAG,
-                "Event: PLAY"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.PLAY) {
+            Log.i(TAG, "Event: PLAY")
         }
-        theoPlayer!!.addEventListener(PlayerEventTypes.PLAYING) { event: PlayingEvent? ->
-            Log.i(
-                TAG,
-                "Event: PLAYING"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.PLAYING) {
+            Log.i(TAG, "Event: PLAYING")
         }
-        theoPlayer!!.addEventListener(PlayerEventTypes.PAUSE) { event: PauseEvent? ->
-            Log.i(
-                TAG,
-                "Event: PAUSE"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.PAUSE) {
+            Log.i(TAG, "Event: PAUSE")
         }
-        theoPlayer!!.addEventListener(PlayerEventTypes.ENDED) { event: EndedEvent? ->
-            Log.i(
-                TAG,
-                "Event: ENDED"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.ENDED) {
+            Log.i(TAG, "Event: ENDED")
         }
-        theoPlayer!!.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
-            Log.i(
-                TAG,
-                "Event: ERROR, error=" + event.errorObject
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
+            Log.i(TAG, "Event: ERROR, error=" + event.errorObject)
         }
     }
 
