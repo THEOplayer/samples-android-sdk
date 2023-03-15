@@ -17,6 +17,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
 
         // Attaching project 'libs' folder as a flatRepo allows importing library
         // as a regular artifact, not as a file.
