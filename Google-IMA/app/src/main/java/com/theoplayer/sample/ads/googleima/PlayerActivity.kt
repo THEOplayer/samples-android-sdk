@@ -17,8 +17,8 @@ import com.theoplayer.android.api.source.addescription.GoogleImaAdDescription
 import com.theoplayer.sample.ads.googleima.databinding.ActivityPlayerBinding
 
 class PlayerActivity : AppCompatActivity() {
-    private var viewBinding: ActivityPlayerBinding? = null
-    private var theoPlayer: Player? = null
+    private lateinit var viewBinding: ActivityPlayerBinding
+    private lateinit var theoPlayer: Player
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.TheoTheme_Base)
         super.onCreate(savedInstanceState)
@@ -40,13 +40,13 @@ class PlayerActivity : AppCompatActivity() {
 
         // Creating a GoogleImaIntegration through the GoogleImaIntegrationFactory,
         // and adding it to your player instance:
-        val imaIntegration = createGoogleImaIntegration(viewBinding!!.theoPlayerView)
-        theoPlayer!!.addIntegration(imaIntegration)
+        val imaIntegration = createGoogleImaIntegration(viewBinding.theoPlayerView)
+        theoPlayer.addIntegration(imaIntegration)
 
         // Coupling the orientation of the device with the fullscreen state.
         // The player will go fullscreen when the device is rotated to landscape
         // and will also exit fullscreen when the device is rotated back to portrait.
-        viewBinding!!.theoPlayerView.settings.isFullScreenOrientationCoupled = true
+        viewBinding.theoPlayerView.settings.isFullScreenOrientationCoupled = true
 
         // Creating a TypedSource builder that defines the location of a single stream source.
         val typedSource = TypedSource.Builder(getString(R.string.defaultSourceUrl))
@@ -78,59 +78,37 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         // Configuring THEOplayer with defined SourceDescription object.
-        theoPlayer!!.source = sourceDescription.build()
+        theoPlayer.source = sourceDescription.build()
 
         // Configuring video to play whenever THEOplayer is visible to a User.
-        theoPlayer!!.isAutoplay = true
+        theoPlayer.isAutoplay = true
 
         // Adding listeners to THEOplayer basic playback events.
-        theoPlayer!!.addEventListener(PlayerEventTypes.PLAY) { event: PlayEvent? ->
-            Log.i(
-                TAG,
-                "Event: PLAY"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.PLAY) {
+            Log.i(TAG,"Event: PLAY")
         }
-        theoPlayer!!.addEventListener(PlayerEventTypes.PLAYING) { event: PlayingEvent? ->
-            Log.i(
-                TAG,
-                "Event: PLAYING"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.PLAYING) {
+            Log.i(TAG, "Event: PLAYING")
         }
-        theoPlayer!!.addEventListener(PlayerEventTypes.PAUSE) { event: PauseEvent? ->
-            Log.i(
-                TAG,
-                "Event: PAUSE"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.PAUSE) {
+            Log.i(TAG, "Event: PAUSE")
         }
-        theoPlayer!!.addEventListener(PlayerEventTypes.ENDED) { event: EndedEvent? ->
-            Log.i(
-                TAG,
-                "Event: ENDED"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.ENDED) {
+            Log.i(TAG, "Event: ENDED")
         }
-        theoPlayer!!.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
-            Log.i(
-                TAG,
-                "Event: ERROR, error=" + event.errorObject
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
+            Log.i(TAG,"Event: ERROR, error=" + event.errorObject)
         }
 
         // Adding listeners to THEOplayer basic ad events.
-        theoPlayer!!.ads.addEventListener(AdsEventTypes.AD_BEGIN) { event: AdBeginEvent ->
-            Log.i(
-                TAG, "Event: AD_BEGIN, ad=" + event.ad
-            )
+        theoPlayer.ads.addEventListener(AdsEventTypes.AD_BEGIN) { event: AdBeginEvent ->
+            Log.i(TAG, "Event: AD_BEGIN, ad=" + event.ad)
         }
-        theoPlayer!!.ads.addEventListener(AdsEventTypes.AD_END) { event: AdEndEvent ->
-            Log.i(
-                TAG,
-                "Event: AD_END, ad=" + event.ad
-            )
+        theoPlayer.ads.addEventListener(AdsEventTypes.AD_END) { event: AdEndEvent ->
+            Log.i(TAG,"Event: AD_END, ad=" + event.ad)
         }
-        theoPlayer!!.ads.addEventListener(AdsEventTypes.AD_ERROR) { event: AdErrorEvent ->
-            Log.i(
-                TAG, "Event: AD_ERROR, error=" + event.error
-            )
+        theoPlayer.ads.addEventListener(AdsEventTypes.AD_ERROR) { event: AdErrorEvent ->
+            Log.i(TAG, "Event: AD_ERROR, error=" + event.error)
         }
     }
 
@@ -140,17 +118,17 @@ class PlayerActivity : AppCompatActivity() {
     // activity methods are called.
     override fun onPause() {
         super.onPause()
-        viewBinding!!.theoPlayerView.onPause()
+        viewBinding.theoPlayerView.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-        viewBinding!!.theoPlayerView.onResume()
+        viewBinding.theoPlayerView.onResume()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        viewBinding!!.theoPlayerView.onDestroy()
+        viewBinding.theoPlayerView.onDestroy()
     }
 
     companion object {
