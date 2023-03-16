@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion '29.0.3'
     defaultConfig {
         applicationId 'com.theoplayer.sample.ads.googleima'
         minSdkVersion 16
@@ -21,6 +20,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    namespace 'com.theoplayer.sample.ads.googleima'
 }
 
 dependencies {
