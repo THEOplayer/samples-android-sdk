@@ -31,6 +31,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Gathering THEO objects references.
         theoPlayer = viewBinding.theoPlayerView.getPlayer();
+        theoPlayer.setAutoplay(true);
 
         // Configuring action bar.
         setSupportActionBar(viewBinding.toolbarLayout.toolbar);
@@ -46,13 +47,11 @@ public class PlayerActivity extends AppCompatActivity {
         viewBinding.theoPlayerView.getSettings().setFullScreenOrientationCoupled(true);
 
         // Creating a TypedSource builder that defines the location of a single stream source.
-        TypedSource.Builder typedSource = TypedSource.Builder
-                .typedSource(getString(R.string.defaultSourceUrl));
+        TypedSource.Builder typedSource = new TypedSource.Builder(getString(R.string.defaultSourceUrl));
 
         // Creating a SourceDescription builder that contains the settings to be applied as a new
         // THEOplayer source.
-        SourceDescription.Builder sourceDescription = SourceDescription.Builder
-                .sourceDescription(typedSource.build())
+        SourceDescription.Builder sourceDescription = new SourceDescription.Builder(typedSource.build())
                 .poster(getString(R.string.defaultPosterUrl));
 
         // VMAP standard defines ads playlist and contains ads time offset definitions. To avoid
@@ -60,33 +59,28 @@ public class PlayerActivity extends AppCompatActivity {
         if (getResources().getBoolean(R.bool.loadVmapAds)) {
             sourceDescription.ads(
                     // Inserting linear pre-roll, mid-roll (15s) and post-roll ads defined with VMAP standard.
-                    GoogleImaAdDescription.Builder
-                            .googleImaAdDescription(getString(R.string.defaultVmapAdUrl))
+                    new GoogleImaAdDescription.Builder(getString(R.string.defaultVmapAdUrl))
                             .build()
             );
         } else {
             sourceDescription.ads(
                     // Inserting linear pre-roll ad defined with VAST standard.
-                    GoogleImaAdDescription.Builder
-                            .googleImaAdDescription(getString(R.string.defaultVastLinearPreRollAdUrl))
+                    new GoogleImaAdDescription.Builder(getString(R.string.defaultVastLinearPreRollAdUrl))
                             .timeOffset("start")
                             .build(),
 
                     // Inserting nonlinear ad defined with VAST standard.
-                    GoogleImaAdDescription.Builder
-                            .googleImaAdDescription(getString(R.string.defaultVastNonLinearAdUrl))
+                    new GoogleImaAdDescription.Builder(getString(R.string.defaultVastNonLinearAdUrl))
                             .timeOffset("start")
                             .build(),
 
                     // Inserting skippable linear mid-roll (15s) ad defined with VAST standard.
-                    GoogleImaAdDescription.Builder
-                            .googleImaAdDescription(getString(R.string.defaultVastLinearMidRollAdUrl))
+                    new GoogleImaAdDescription.Builder(getString(R.string.defaultVastLinearMidRollAdUrl))
                             .timeOffset("15")
                             .build(),
 
                     // Inserting mid-roll (30s) ad defined with VPAID standard.
-                    GoogleImaAdDescription.Builder
-                            .googleImaAdDescription(getString(R.string.defaultVpaidAdUrl))
+                    new GoogleImaAdDescription.Builder(getString(R.string.defaultVpaidAdUrl))
                             .timeOffset("30")
                             .build()
             );
