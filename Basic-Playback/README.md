@@ -17,9 +17,11 @@ to the activity and running the application.
 
 ### Using THEOplayer distribution from public repository
 
-This project is already set up to use THEOplayer from jitpack.io so you need to check it out and build. Below is a short explanation about how to include HEOplayer in the project. For the more comprehensive explanation please refer to [THEOplayer documentation].
+This project is already set up to use THEOplayer from jitpack.io so you need to check it out and build. 
+Below is a short explanation about how to include THEOplayer in the project. 
+For the more comprehensive explanation please refer to [THEOplayer documentation].
 
-THEOplayer is hosted on jitpack.io, so you have to include it to the build.gradle file on the project level:
+To use THEOplayer from jitpack.io, you need to include it in the build.gradle file on the project level:
 
     allprojects {
         repositories {
@@ -29,7 +31,7 @@ THEOplayer is hosted on jitpack.io, so you have to include it to the build.gradl
         }
     }
 
-Then to use the library you should specify the following in the module's level build gradle file:
+Then, to use the library, specify the following in the module's level build.gradle file:
 
     dependencies {
         ...
@@ -39,6 +41,8 @@ Then to use the library you should specify the following in the module's level b
     }
 
 ### Using library downloaded from [THEO Portal]
+
+To use THEOplayer from a library downloaded from THEO Portal, follow these steps:
 
 1. Obtain THEOplayer Android SDK and unzip it.
 
