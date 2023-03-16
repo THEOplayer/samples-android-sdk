@@ -17,7 +17,8 @@
             android:name=".PlayerActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/TheoTheme.SplashScreen">
+            android:theme="@style/TheoTheme.SplashScreen"
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
