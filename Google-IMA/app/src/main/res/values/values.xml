@@ -12,4 +12,7 @@
     <string name="defaultVmapAdUrl">https://cdn.theoplayer.com/demos/ads/vmap/single-pre-mid-post-no-skip.xml</string>
 
     <bool name="loadVmapAds">false</bool>
+
+    <!-- Insert THEOplayer license -->
+    <string name="theoplayer_test_license"></string>
 </resources>
