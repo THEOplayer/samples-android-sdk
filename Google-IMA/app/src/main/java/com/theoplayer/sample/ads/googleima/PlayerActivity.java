@@ -41,6 +41,12 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     private void configureTHEOplayer() {
+
+        // Creating a GoogleImaIntegration through the GoogleImaIntegrationFactory,
+        // and adding it to your player instance:
+        GoogleImaIntegration imaIntegration = GoogleImaIntegrationFactory.createGoogleImaIntegration(viewBinding.theoPlayerView);
+        theoPlayer.addIntegration(imaIntegration);
+
         // Coupling the orientation of the device with the fullscreen state.
         // The player will go fullscreen when the device is rotated to landscape
         // and will also exit fullscreen when the device is rotated back to portrait.
