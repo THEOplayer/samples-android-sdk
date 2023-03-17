@@ -62,14 +62,12 @@ class PlayerActivity : AppCompatActivity() {
             sourceDescription.ads( // Inserting linear pre-roll ad defined with VAST standard.
                 GoogleImaAdDescription.Builder(getString(R.string.defaultVastLinearPreRollAdUrl))
                     .timeOffset("start")
-                    .build(),  // Inserting skippable linear mid-roll (15s) ad defined with VAST standard.
+                    .build(),
             )
         }
 
         // Configuring THEOplayer with defined SourceDescription object.
         theoPlayer.source = sourceDescription.build()
-
-        // Configuring video to play whenever THEOplayer is visible to a User.
 
         // Adding listeners to THEOplayer basic playback events.
         theoPlayer.addEventListener(PlayerEventTypes.PLAY) {
