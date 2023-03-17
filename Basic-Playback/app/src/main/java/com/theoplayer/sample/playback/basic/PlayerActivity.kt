@@ -48,9 +48,6 @@ class PlayerActivity : AppCompatActivity() {
         // Configuring THEOplayer with defined SourceDescription object.
         theoPlayer.source = sourceDescription.build()
 
-        // Configuring video to play whenever THEOplayer is visible to a User.
-        theoPlayer.isAutoplay = true
-
         // Adding listeners to THEOplayer basic playback events.
         theoPlayer.addEventListener(PlayerEventTypes.PLAY) {
             Log.i(TAG, "Event: PLAY")

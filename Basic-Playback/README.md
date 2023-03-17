@@ -36,7 +36,7 @@ Then, to use the library, specify the following in the module's level build.grad
     dependencies {
         ...
         // THEOplayer required dependencies.
-        implementation 'com.theoplayer.theoplayer-sdk-android:unified:4.10.0'
+         implementation 'com.theoplayer.theoplayer-sdk-android:basic-minapi21:4.10.0'
         ...
     }
 
