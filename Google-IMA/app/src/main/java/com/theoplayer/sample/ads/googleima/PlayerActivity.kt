@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.theoplayer.android.api.ads.ima.GoogleImaIntegrationFactory.createGoogleImaIntegration
 import com.theoplayer.android.api.event.ads.AdBeginEvent
 import com.theoplayer.android.api.event.ads.AdEndEvent
 import com.theoplayer.android.api.event.ads.AdErrorEvent
 import com.theoplayer.android.api.event.ads.AdsEventTypes
-import com.theoplayer.android.api.event.player.*
+import com.theoplayer.android.api.event.player.ErrorEvent
+import com.theoplayer.android.api.event.player.PlayerEventTypes
 import com.theoplayer.android.api.player.Player
 import com.theoplayer.android.api.source.SourceDescription
 import com.theoplayer.android.api.source.TypedSource
@@ -38,11 +38,6 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun configureTHEOplayer() {
 
-        // Creating a GoogleImaIntegration through the GoogleImaIntegrationFactory,
-        // and adding it to your player instance:
-        val imaIntegration = createGoogleImaIntegration(viewBinding.theoPlayerView)
-        theoPlayer.addIntegration(imaIntegration)
-
         // Coupling the orientation of the device with the fullscreen state.
         // The player will go fullscreen when the device is rotated to landscape
         // and will also exit fullscreen when the device is rotated back to portrait.
@@ -68,12 +63,6 @@ class PlayerActivity : AppCompatActivity() {
                 GoogleImaAdDescription.Builder(getString(R.string.defaultVastLinearPreRollAdUrl))
                     .timeOffset("start")
                     .build(),  // Inserting skippable linear mid-roll (15s) ad defined with VAST standard.
-                GoogleImaAdDescription.Builder(getString(R.string.defaultVastLinearMidRollAdUrl))
-                    .timeOffset("15")
-                    .build(),  // Inserting mid-roll (30s) ad defined with VPAID standard.
-                GoogleImaAdDescription.Builder(getString(R.string.defaultVpaidAdUrl))
-                    .timeOffset("30")
-                    .build()
             )
         }
 
@@ -81,7 +70,6 @@ class PlayerActivity : AppCompatActivity() {
         theoPlayer.source = sourceDescription.build()
 
         // Configuring video to play whenever THEOplayer is visible to a User.
-        theoPlayer.isAutoplay = true
 
         // Adding listeners to THEOplayer basic playback events.
         theoPlayer.addEventListener(PlayerEventTypes.PLAY) {
