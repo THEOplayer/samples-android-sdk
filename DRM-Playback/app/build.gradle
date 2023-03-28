@@ -25,9 +25,10 @@ android {
 
 dependencies {
     implementation 'com.google.android.material:material:1.8.0'
+    // Remote THEOplayer required dependencies
     implementation 'com.theoplayer.theoplayer-sdk-android:unified:4.10.0'
 
-    // THEOplayer required dependencies.
+    // Local THEOplayer required dependencies.
 //    implementation ':theoplayer@aar'
     implementation 'com.google.code.gson:gson:2.8.9'
 }
