@@ -12,4 +12,6 @@
     <string name="defaultClearSourceUrl">https://cdn.theoplayer.com/video/elephants-dream/playlist.m3u8</string>
     <string name="defaultProtectedSourceUrl">https://wvm.ezdrm.com/demo/stream.mpd</string>
     <string name="defaultProtectedLicenseUrl">https://widevine-dash.ezdrm.com/proxy?pX=BF9CEB</string>
+
+    <string name="theoplayer_test_license"></string>
 </resources>
