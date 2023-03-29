@@ -63,18 +63,16 @@ public class PlayerActivity extends AppCompatActivity {
         viewBinding.theoPlayerView.getSettings().setFullScreenOrientationCoupled(true);
 
         // Creating a TypedSource builder that defines the location of a single stream source.
-        TypedSource.Builder typedSource = TypedSource.Builder.typedSource(sourceUrl);
+        TypedSource.Builder typedSource = new TypedSource.Builder(sourceUrl);
 
         if (!TextUtils.isEmpty(licenseUrl)) {
             // Creating a KeySystemConfiguration builder that contains license acquisition URL used
             // during the licensing process with a DRM server.
-            KeySystemConfiguration.Builder keySystemConfig = KeySystemConfiguration.Builder
-                    .keySystemConfiguration(licenseUrl);
+            KeySystemConfiguration.Builder keySystemConfig = new KeySystemConfiguration.Builder(licenseUrl);
 
             // Creating a DRMConfiguration builder that contains license acquisition parameters
             // for integration with a Widevine license server.
-            DRMConfiguration.Builder drmConfiguration = DRMConfiguration.Builder
-                    .widevineDrm(keySystemConfig.build());
+            DRMConfiguration.Builder drmConfiguration = new DRMConfiguration.Builder().widevine(keySystemConfig.build());
 
             // Applying Widevine DRM parameters to the configured TypedSource builder.
             typedSource.drm(drmConfiguration.build());
@@ -82,8 +80,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Creating a SourceDescription builder that contains the settings to be applied as a new
         // THEOplayer source.
-        SourceDescription.Builder sourceDescription = SourceDescription.Builder
-                .sourceDescription(typedSource.build());
+        SourceDescription.Builder sourceDescription = new SourceDescription.Builder(typedSource.build());
 
         // Configuring THEOplayer with defined SourceDescription object to be played automatically.
         theoPlayer.setSource(sourceDescription.build());
@@ -94,11 +91,11 @@ public class PlayerActivity extends AppCompatActivity {
         theoPlayer.addEventListener(PlayerEventTypes.PLAYING, event -> Log.i(TAG, "Event: PLAYING"));
         theoPlayer.addEventListener(PlayerEventTypes.PAUSE, event -> Log.i(TAG, "Event: PAUSE"));
         theoPlayer.addEventListener(PlayerEventTypes.ENDED, event -> Log.i(TAG, "Event: ENDED"));
-        theoPlayer.addEventListener(PlayerEventTypes.ERROR, event -> Log.i(TAG, "Event: ERROR, error=" + event.getError()));
+        theoPlayer.addEventListener(PlayerEventTypes.ERROR, event -> Log.i(TAG, "Event: ERROR, error=" + event.getErrorObject()));
 
         // Adding listeners to THEOplayer content protection events.
         theoPlayer.addEventListener(PlayerEventTypes.CONTENTPROTECTIONSUCCESS, event -> Log.i(TAG, "Event: CONTENT_PROTECTION_SUCCESS, mediaTrackType=" + event.getMediaTrackType()));
-        theoPlayer.addEventListener(PlayerEventTypes.CONTENTPROTECTIONERROR, event -> Log.i(TAG, "Event: CONTENT_PROTECTION_ERROR, error=" + event.getError()));
+        theoPlayer.addEventListener(PlayerEventTypes.CONTENTPROTECTIONERROR, event -> Log.i(TAG, "Event: CONTENT_PROTECTION_ERROR, error=" + event.getErrorObject()));
     }
 
 
