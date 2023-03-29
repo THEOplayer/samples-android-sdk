@@ -82,8 +82,8 @@ class SetupActivity : AppCompatActivity() {
     }
 
     private fun changeDefaultValueForTextInput(textInput: TextView, defaultValueId: Int) {
-        val currentDefaultValue = textInput.tag as CharSequence
-        val newDefaultValue = textInput.getTag(defaultValueId) as CharSequence
+        val currentDefaultValue = textInput.tag as CharSequence?
+        val newDefaultValue = textInput.getTag(defaultValueId) as CharSequence?
 
         // Clearing currently displayed value if equal to default value.
         if (TextUtils.equals(textInput.text, currentDefaultValue)) {
@@ -95,7 +95,7 @@ class SetupActivity : AppCompatActivity() {
     }
 
     private fun changeDefaultValueVisibilityForTextInput(textInput: TextView) {
-        val defaultValue = textInput.tag as CharSequence
+        val defaultValue = textInput.tag as CharSequence?
         // Default value is displayed if text field is empty and not focused.
         if (TextUtils.equals(textInput.text, if (textInput.isFocused) defaultValue else "")) {
             textInput.text = if (textInput.isFocused) "" else defaultValue
@@ -104,9 +104,9 @@ class SetupActivity : AppCompatActivity() {
 
     private fun onPlay() {
         val sourceUrl: CharSequence? = viewBinding.sourceUrlTextInput.text
-        val defaultSourceUrl = viewBinding.sourceUrlTextInput.tag as String
+        val defaultSourceUrl = viewBinding.sourceUrlTextInput.tag as String?
         val licenseUrl: CharSequence? = viewBinding.licenseUrlTextInput.text
-        val defaultLicenseUrl = viewBinding.licenseUrlTextInput.tag as String
+        val defaultLicenseUrl = viewBinding.licenseUrlTextInput.tag as String?
         play(
             this,
             if (TextUtils.isEmpty(sourceUrl)) defaultSourceUrl else sourceUrl.toString(),

@@ -34,8 +34,8 @@ class PlayerActivity : AppCompatActivity() {
 
         // Configuring THEOplayer playback with parameters from intent.
         configureTHEOplayer(
-            intent.getStringExtra(PLAYER_PARAM__SOURCE_URL)!!,
-            intent.getStringExtra(PLAYER_PARAM__LICENSE_URL)!!
+            intent.getStringExtra(PLAYER_PARAM__SOURCE_URL) ?: "",
+            intent.getStringExtra(PLAYER_PARAM__LICENSE_URL) ?: ""
         )
     }
 
