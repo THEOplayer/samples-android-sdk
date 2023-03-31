@@ -1,82 +1,63 @@
-package com.theoplayer.sample.playback.metadata;
+package com.theoplayer.sample.playback.metadata
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.theoplayer.sample.playback.metadata.PlayerActivity.Companion.play
+import com.theoplayer.sample.playback.metadata.databinding.ActivitySetupBinding
+import com.theoplayer.sample.playback.metadata.databinding.LayoutMetadataBinding
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.theoplayer.sample.playback.metadata.databinding.ActivitySetupBinding;
-import com.theoplayer.sample.playback.metadata.databinding.LayoutMetadataBinding;
-
-
-public class SetupActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.TheoTheme_Base);
-        super.onCreate(savedInstanceState);
+class SetupActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.TheoTheme_Base)
+        super.onCreate(savedInstanceState)
 
         // Inflating view and obtaining an instance of the binding class.
-        ActivitySetupBinding viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_setup);
+        val viewBinding =
+            DataBindingUtil.setContentView<ActivitySetupBinding>(this, R.layout.activity_setup)
 
         // Configuring action bar.
-        setSupportActionBar(viewBinding.toolbarLayout.toolbar);
+        setSupportActionBar(viewBinding.toolbarLayout.toolbar)
 
         // Configure UI behavior and default values.
-        viewBinding.metadataRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        viewBinding.metadataRecyclerView.setAdapter(new MetadataAdapter(new int[]{
+        viewBinding.metadataRecyclerView.layoutManager = LinearLayoutManager(this)
+        viewBinding.metadataRecyclerView.adapter = MetadataAdapter(
+            intArrayOf(
                 R.string.hlsWithID3MetadataName,
                 R.string.hlsWithProgramDateTimeMetadataName,
                 R.string.hlsWithDateRangeMetadataName,
                 R.string.dashWithEmsgMetadataName,
                 R.string.dashWithEventStreamMetadataName
-        }));
+            )
+        )
     }
 
-
-    private class MetadataAdapter extends RecyclerView.Adapter<MetadataAdapter.ViewHolder> {
-
-        private int[] metadataIds;
-
-        MetadataAdapter(int[] metadataIds) {
-            this.metadataIds = metadataIds;
+    private inner class MetadataAdapter constructor(private val metadataIds: IntArray) :
+        RecyclerView.Adapter<MetadataAdapter.ViewHolder>() {
+        override fun getItemCount(): Int {
+            return metadataIds.size
         }
 
-        @Override
-        public int getItemCount() {
-            return metadataIds.length;
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val viewBinding = LayoutMetadataBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+            return ViewHolder(viewBinding)
         }
 
-        @NonNull
-        @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutMetadataBinding viewBinding = LayoutMetadataBinding.inflate(
-                    LayoutInflater.from(parent.getContext()), parent, false);
-            return new ViewHolder(viewBinding);
+        override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+            val metadataId = metadataIds[position]
+            val metadataName = viewHolder.itemView.context.getString(metadataId)
+            viewHolder.viewBinding.metadataNameTextView.text = metadataName
+            viewHolder.itemView.setOnClickListener { view: View -> play(view.context, metadataId) }
         }
 
-        @Override
-        public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-            int metadataId = metadataIds[position];
-            String metadataName = viewHolder.itemView.getContext().getString(metadataId);
-
-            viewHolder.viewBinding.metadataNameTextView.setText(metadataName);
-            viewHolder.itemView.setOnClickListener(view -> PlayerActivity.play(view.getContext(), metadataId));
-        }
-
-        class ViewHolder extends RecyclerView.ViewHolder {
-
-            LayoutMetadataBinding viewBinding;
-
-            ViewHolder(LayoutMetadataBinding viewBinding) {
-                super(viewBinding.getRoot());
-                this.viewBinding = viewBinding;
-            }
-        }
+        inner class ViewHolder(var viewBinding: LayoutMetadataBinding) :
+            RecyclerView.ViewHolder(viewBinding.root)
     }
 }
