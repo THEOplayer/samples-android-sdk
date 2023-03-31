@@ -49,11 +49,11 @@ class PlayerActivity : AppCompatActivity() {
         theoFullScreenManager.fullscreenActivity = CustomFullScreenActivity::class.java
 
         // Creating a TypedSource builder that defines the location of a single stream source.
-        val typedSource = TypedSource.Builder.typedSource(getString(R.string.defaultSourceUrl))
+        val typedSource = TypedSource.Builder(getString(R.string.defaultSourceUrl))
 
         // Creating a SourceDescription builder that contains the settings to be applied as a new
         // THEOplayer source.
-        val sourceDescription = SourceDescription.Builder.sourceDescription(typedSource.build())
+        val sourceDescription = SourceDescription.Builder(typedSource.build())
             .poster(getString(R.string.defaultPosterUrl))
 
         // Configuring THEOplayer with defined SourceDescription object.
