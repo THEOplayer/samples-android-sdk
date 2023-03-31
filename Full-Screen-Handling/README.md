@@ -79,7 +79,8 @@ This project is licensed under the BSD 3 Clause License - see the [LICENSE] file
 [THEOplayer]: https://www.theoplayer.com/
 [THEO Basic Playback]: ../Basic-Playback
 [THEOplayer How To's - Full Screen Management]: guides/howto-full-screen-management/README.md
-[Get Started with THEOplayer]: https://www.theoplayer.com/licensing
+[THEO Portal]: https://portal.theoplayer.com/
+[THEOplayer documentation]: https://docs.theoplayer.com/getting-started/01-sdks/02-android-unified/00-getting-started.md#getting-started-on-unified-android
 [EZ DRM]: https://ezdrm.com/
 
 [//]: # (Project files reference)
