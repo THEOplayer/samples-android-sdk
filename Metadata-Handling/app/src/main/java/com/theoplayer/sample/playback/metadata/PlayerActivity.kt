@@ -74,7 +74,7 @@ class PlayerActivity : AppCompatActivity() {
 
         // Configuring THEOplayer with appropriate stream source.
         configureTHEOplayer(
-            TypedSource.Builder.typedSource(getString(R.string.hlsWithID3MetadataSourceUrl))
+            TypedSource.Builder(getString(R.string.hlsWithID3MetadataSourceUrl))
         )
 
         // Listening to 'addtrack' events to find text track of type 'id3'.
@@ -107,7 +107,7 @@ class PlayerActivity : AppCompatActivity() {
 
         // Configuring THEOplayer with appropriate stream source.
         configureTHEOplayer(
-            TypedSource.Builder.typedSource(getString(R.string.hlsWithProgramDateTimeMetadataSourceUrl))
+            TypedSource.Builder(getString(R.string.hlsWithProgramDateTimeMetadataSourceUrl))
         )
 
         // Listening to 'timeupdate' events that are triggered every time EXT-X-PROGRAM-DATE-TIME
@@ -133,8 +133,7 @@ class PlayerActivity : AppCompatActivity() {
         // Configuring THEOplayer with appropriate stream source. Note that logic that exposes date
         // ranges parsed from HLS manifest needs to be enabled.
         configureTHEOplayer(
-            TypedSource.Builder
-                .typedSource(getString(R.string.hlsWithDateRangeMetadataSourceUrl))
+            TypedSource.Builder(getString(R.string.hlsWithDateRangeMetadataSourceUrl))
                 .hlsDateRange(true)
         )
 
@@ -188,7 +187,7 @@ class PlayerActivity : AppCompatActivity() {
 
         // Configuring THEOplayer with appropriate stream source.
         configureTHEOplayer(
-            TypedSource.Builder.typedSource(getString(R.string.dashWithEmsgMetadataSourceUrl))
+            TypedSource.Builder(getString(R.string.dashWithEmsgMetadataSourceUrl))
         )
 
         // Listening to 'addtrack' events to find text track of type 'emsg'.
@@ -227,7 +226,7 @@ class PlayerActivity : AppCompatActivity() {
 
         // Configuring THEOplayer with appropriate stream source.
         configureTHEOplayer(
-            TypedSource.Builder.typedSource(getString(R.string.dashWithEventStreamMetadataSourceUrl))
+            TypedSource.Builder(getString(R.string.dashWithEventStreamMetadataSourceUrl))
         )
 
         // Listening to 'addtrack' events to find text track of type 'eventstream'.
@@ -249,8 +248,7 @@ class PlayerActivity : AppCompatActivity() {
     private fun configureTHEOplayer(typedSource: TypedSource.Builder) {
         // Creating a SourceDescription builder that contains the settings to be applied as a new
         // THEOplayer source.
-        val sourceDescription = SourceDescription.Builder
-            .sourceDescription(typedSource.build())
+        val sourceDescription = SourceDescription.Builder(typedSource.build())
 
         // Configuring THEOplayer with defined SourceDescription object.
         theoPlayer.source = sourceDescription.build()
@@ -261,7 +259,7 @@ class PlayerActivity : AppCompatActivity() {
         theoPlayer.addEventListener(PlayerEventTypes.PLAYING) { Log.i(TAG, "Event: PLAYING") }
         theoPlayer.addEventListener(PlayerEventTypes.PAUSE) { Log.i(TAG, "Event: PAUSE") }
         theoPlayer.addEventListener(PlayerEventTypes.ENDED) { Log.i(TAG, "Event: ENDED") }
-        theoPlayer.addEventListener<ErrorEvent>(PlayerEventTypes.ERROR) { event: ErrorEvent ->
+        theoPlayer.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
             Log.i(TAG, "Event: ERROR, error=" + event.errorObject)
         }
     }
