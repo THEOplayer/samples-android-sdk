@@ -25,4 +25,6 @@
     <string name="dashWithEventStreamMetadataName">DASH with EventStream</string>
     <string name="dashWithEventStreamMetadataHeader">DASH with EventStream</string>
     <string name="dashWithEventStreamMetadataSourceUrl">https://cdn.theoplayer.com/stream/bbb.mpd</string>
+
+    <string name="theoplayer_test_license"></string>
 </resources>

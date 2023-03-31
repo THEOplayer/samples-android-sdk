@@ -32,7 +32,7 @@
 
         <meta-data
             android:name="THEOPLAYER_LICENSE"
-            android:value="your_license_here" />
+            android:value="@string/theoplayer_test_license" />
 
     </application>
 
