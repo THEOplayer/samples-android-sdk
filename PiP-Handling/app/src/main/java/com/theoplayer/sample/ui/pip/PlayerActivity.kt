@@ -1,52 +1,43 @@
-package com.theoplayer.sample.ui.pip;
+package com.theoplayer.sample.ui.pip
 
-import android.os.Build;
-import android.os.Bundle;
-import android.text.Layout;
-import android.text.SpannableString;
-import android.text.style.AlignmentSpan;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
+import android.os.Build
+import android.os.Bundle
+import android.text.Layout
+import android.text.SpannableString
+import android.text.style.AlignmentSpan
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.theoplayer.android.api.event.player.*
+import com.theoplayer.android.api.pip.PiPType
+import com.theoplayer.android.api.player.Player
+import com.theoplayer.android.api.source.SourceDescription
+import com.theoplayer.android.api.source.TypedSource
+import com.theoplayer.sample.ui.pip.databinding.ActivityPlayerBinding
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
-import com.theoplayer.android.api.event.player.PlayerEventTypes;
-import com.theoplayer.android.api.player.Player;
-import com.theoplayer.android.api.source.SourceDescription;
-import com.theoplayer.android.api.source.TypedSource;
-import com.theoplayer.sample.ui.pip.databinding.ActivityPlayerBinding;
-
-public class PlayerActivity extends AppCompatActivity {
-
-    private static final String TAG = PlayerActivity.class.getSimpleName();
-
-    private static boolean SUPPORTS_PIP = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
-
-    private ActivityPlayerBinding viewBinding;
-    private Player theoPlayer;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.TheoTheme_Base);
-        super.onCreate(savedInstanceState);
+class PlayerActivity : AppCompatActivity() {
+    private lateinit var viewBinding: ActivityPlayerBinding
+    private lateinit var theoPlayer: Player
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.TheoTheme_Base)
+        super.onCreate(savedInstanceState)
 
         // Inflating view and obtaining an instance of the binding class.
         // Pay attention to the app:pip="true" in the activity_player.xml.
         // Programmatically this can be achieved by passing a PiPConfiguration in the THEOplayerConfig.
-        viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_player);
+        viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_player)
 
         // Gathering THEO objects references.
-        theoPlayer = viewBinding.theoPlayerView.getPlayer();
+        theoPlayer = viewBinding.theoPlayerView.player
 
         // Configuring action bar.
-        setSupportActionBar(viewBinding.toolbarLayout.toolbar);
+        setSupportActionBar(viewBinding.toolbarLayout.toolbar)
 
         // Configuring THEOplayer playback with default parameters.
-        configureTHEOplayer();
+        configureTHEOplayer()
 
         // When using a chromefull player, you can make use of the pip-putton in the UI (for devices that support PiP)
         // Otherwise, in the case of chromeless, you can trigger pip using:
@@ -54,87 +45,91 @@ public class PlayerActivity extends AppCompatActivity {
         // viewBinding.theoPlayerView.getPiPManager().exitPiP();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.activity_player, menu);
-        return true;
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.activity_player, menu)
+        return true
     }
 
-    private void configureTHEOplayer() {
+    private fun configureTHEOplayer() {
         // Coupling the orientation of the device with the fullscreen state.
         // The player will go fullscreen when the device is rotated to landscape
         // and will also exit fullscreen when the device is rotated back to portrait.
-        viewBinding.theoPlayerView.getSettings().setFullScreenOrientationCoupled(true);
+        viewBinding.theoPlayerView.settings.isFullScreenOrientationCoupled = true
 
         // Creating a TypedSource builder that defines the location of a single stream source.
-        TypedSource.Builder typedSource = TypedSource.Builder
-                .typedSource(getString(R.string.defaultSourceUrl));
+        val typedSource = TypedSource.Builder(getString(R.string.defaultSourceUrl))
 
         // Creating a SourceDescription builder that contains the settings to be applied as a new
         // THEOplayer source.
-        SourceDescription.Builder sourceDescription = SourceDescription.Builder
-                .sourceDescription(typedSource.build())
-                .poster(getString(R.string.defaultPosterUrl));
+        val sourceDescription = SourceDescription.Builder(typedSource.build())
+            .poster(getString(R.string.defaultPosterUrl))
 
         // Configuring THEOplayer with defined SourceDescription object.
-        theoPlayer.setSource(sourceDescription.build());
+        theoPlayer.source = sourceDescription.build()
 
         // Adding listeners to THEOplayer basic playback events.
-        theoPlayer.addEventListener(PlayerEventTypes.PLAY, event -> Log.i(TAG, "Event: PLAY"));
-        theoPlayer.addEventListener(PlayerEventTypes.PLAYING, event -> Log.i(TAG, "Event: PLAYING"));
-        theoPlayer.addEventListener(PlayerEventTypes.PAUSE, event -> Log.i(TAG, "Event: PAUSE"));
-        theoPlayer.addEventListener(PlayerEventTypes.ENDED, event -> Log.i(TAG, "Event: ENDED"));
-        theoPlayer.addEventListener(PlayerEventTypes.ERROR, event -> Log.i(TAG, "Event: ERROR, error=" + event.getErrorObject()));
+        theoPlayer.addEventListener(PlayerEventTypes.PLAY) { Log.i(TAG, "Event: PLAY") }
+        theoPlayer.addEventListener(PlayerEventTypes.PLAYING) { Log.i(TAG, "Event: PLAYING") }
+        theoPlayer.addEventListener(PlayerEventTypes.PAUSE) { Log.i(TAG, "Event: PAUSE") }
+        theoPlayer.addEventListener(PlayerEventTypes.ENDED) { Log.i(TAG, "Event: ENDED") }
+        theoPlayer.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
+            Log.i(TAG, "Event: ERROR, error=" + event.errorObject)
+        }
 
         // Adding listeners to THEOplayer basic picture-in-picture changes events.
-        theoPlayer.addEventListener(PlayerEventTypes.PRESENTATIONMODECHANGE, event -> Log.i(TAG, "Event: PRESENTATION_MODE_CHANGE"));
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.pipMenuItem) {
-            tryEnterPictureInPictureMode();
+        theoPlayer.addEventListener(PlayerEventTypes.PRESENTATIONMODECHANGE) {
+            Log.i(TAG, "Event: PRESENTATION_MODE_CHANGE")
         }
-        return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onUserLeaveHint() {
-        tryEnterPictureInPictureMode();
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.pipMenuItem) {
+            tryEnterPictureInPictureMode()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
-    private void tryEnterPictureInPictureMode() {
+    override fun onUserLeaveHint() {
+        tryEnterPictureInPictureMode()
+    }
+
+    private fun tryEnterPictureInPictureMode() {
         if (SUPPORTS_PIP) {
-            viewBinding.theoPlayerView.getPiPManager().enterPiP();
+            viewBinding.theoPlayerView.piPManager!!.enterPiP(PiPType.ACTIVITY)
         } else {
-            SpannableString toastMessage = SpannableString.valueOf(getString(R.string.pipNotSupported));
-            toastMessage.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, toastMessage.length(), 0);
-            Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
+            val toastMessage = SpannableString.valueOf(getString(R.string.pipNotSupported))
+            toastMessage.setSpan(
+                AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER),
+                0,
+                toastMessage.length,
+                0
+            )
+            Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show()
         }
     }
+
     // In order to work properly and in sync with the activity lifecycle changes (e.g. device
     // is rotated, new activity is started or app is moved to background) we need to call
     // the "onResume", "onPause" and "onDestroy" methods of the THEOplayerView when the matching
     // activity methods are called.
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        viewBinding.theoPlayerView.onPause();
+    override fun onPause() {
+        super.onPause()
+        viewBinding.theoPlayerView.onPause()
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        viewBinding.theoPlayerView.onResume();
+    override fun onResume() {
+        super.onResume()
+        viewBinding.theoPlayerView.onResume()
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        viewBinding.theoPlayerView.onDestroy();
+    override fun onDestroy() {
+        super.onDestroy()
+        viewBinding.theoPlayerView.onDestroy()
     }
 
+    companion object {
+        private val TAG = PlayerActivity::class.java.simpleName
+        private val SUPPORTS_PIP = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+    }
 }
