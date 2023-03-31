@@ -8,7 +8,7 @@ For quick start, please proceed with the [Quick Start](#quick-start) guide.
 
 ## THEO Docs
 
-This app is an extension of [THEOplayer documentation] application. For help with getting started with
+This app is an extension of [THEO Basic Playback] application. For help with getting started with
 THEOplayer or Android Studio feel free to check related [THEOplayer documentation]
 
 ## Quick Start
