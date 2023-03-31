@@ -6,7 +6,7 @@ android {
     namespace 'com.theoplayer.sample.playback.metadata'
     defaultConfig {
         applicationId 'com.theoplayer.sample.playback.metadata'
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 33
         versionCode 1
         versionName '1.0'
