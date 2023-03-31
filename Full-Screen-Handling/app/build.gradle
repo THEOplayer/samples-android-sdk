@@ -25,12 +25,11 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.android.material:material:1.2.0-alpha05'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
+    implementation 'com.google.android.material:material:1.8.0'
 
     // Remote THEOplayer required dependencies.
     implementation 'com.theoplayer.theoplayer-sdk-android:basic-minapi21:4.11.0'
     // Local THEOplayer required dependencies.
 //    implementation ':theoplayer@aar'
-    implementation 'com.google.code.gson:gson:2.8.5'
+//    implementation 'com.google.code.gson:gson:2.8.5'
 }
