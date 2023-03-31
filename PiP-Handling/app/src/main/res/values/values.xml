@@ -7,4 +7,6 @@
 
     <string name="defaultPosterUrl">https://cdn.theoplayer.com/video/elephants-dream/playlist.png</string>
     <string name="defaultSourceUrl">https://cdn.theoplayer.com/video/elephants-dream/playlist.m3u8</string>
+    <!-- Insert THEOplayer license -->
+    <string name="theoplayer_test_license"></string>
 </resources>
