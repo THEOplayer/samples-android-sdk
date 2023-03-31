@@ -9,7 +9,7 @@ For quick start, please proceed with the [Quick Start](#quick-start) guide.
 ## THEO Docs
 
 This app is an extension of [THEO Basic Playback] application. For help with getting started with
-THEOplayer or Android Studio feel free to check related guides:
+THEOplayer or Android Studio feel free to check [THEOplayer documentation]
 
 
 ## Quick Start
@@ -76,6 +76,8 @@ This project is licensed under the BSD 3 Clause License - see the [LICENSE] file
 [THEOplayer]: https://www.theoplayer.com/
 [THEO Basic Playback]: ../Basic-Playback
 [Get Started with THEOplayer]: https://www.theoplayer.com/licensing
+[THEO Portal]: https://portal.theoplayer.com/
+[THEOplayer documentation]: https://docs.theoplayer.com/getting-started/01-sdks/02-android-unified/00-getting-started.md#getting-started-on-unified-android
 [EZ DRM]: https://ezdrm.com/
 
 [//]: # (Project files reference)
