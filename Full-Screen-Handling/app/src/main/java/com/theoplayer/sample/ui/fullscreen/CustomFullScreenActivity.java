@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.theoplayer.android.api.event.player.PlayerEventTypes;
@@ -53,7 +54,8 @@ public class CustomFullScreenActivity extends FullScreenActivity {
         getDelegate().onDestroy();
     }
 
-    private AppCompatDelegate getDelegate() {
+    @NonNull
+    public AppCompatDelegate getDelegate() {
         if (appCompatDelegate == null) {
             appCompatDelegate = AppCompatDelegate.create(this, null);
         }
