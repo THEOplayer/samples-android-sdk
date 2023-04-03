@@ -6,52 +6,42 @@ to insert advertisement to video playback.
 For quick start, please proceed with the [Quick Start](#quick-start) guide.
 
 
-## Guides
+## THEO Docs
 
-The guides below will provide a detailed explanation about Advertising and Ads insertion by using
+e [THEOplayer documentation] will provide a detailed explanation about Advertising and Ads insertion by using
 Google IMA module.
 
   * [THEOplayer How To's - Ads Insertion with Google IMA]
 
 This app is an extension of [THEO Basic Playback] application. For help with getting started with
-THEOplayer or Android Studio feel free to check related guides:
-
-  * [THEO Knowledge Base - Android Studio Setup]
-  * [THEO Knowledge Base - Virtual and Physical Devices]
-  * [THEOplayer How To's - THEOplayer Android SDK Integration]
+THEOplayer or Android Studio feel free to check related [THEOplayer documentation] 
 
 
 ## Quick Start
+
+### Using library downloaded from [THEO Portal]
+
+To use THEOplayer from a library downloaded from THEO Portal, follow these steps:
 
 1. Obtain THEOplayer Android SDK with **Ads** feature enabled and unzip it.
 
    Please visit [Get Started with THEOplayer] to get required THEOplayer Android SDK.
 
-2. Copy **`theoplayer-android-[name]-[version]-minapi16-release.aar`** file from unzipped SDK into
+2. Copy **`theoplayer-android-[name]-[version]-minapi21-release.aar`** file from unzipped SDK into
    application **[libs]** folder and rename it to **`theoplayer.aar`**.
 
    Project is configured to load SDK with such name, for using other name please change
    `implementation ':theoplayer@aar'` dependency in [app-level build.gradle] file accordingly.
-
-   Please check [THEOplayer How To's - THEOplayer Android SDK Integration] guide for more information
-   about integrating THEOplayer Android SDK.
    
 3. Confirm that `app/build.gradle` has the Google IMA Android SDK as one of its dependencies.
 
 4. Open _**THEO Google IMA**_ application in Android Studio.
-
-   For more information about installing Android Studio please check
-   [THEO Knowledge Base - Android Studio Setup] guide.
 
    Android Studio should automatically synchronize and rebuild project. If this won't happen please
    select **File > Sync Project with Gradle Files** menu item to do it manually. Please note, that
    in very rare cases it will be required to synchronize project twice.
 
 5. Select **Run > Run 'app'** menu item to run application on a device selected by default.
-
-   To change the device please select **Run > Select Device...** menu item. For more information
-   about working with Android devices please check [THEO Knowledge Base - Virtual and Physical Devices]
-   guide.
 
 
 ## Streams/Content Rights:
@@ -68,10 +58,8 @@ This project is licensed under the BSD 3 Clause License - see the [LICENSE] file
 [//]: # (Links and Guides reference)
 [THEOplayer]: https://www.theoplayer.com/
 [THEO Basic Playback]: ../Basic-Playback
-[THEO Knowledge Base - Android Studio Setup]: ../Basic-Playback/guides/knowledgebase-android-studio-setup/README.md
-[THEO Knowledge Base - Virtual and Physical Devices]: ../Basic-Playback/guides/knowledgebase-virtual-and-physical-devices/README.md
-[THEOplayer How To's - THEOplayer Android SDK Integration]: ../Basic-Playback/guides/howto-theoplayer-android-sdk-integration/README.md
-[THEOplayer How To's - Ads Insertion with Google IMA]: guides/howto-ads-insertion-google-ima/README.md
+[THEO Portal]: https://portal.theoplayer.com/
+[THEOplayer documentation]: https://docs.theoplayer.com/getting-started/01-sdks/02-android-unified/00-getting-started.md#getting-started-on-unified-android
 [Get Started with THEOplayer]: https://www.theoplayer.com/licensing
 [EZ DRM]: https://ezdrm.com/
 [Google IMA]: https://developers.google.com/interactive-media-ads/
