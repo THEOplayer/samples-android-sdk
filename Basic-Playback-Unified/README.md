@@ -36,36 +36,9 @@ Then, to use the library, specify the following in the module's level build.grad
     dependencies {
         ...
         // THEOplayer required dependencies.
-         implementation 'com.theoplayer.theoplayer-sdk-android:unified:4.10.0'
+         implementation 'com.theoplayer.theoplayer-sdk-android:unified:4.12.0'
         ...
     }
-
-### Using library downloaded from [THEO Portal]
-
-To use THEOplayer from a library downloaded from THEO Portal, follow these steps:
-
-1. Obtain THEOplayer Android SDK and unzip it.
-
-   Please visit [THEOplayer documentation] to get required THEOplayer Android SDK.
-
-2. Copy **`theoplayer-android-[name]-[version]-minapi21-release.aar`** file from unzipped SDK into
-   application **[libs]** folder and rename it to **`theoplayer.aar`**.
-
-   Project is configured to load SDK with such name, for using other name please change
-   `implementation ':theoplayer@aar'` dependency in [app-level build.gradle] file accordingly.
-
-   Please check [THEOplayer How To's - THEOplayer Android SDK Integration] guide for more information
-   about integrating THEOplayer Android SDK, for example on configuring
-   the `INTERNET` permission and `THEOPLAYER_LICENSE` in `AndroidManifest.xml`.
-
-3. Open _**THEO Basic Playback**_ application in Android Studio.
-
-   Android Studio should automatically synchronize and rebuild project. If this won't happen please
-   select **File > Sync Project with Gradle Files** menu item to do it manually. Please note, that
-   in very rare cases it will be required to synchronize project twice.
-
-4. Select **Run > Run 'app'** menu item to run application on a device selected by default.
-
 
 ## Streams/Content Rights:
 
@@ -80,11 +53,10 @@ This project is licensed under the BSD 3 Clause License - see the [LICENSE] file
 [//]: # (Links and Guides reference)
 [THEOplayer]: https://www.theoplayer.com/
 [THEO Portal]: https://portal.theoplayer.com/
-[THEOplayer documentation]: https://docs.theoplayer.com/getting-started/01-sdks/02-android-unified/00-getting-started.md#getting-started-on-unified-android
+[THEOplayer documentation]: https://docs.theoplayer.com/getting-started/01-sdks/02-android/00-getting-started.md#getting-started-on-android
 [Get Started with THEOplayer]: https://www.theoplayer.com/licensing
 [EZ DRM]: https://ezdrm.com/
 
 [//]: # (Project files reference)
 [LICENSE]: LICENSE
-[libs]: app/libs
 [app-level build.gradle]: app/build.gradle

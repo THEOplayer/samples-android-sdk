@@ -13,5 +13,5 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
     }
 }
-rootProject.name = "Basic-Playback-Unified"
+rootProject.name = "Basic-Playback"
 include ':app'

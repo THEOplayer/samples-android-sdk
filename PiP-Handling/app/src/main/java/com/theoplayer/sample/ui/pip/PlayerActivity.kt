@@ -39,9 +39,9 @@ class PlayerActivity : AppCompatActivity() {
         // Configuring THEOplayer playback with default parameters.
         configureTHEOplayer()
 
-        // When using a chromefull player, you can make use of the pip-putton in the UI (for devices that support PiP)
+        // When using a chromefull player, you can make use of the pip-button in the UI (for devices that support PiP)
         // Otherwise, in the case of chromeless, you can trigger pip using:
-        // viewBinding.theoPlayerView.getPiPManager().enterPiP();
+        // viewBinding.theoPlayerView.getPiPManager().enterPiP(PiPType.ACTIVITY);
         // viewBinding.theoPlayerView.getPiPManager().exitPiP();
     }
 

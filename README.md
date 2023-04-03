@@ -7,7 +7,7 @@ This projects falls under the license as defined in https://github.com/THEOplaye
 ## Introduction
 
 In order to get a common understanding of how the THEOplayer SDKs are to be used, we will include
-rich example apps. These apps will have following characteristics:
+rich example apps. These apps will have the following characteristics:
 
   * Easy to read code, allowing them to be used as samples on how specific features can be integrated.
   * Open source code, providing common ground when investigating issues, allowing the THEO support

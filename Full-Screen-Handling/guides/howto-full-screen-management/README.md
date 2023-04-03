@@ -172,10 +172,6 @@ public class CustomFullScreenActivity extends FullScreenActivity {
         // ...
         viewBinding.exitFullScreenButton.setOnClickListener((button) -> onFullScreenExit());
 
-        // Lock fullscreen activity to particular orientation, not required if you already specify it in the manifest.
-        // Note: If you only have a custom activity for the orientation logic, use setFullScreenOrientation(...) instead.
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
-
         // ...
     }
 
