@@ -5,4 +5,6 @@
     <string name="defaultPosterUrl">https://cdn.theoplayer.com/video/big_buck_bunny/poster.jpg</string>
     <string name="defaultSourceUrl">https://wvm.ezdrm.com/demo/stream.mpd</string>
     <string name="defaultLicenseUrl">https://widevine-dash.ezdrm.com/proxy?pX=BF9CEB</string>
+    <!-- Insert THEOplayer license -->
+    <string name="theoplayer_test_license"></string>
 </resources>
