@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.3'
+    compileSdkVersion 33
+    namespace 'com.theoplayer.sample.ui.pip'
     defaultConfig {
         applicationId 'com.theoplayer.sample.ui.pip'
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 33
         versionCode 1
         versionName '1.0'
     }
@@ -24,9 +25,11 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.android.material:material:1.2.0-alpha05'
+    implementation 'com.google.android.material:material:1.8.0'
 
-    // THEOplayer required dependencies.
-    implementation ':theoplayer@aar'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    // Remote THEOplayer required dependencies.
+    implementation 'com.theoplayer.theoplayer-sdk-android:basic-minapi21:4.11.0'
+    // Local THEOplayer required dependencies.
+//    implementation ':theoplayer@aar'
+    implementation 'com.google.code.gson:gson:2.8.9'
 }

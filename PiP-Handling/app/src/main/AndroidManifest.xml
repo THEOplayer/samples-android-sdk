@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/appName"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -21,7 +20,8 @@
             android:screenOrientation="portrait"
             android:supportsPictureInPicture="true"
             android:theme="@style/TheoTheme.SplashScreen"
-            tools:targetApi="24">
+            tools:targetApi="24"
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +32,7 @@
 
         <meta-data
             android:name="THEOPLAYER_LICENSE"
-            android:value="your_license_here" />
+            android:value="@string/theoplayer_test_license" />
 
     </application>
 
