@@ -39,9 +39,6 @@ class CustomFullScreenActivity : FullScreenActivity() {
         viewBinding.playPauseButton.setOnClickListener { onPlayPauseClick() }
         viewBinding.exitFullScreenButton.setOnClickListener { onFullScreenExit() }
 
-        // Set default orientation
-        //this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
-
         // Configuring THEOplayer.
         theoPlayer.addEventListener(PlayerEventTypes.PLAY) { adjustPlayPauseButtonIcon() }
         theoPlayer.addEventListener(PlayerEventTypes.PAUSE) { adjustPlayPauseButtonIcon() }

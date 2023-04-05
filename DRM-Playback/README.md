@@ -38,7 +38,7 @@ Then, to use the library, specify the following in the module's level build.grad
      dependencies {
          ...
          // THEOplayer required dependencies.
-          implementation 'com.theoplayer.theoplayer-sdk-android:basic-minapi21:4.10.0'
+          implementation 'com.theoplayer.theoplayer-sdk-android:basic-minapi21:4.12.0'
          ...
      }
 
@@ -81,7 +81,7 @@ This project is licensed under the BSD 3 Clause License - see the [LICENSE] file
 [THEOplayer]: https://www.theoplayer.com/
 [THEO Basic Playback]: ../Basic-Playback
 [THEO Portal]: https://portal.theoplayer.com/
-[THEOplayer documentation]: https://docs.theoplayer.com/getting-started/01-sdks/02-android-unified/00-getting-started.md#getting-started-on-unified-android
+[THEOplayer documentation]: https://docs.theoplayer.com/getting-started/01-sdks/02-android/00-getting-started.md#getting-started-on-android
 [Get Started with THEOplayer]: https://www.theoplayer.com/licensing
 [EZ DRM]: https://ezdrm.com/
 

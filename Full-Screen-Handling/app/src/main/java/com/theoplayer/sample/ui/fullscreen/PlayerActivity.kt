@@ -1,5 +1,6 @@
 package com.theoplayer.sample.ui.fullscreen
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -43,6 +44,10 @@ class PlayerActivity : AppCompatActivity() {
         // The player will go fullscreen when the device is rotated to landscape
         // and will also exit fullscreen when the device is rotated back to portrait.
         viewBinding.theoPlayerView.settings.isFullScreenOrientationCoupled = true
+
+        // Always go into a particular orientation when in fullscreen.
+        // For all possible values see `ActivityInfo.SCREEN_ORIENTATION_*`.
+        viewBinding.theoPlayerView.settings.fullscreenOrientation = ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE;
 
         // Setting custom full screen activity which allows to change behavior
         // and/or look of the full screen activity.
