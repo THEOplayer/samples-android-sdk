@@ -9,14 +9,11 @@ For quick start, please proceed with the [Quick Start](#quick-start) guide.
 More information on how to use the [Media Session Connector] can be found on its documentation page and
 the Android developer pages describing [Building a video app] and [Building an audio app].
 
-## Guides
+## THEO Docs
 
-This app is an extension of a [THEO Basic Playback] application. For help with getting started with
-THEOplayer, Android Studio and Android Media Sessions feel free to check related guides:
+This app is an extension of [THEO Basic Playback] application. For help with getting started with
+THEOplayer or Android Studio feel free to check [THEOplayer documentation]
 
-* [THEO Knowledge Base - Android Studio Setup]
-* [THEO Knowledge Base - Virtual and Physical Devices]
-* [THEOplayer How To's - THEOplayer Android SDK Integration]
 
 ## Quick Start
 
@@ -24,10 +21,7 @@ THEOplayer, Android Studio and Android Media Sessions feel free to check related
    the `theoplayer.com` domain. For play-out of other streams first obtain a license at the
    [THEOplayer portal](https://portal.theoplayer.com/).
 
-2. Open _**THEO Custom Ads**_ application in Android Studio.
-
-   For more information about installing Android Studio please check
-   [THEO Knowledge Base - Android Studio Setup] guide.
+2. Open _**Background-Playback**_ application in Android Studio.
 
    Android Studio should automatically synchronize and rebuild project. If this won't happen please
    select **File > Sync Project with Gradle Files** menu item to do it manually. Please note, that
@@ -46,9 +40,7 @@ THEOplayer, Android Studio and Android Media Sessions feel free to check related
 
 4. Select **Run > Run 'app'** menu item to run application on a device selected by default.
 
-   To change the device please select **Run > Select Device...** menu item. For more information
-   about working with Android devices please check [THEO Knowledge Base - Virtual and Physical Devices]
-   guide.
+   To change the device please select **Run > Select Device...** menu item.
 
 ## License
 
@@ -57,11 +49,9 @@ This project is licensed under the BSD 3 Clause License - see the [LICENSE] file
 [//]: # (Links and Guides reference)
 [THEOplayer]: https://www.theoplayer.com/
 [THEO Basic Playback]: ../Basic-Playback
-[THEO Knowledge Base - Android Studio Setup]: ../Basic-Playback/guides/knowledgebase-android-studio-setup/README.md
-[THEO Knowledge Base - Virtual and Physical Devices]: ../Basic-Playback/guides/knowledgebase-virtual-and-physical-devices/README.md
-[THEOplayer How To's - THEOplayer Android SDK Integration]: ../Basic-Playback/guides/howto-theoplayer-android-sdk-integration/README.md
+[THEOplayer documentation]: https://docs.theoplayer.com/getting-started/01-sdks/02-android/00-getting-started.md#getting-started-on-android
 [Get Started with THEOplayer]: https://www.theoplayer.com/licensing
-[Media Session Connector]: https://github.com/THEOplayer/android-connector/tree/main/mediasession/connectors
+[Media Session Connector]: https://github.com/THEOplayer/android-connector/tree/master/connectors/mediasession
 [Android Developer Guides - Working With a MediaSession]: https://developer.android.com/guide/topics/media-apps/working-with-a-media-session
 [Building a video app]: https://developer.android.com/guide/topics/media-apps/video-app/building-a-video-app
 [Building an audio app]: https://developer.android.com/guide/topics/media-apps/audio-app/building-an-audio-app
