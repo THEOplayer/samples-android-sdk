@@ -1,12 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.3'
+    compileSdkVersion 33
     defaultConfig {
         applicationId 'com.theoplayer.sample.ads.basic'
-        minSdkVersion 16
-        targetSdkVersion 29
+        minSdkVersion 21
+        targetSdkVersion 33
         versionCode 1
         versionName '1.0'
     }
@@ -21,12 +20,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    namespace 'com.theoplayer.sample.ads.basic'
 }
 
 dependencies {
-    implementation 'com.google.android.material:material:1.2.0-alpha05'
-
+    implementation 'com.google.android.material:material:1.8.0'
     // THEOplayer required dependencies.
     implementation ':theoplayer@aar'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.9'
 }

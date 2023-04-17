@@ -6,51 +6,37 @@ advertisement to video playback.
 For quick start, please proceed with the [Quick Start](#quick-start) guide.
 
 
-## Guides
+## THEO Docs
 
 The guides below will provide a detailed explanation about Advertising and Ads insertion by using
 the default THEO ads module.
 
-  * [THEO Knowledge Base - Advertisement Overview]
+  * [THEO Knowledge Base - Advertising User Guide]
   * [THEOplayer How To's - Ads Insertion]
 
 This app is an extension of [THEO Basic Playback] application. For help with getting started with
-THEOplayer or Android Studio feel free to check related guides:
-
-  * [THEO Knowledge Base - Android Studio Setup]
-  * [THEO Knowledge Base - Virtual and Physical Devices]
-  * [THEOplayer How To's - THEOplayer Android SDK Integration]
+THEOplayer or Android Studio feel free to check related [THEOplayer documentation]
 
 
 ## Quick Start
 
-1. Obtain THEOplayer Android SDK with **Ads** feature enabled and unzip it.
+1. Obtain THEOplayer Android SDK and unzip it.
 
    Please visit [Get Started with THEOplayer] to get required THEOplayer Android SDK.
 
-2. Copy **`theoplayer-android-[name]-[version]-minapi16-release.aar`** file from unzipped SDK into
+2. Copy **`theoplayer-android-[name]-[version]-minapi21-release.aar`** file from unzipped SDK into
    application **[libs]** folder and rename it to **`theoplayer.aar`**.
 
    Project is configured to load SDK with such name, for using other name please change
    `implementation ':theoplayer@aar'` dependency in [app-level build.gradle] file accordingly.
 
-   Please check [THEOplayer How To's - THEOplayer Android SDK Integration] guide for more information
-   about integrating THEOplayer Android SDK.
-
-3. Open _**THEO Basic Ads**_ application in Android Studio.
-
-   For more information about installing Android Studio please check
-   [THEO Knowledge Base - Android Studio Setup] guide.
+3. Open _**THEO DRM Playback**_ application in Android Studio.
 
    Android Studio should automatically synchronize and rebuild project. If this won't happen please
    select **File > Sync Project with Gradle Files** menu item to do it manually. Please note, that
    in very rare cases it will be required to synchronize project twice.
 
 4. Select **Run > Run 'app'** menu item to run application on a device selected by default.
-
-   To change the device please select **Run > Select Device...** menu item. For more information
-   about working with Android devices please check [THEO Knowledge Base - Virtual and Physical Devices]
-   guide.
 
 
 ## Streams/Content Rights:
@@ -67,10 +53,7 @@ This project is licensed under the BSD 3 Clause License - see the [LICENSE] file
 [//]: # (Links and Guides reference)
 [THEOplayer]: https://www.theoplayer.com/
 [THEO Basic Playback]: ../Basic-Playback
-[THEO Knowledge Base - Android Studio Setup]: ../Basic-Playback/guides/knowledgebase-android-studio-setup/README.md
-[THEO Knowledge Base - Virtual and Physical Devices]: ../Basic-Playback/guides/knowledgebase-virtual-and-physical-devices/README.md
-[THEO Knowledge Base - Advertisement Overview]: https://docs.portal.theoplayer.com/docs/docs/advanced-topics/advertising/advertising-0-advertising-user-guide
-[THEOplayer How To's - THEOplayer Android SDK Integration]: ../Basic-Playback/guides/howto-theoplayer-android-sdk-integration/README.md
+[THEO Knowledge Base - Advertising User Guide]: https://docs.theoplayer.com/knowledge-base/01-advertisement/01-user-guide.md
 [THEOplayer How To's - Ads Insertion]: guides/howto-ads-insertion/README.md
 [Get Started with THEOplayer]: https://www.theoplayer.com/licensing
 [EZ DRM]: https://ezdrm.com/

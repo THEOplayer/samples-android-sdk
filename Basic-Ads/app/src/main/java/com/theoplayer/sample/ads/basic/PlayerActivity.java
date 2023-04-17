@@ -46,13 +46,11 @@ public class PlayerActivity extends AppCompatActivity {
         viewBinding.theoPlayerView.getSettings().setFullScreenOrientationCoupled(true);
 
         // Creating a TypedSource builder that defines the location of a single stream source.
-        TypedSource.Builder typedSource = TypedSource.Builder
-                .typedSource(getString(R.string.defaultSourceUrl));
+        TypedSource.Builder typedSource = new TypedSource.Builder(getString(R.string.defaultSourceUrl));
 
         // Creating a SourceDescription builder that contains the settings to be applied as a new
         // THEOplayer source.
-        SourceDescription.Builder sourceDescription = SourceDescription.Builder
-                .sourceDescription(typedSource.build())
+        SourceDescription.Builder sourceDescription = new SourceDescription.Builder(typedSource.build())
                 .poster(getString(R.string.defaultPosterUrl));
 
         // VMAP standard defines ads playlist and contains ads time offset definitions. To avoid
@@ -60,27 +58,23 @@ public class PlayerActivity extends AppCompatActivity {
         if (getResources().getBoolean(R.bool.loadVmapAds)) {
             sourceDescription.ads(
                     // Inserting linear pre-roll, mid-roll (15s) and post-roll ads defined with VMAP standard.
-                    THEOplayerAdDescription.Builder
-                            .adDescription(getString(R.string.defaultVmapAdUrl))
+                    new THEOplayerAdDescription.Builder(getString(R.string.defaultVmapAdUrl))
                             .build()
             );
         } else {
             sourceDescription.ads(
                     // Inserting linear pre-roll ad defined with VAST standard.
-                    THEOplayerAdDescription.Builder
-                            .adDescription(getString(R.string.defaultVastLinearPreRollAdUrl))
+                    new THEOplayerAdDescription.Builder(getString(R.string.defaultVastLinearPreRollAdUrl))
                             .timeOffset("start")
                             .build(),
 
                     // Inserting nonlinear ad defined with VAST standard.
-                    THEOplayerAdDescription.Builder
-                            .adDescription(getString(R.string.defaultVastNonLinearAdUrl))
+                    new THEOplayerAdDescription.Builder(getString(R.string.defaultVastNonLinearAdUrl))
                             .timeOffset("start")
                             .build(),
 
                     // Inserting skippable linear mid-roll (15s) ad defined with VAST standard.
-                    THEOplayerAdDescription.Builder
-                            .adDescription(getString(R.string.defaultVastLinearMidRollAdUrl))
+                    new THEOplayerAdDescription.Builder(getString(R.string.defaultVastLinearMidRollAdUrl))
                             .timeOffset("15")
                             .skipOffset("5")
                             .build()
@@ -95,7 +89,7 @@ public class PlayerActivity extends AppCompatActivity {
         theoPlayer.addEventListener(PlayerEventTypes.PLAYING, event -> Log.i(TAG, "Event: PLAYING"));
         theoPlayer.addEventListener(PlayerEventTypes.PAUSE, event -> Log.i(TAG, "Event: PAUSE"));
         theoPlayer.addEventListener(PlayerEventTypes.ENDED, event -> Log.i(TAG, "Event: ENDED"));
-        theoPlayer.addEventListener(PlayerEventTypes.ERROR, event -> Log.i(TAG, "Event: ERROR, error=" + event.getError()));
+        theoPlayer.addEventListener(PlayerEventTypes.ERROR, event -> Log.i(TAG, "Event: ERROR, error=" + event.getErrorObject()));
 
         // Adding listeners to THEOplayer basic ad events.
         theoPlayer.getAds().addEventListener(AdsEventTypes.AD_BEGIN, event -> Log.i(TAG, "Event: AD_BEGIN, ad=" + event.getAd()));
