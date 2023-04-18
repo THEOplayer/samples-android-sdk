@@ -111,13 +111,13 @@ public class SetupActivity extends AppCompatActivity {
         String defaultAdUrl = (String) viewBinding.adUrlTextInput.getTag();
 
         String adTimeOffset = (String) viewBinding.adPlacementsGroup.getTag(viewBinding.adPlacementsGroup.getCheckedRadioButtonId());
-        boolean isVmapChecked = R.id.adStandardVmap == viewBinding.adPlacementsGroup.getCheckedRadioButtonId();
+        boolean isVmapChecked = R.id.adStandardVmap == viewBinding.adStandardsGroup.getCheckedRadioButtonId();
 
         PlayerActivity.play(
                 this,
                 TextUtils.isEmpty(sourceUrl) ? defaultSourceUrl : sourceUrl.toString(),
                 TextUtils.isEmpty(adUrl) ? defaultAdUrl : adUrl.toString(),
-                isVmapChecked ? adTimeOffset : null
+                isVmapChecked ? null : adTimeOffset
         );
     }
 
