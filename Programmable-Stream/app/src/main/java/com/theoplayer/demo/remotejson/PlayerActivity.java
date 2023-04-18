@@ -388,7 +388,7 @@ public class PlayerActivity extends AppCompatActivity {
     };
 
     private final EventListener<ErrorEvent> onErrorEventListener = event -> {
-        String msg = String.format(getString(R.string.eventWithError), event.getType(), event.getError());
+        String msg = String.format(getString(R.string.eventWithError), event.getType(), event.getErrorObject());
         eventLog.append(String.format("%s%n", msg));
         Log.i(TAG, msg);
         updatePlayerStateInfo();
