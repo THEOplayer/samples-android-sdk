@@ -159,7 +159,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Listening to 'error' event which indicates that something went wrong.
         theoPlayer.addEventListener(PlayerEventTypes.ERROR, event ->
-                Log.i(TAG, "Event: ERROR, error=" + event.getError())
+                Log.i(TAG, "Event: ERROR, error=" + event.getErrorObject())
         );
     }
 
@@ -178,10 +178,8 @@ public class PlayerActivity extends AppCompatActivity {
             uiVisibilityFlags = uiVisibilityFlags
                     | View.SYSTEM_UI_FLAG_LOW_PROFILE
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                uiVisibilityFlags |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-            }
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         } else {
             // With portrait orientation window (activity) display mode is changed back to default
             // with status, navigation and action bars shown.
