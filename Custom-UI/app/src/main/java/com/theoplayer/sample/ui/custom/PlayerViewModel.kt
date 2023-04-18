@@ -132,9 +132,9 @@ class PlayerViewModel : ViewModel() {
      */
     fun toggleUI() {
         if (java.lang.Boolean.TRUE == isUIRequired.value && canHideUI()) {
-            isUIRequired.setValue(false)
+            isUIRequired.value = (false)
         } else {
-            isUIRequired.setValue(true)
+            isUIRequired.value = true
             scheduleHidingUI()
         }
     }
@@ -265,9 +265,7 @@ class PlayerViewModel : ViewModel() {
      * starts after last user interaction with UI.
      */
     private fun scheduleHidingUI() {
-        if (hideUITask != null) {
-            hideUITask!!.cancel()
-        }
+        hideUITask?.cancel()
         hideUITask = object : TimerTask() {
             override fun run() {
                 if (canHideUI()) {

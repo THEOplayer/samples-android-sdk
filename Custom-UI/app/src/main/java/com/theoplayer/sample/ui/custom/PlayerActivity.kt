@@ -26,8 +26,8 @@ class PlayerActivity : AppCompatActivity() {
         // Inflating view and obtaining an instance of the binding and model classes.
         viewModel = ViewModelProvider(this).get(PlayerViewModel::class.java)
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_player)
-        viewBinding.setLifecycleOwner(this)
-        viewBinding.setViewModel(viewModel)
+        viewBinding.lifecycleOwner = this
+        viewBinding.viewModel = viewModel
 
         // Gathering THEO objects references.
         theoPlayer = viewBinding.theoPlayerView.player
@@ -47,7 +47,7 @@ class PlayerActivity : AppCompatActivity() {
         viewBinding.playerClickableOverlay.setOnClickListener { view: View? -> viewModel.toggleUI() }
 
         // Listening to play/pause button click events to play/pause stream playback.
-        viewBinding.playPauseButton.setOnClickListener { view: View? ->
+        viewBinding.playPauseButton.setOnClickListener {
             if (theoPlayer.isPaused) {
                 theoPlayer.play()
             } else {
@@ -56,19 +56,15 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         // Listening to skipForward button click events to move stream forward by given tine interval.
-        viewBinding.skipForwardButton.setOnClickListener { view: View? ->
+        viewBinding.skipForwardButton.setOnClickListener {
             val skipForwardInSeconds = resources.getInteger(R.integer.skipForwardInSeconds)
-            theoPlayer.requestCurrentTime { currentTime: Double ->
-                theoPlayer.currentTime = currentTime + skipForwardInSeconds
-            }
+            theoPlayer.currentTime = theoPlayer.currentTime + skipForwardInSeconds
         }
 
         // Listening to skipBackward button click events to move stream backward by given tine interval.
-        viewBinding.skipBackwardButton.setOnClickListener { view: View? ->
+        viewBinding.skipBackwardButton.setOnClickListener {
             val skipBackwardInSeconds = resources.getInteger(R.integer.skipBackwardInSeconds)
-            theoPlayer.requestCurrentTime { currentTime: Double ->
-                theoPlayer.currentTime = currentTime - skipBackwardInSeconds
-            }
+            theoPlayer.currentTime = theoPlayer.currentTime - skipBackwardInSeconds
         }
 
         // Listening to slider seeking events to change stream position to selected time interval
@@ -93,13 +89,11 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun configureTHEOplayer() {
         // Creating a TypedSource builder that defines the location of a single stream source.
-        val typedSource = TypedSource.Builder
-            .typedSource(getString(R.string.defaultSourceUrl))
+        val typedSource = TypedSource.Builder(getString(R.string.defaultSourceUrl))
 
         // Creating a SourceDescription builder that contains the settings to be applied as a new
         // THEOplayer source.
-        val sourceDescription = SourceDescription.Builder
-            .sourceDescription(typedSource.build())
+        val sourceDescription = SourceDescription.Builder(typedSource.build())
             .poster(getString(R.string.defaultPosterUrl))
 
         // Configuring THEOplayer with defined SourceDescription object.
@@ -107,14 +101,14 @@ class PlayerActivity : AppCompatActivity() {
 
         // Listening to 'sourcechange' event which indicates resetting UI and displaying only big
         // play button that loads defined source.
-        theoPlayer.addEventListener(PlayerEventTypes.SOURCECHANGE) { event: SourceChangeEvent? ->
+        theoPlayer.addEventListener(PlayerEventTypes.SOURCECHANGE) {
             Log.i(TAG, "Event: SOURCECHANGE")
             viewModel.resetUI()
         }
 
         // Listening to 'play' event which indicates the intent of playing source. Depending on
         // actual state, source will be loaded first and/or played.
-        theoPlayer.addEventListener(PlayerEventTypes.PLAY) { event: PlayEvent? ->
+        theoPlayer.addEventListener(PlayerEventTypes.PLAY) {
             Log.i(TAG, "Event: PLAY")
             viewModel.markBuffering()
         }
@@ -127,13 +121,13 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         // Listening to 'playing' event which indicates that source is being played.
-        theoPlayer.addEventListener(PlayerEventTypes.PLAYING) { event: PlayingEvent? ->
+        theoPlayer.addEventListener(PlayerEventTypes.PLAYING) {
             Log.i(TAG, "Event: PLAYING")
             viewModel.markPlaying()
         }
 
         // Listening to 'pause' event which indicates that the source was paused.
-        theoPlayer.addEventListener(PlayerEventTypes.PAUSE) { event: PauseEvent? ->
+        theoPlayer.addEventListener(PlayerEventTypes.PAUSE) {
             Log.i(TAG, "Event: PAUSE")
             viewModel.markPaused()
         }
@@ -156,9 +150,9 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         // Listening to 'error' event which indicates that something went wrong.
-        theoPlayer.addEventListener(
-            PlayerEventTypes.ERROR
-        ) { event: ErrorEvent -> Log.i(TAG, "Event: ERROR, error=" + event.errorObject) }
+        theoPlayer.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
+            Log.i(TAG, "Event: ERROR, error=" + event.errorObject)
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
