@@ -3,6 +3,7 @@ package com.theoplayer.sample.ads.custom;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
@@ -110,7 +111,7 @@ public class SetupActivity extends AppCompatActivity {
         String defaultAdUrl = (String) viewBinding.adUrlTextInput.getTag();
 
         String adTimeOffset = (String) viewBinding.adPlacementsGroup.getTag(viewBinding.adPlacementsGroup.getCheckedRadioButtonId());
-        boolean isVmapChecked = R.id.adStandardVmap == viewBinding.adStandardsGroup.getCheckedRadioButtonId();
+        boolean isVmapChecked = viewBinding.adStandardVmap.isChecked();
 
         PlayerActivity.play(
                 this,
