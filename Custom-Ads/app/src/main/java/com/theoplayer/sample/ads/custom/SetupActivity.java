@@ -35,7 +35,6 @@ public class SetupActivity extends AppCompatActivity {
         // Defining default ads and its visibility constraints.
         viewBinding.adUrlTextInput.setTag(R.id.adStandardVast, getString(R.string.defaultVastAdUrl));
         viewBinding.adUrlTextInput.setTag(R.id.adStandardVmap, getString(R.string.defaultVmapAdUrl));
-        viewBinding.adUrlTextInput.setTag(R.id.adStandardVpaid, getString(R.string.defaultVpaidAdUrl));
         viewBinding.adUrlTextInput.setOnFocusChangeListener((view, hasFocus) -> onTextInputFocusChange((TextView) view));
 
         // Defining default sources and its visibility constraints.
