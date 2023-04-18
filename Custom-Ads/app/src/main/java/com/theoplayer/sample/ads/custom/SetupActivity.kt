@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import com.theoplayer.sample.ads.custom.PlayerActivity.Companion.play
 import com.theoplayer.sample.ads.custom.databinding.ActivitySetupBinding
@@ -39,12 +40,12 @@ class SetupActivity : AppCompatActivity() {
             getString(R.string.defaultVmapAdUrl)
         )
         viewBinding.adUrlTextInput.onFocusChangeListener =
-            OnFocusChangeListener { view: View, hasFocus: Boolean -> onTextInputFocusChange(view as TextView) }
+            OnFocusChangeListener { view: View, _: Boolean -> onTextInputFocusChange(view as TextView) }
 
         // Defining default sources and its visibility constraints.
         viewBinding.sourceUrlTextInput.tag = getString(R.string.defaultSourceUrl)
         viewBinding.sourceUrlTextInput.onFocusChangeListener =
-            OnFocusChangeListener { view: View, hasFocus: Boolean -> onTextInputFocusChange(view as TextView) }
+            OnFocusChangeListener { view: View, _: Boolean -> onTextInputFocusChange(view as TextView) }
 
         // Defining ad placement values and checking default ad placement.
         viewBinding.adPlacementsGroup.setTag(
@@ -70,7 +71,7 @@ class SetupActivity : AppCompatActivity() {
         viewBinding.adStandardsGroup.check(R.id.adStandardVast)
 
         // Setting action on stream play request.
-        viewBinding.playButton.setOnClickListener { playButton: View? -> onPlay() }
+        viewBinding.playButton.setOnClickListener { onPlay() }
     }
 
     private fun onTextInputFocusChange(textInput: TextView) {
@@ -90,10 +91,8 @@ class SetupActivity : AppCompatActivity() {
         changeDefaultValueVisibilityForTextInput(viewBinding.sourceUrlTextInput)
 
         // VMAP standard already defines ad placement, redefining it has no sense.
-        val isVmapNotChecked = R.id.adStandardVmap != checkedAdStandardId
-        for (i in 0 until viewBinding.adPlacementsGroup.childCount) {
-            viewBinding.adPlacementsGroup.getChildAt(i).isEnabled = isVmapNotChecked
-        }
+        val isVmapNotChecked = !viewBinding.adStandardVmap.isChecked
+        viewBinding.adPlacementsGroup.children.forEach { it.isEnabled = isVmapNotChecked }
     }
 
     private fun changeDefaultValueForTextInput(textInput: TextView, defaultValueId: Int) {
@@ -118,17 +117,17 @@ class SetupActivity : AppCompatActivity() {
     }
 
     private fun onPlay() {
-        val sourceUrl: CharSequence? = viewBinding.sourceUrlTextInput.text
+        val sourceUrl = viewBinding.sourceUrlTextInput.text
         val defaultSourceUrl = viewBinding.sourceUrlTextInput.tag as String
-        val adUrl: CharSequence? = viewBinding.adUrlTextInput.text
+        val adUrl = viewBinding.adUrlTextInput.text
         val defaultAdUrl = viewBinding.adUrlTextInput.tag as String
         val adTimeOffset =
             viewBinding.adPlacementsGroup.getTag(viewBinding.adPlacementsGroup.checkedRadioButtonId) as String
         val isVmapChecked = viewBinding.adStandardVmap.isChecked
         play(
             this,
-            if (TextUtils.isEmpty(sourceUrl)) defaultSourceUrl else sourceUrl.toString(),
-            if (TextUtils.isEmpty(adUrl)) defaultAdUrl else adUrl.toString(),
+            if (sourceUrl.isNullOrBlank()) defaultSourceUrl else sourceUrl.toString(),
+            if (adUrl.isNullOrBlank()) defaultAdUrl else adUrl.toString(),
             if (isVmapChecked) "" else adTimeOffset
         )
     }

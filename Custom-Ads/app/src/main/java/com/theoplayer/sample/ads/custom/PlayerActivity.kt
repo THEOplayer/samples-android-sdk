@@ -66,53 +66,31 @@ class PlayerActivity : AppCompatActivity() {
         theoPlayer.isAutoplay = true
 
         // Adding listeners to THEOplayer basic playback events.
-        theoPlayer.addEventListener(PlayerEventTypes.PLAY) { event: PlayEvent? ->
-            Log.i(
-                TAG,
-                "Event: PLAY"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.PLAY) {
+            Log.i(TAG, "Event: PLAY")
         }
-        theoPlayer.addEventListener(PlayerEventTypes.PLAYING) { event: PlayingEvent? ->
-            Log.i(
-                TAG,
-                "Event: PLAYING"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.PLAYING) {
+            Log.i(TAG, "Event: PLAYING")
         }
-        theoPlayer.addEventListener(PlayerEventTypes.PAUSE) { event: PauseEvent? ->
-            Log.i(
-                TAG,
-                "Event: PAUSE"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.PAUSE) {
+            Log.i(TAG, "Event: PAUSE")
         }
-        theoPlayer.addEventListener(PlayerEventTypes.ENDED) { event: EndedEvent? ->
-            Log.i(
-                TAG,
-                "Event: ENDED"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.ENDED) {
+            Log.i(TAG, "Event: ENDED")
         }
         theoPlayer.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
-            Log.i(
-                TAG,
-                "Event: ERROR, error=" + event.errorObject
-            )
+            Log.i(TAG, "Event: ERROR, error=" + event.errorObject)
         }
 
         // Adding listeners to THEOplayer basic ad events.
         theoPlayer.ads.addEventListener(AdsEventTypes.AD_BEGIN) { event: AdBeginEvent ->
-            Log.i(
-                TAG, "Event: AD_BEGIN, ad=" + event.ad
-            )
+            Log.i(TAG, "Event: AD_BEGIN, ad=" + event.ad)
         }
         theoPlayer.ads.addEventListener(AdsEventTypes.AD_END) { event: AdEndEvent ->
-            Log.i(
-                TAG,
-                "Event: AD_END, ad=" + event.ad
-            )
+            Log.i(TAG, "Event: AD_END, ad=" + event.ad)
         }
         theoPlayer.ads.addEventListener(AdsEventTypes.AD_ERROR) { event: AdErrorEvent ->
-            Log.i(
-                TAG, "Event: AD_ERROR, error=" + event.error
-            )
+            Log.i(TAG, "Event: AD_ERROR, error=" + event.error)
         }
     }
 
