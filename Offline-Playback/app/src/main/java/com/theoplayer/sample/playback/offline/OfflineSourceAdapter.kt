@@ -37,11 +37,7 @@ internal class OfflineSourceAdapter(
         RecyclerView.ViewHolder(
             viewBinding.root
         ) {
-        private val context: Context
-
-        init {
-            context = viewBinding.root.context
-        }
+        private val context: Context = viewBinding.root.context
 
         fun bind(offlineSource: OfflineSource?) {
             // View tag is used to determine if requested poster already loaded and shown.

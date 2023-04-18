@@ -8,20 +8,20 @@ import com.theoplayer.android.api.source.drm.KeySystemConfiguration
 import com.theoplayer.android.api.source.drm.LicenseType
 
 object SourceDescriptionRepository {
-    fun getBySourceUrl(context: Context, sourceUrl: String?): SourceDescription? {
-        if (sourceUrl == context.getString(R.string.bigBuckBunnySourceUrl)) {
-            return getBigBuckBunnySourceDescription(context)
+    fun getBySourceUrl(context: Context, sourceUrl: String?): SourceDescription? =
+        when (sourceUrl) {
+            context.getString(R.string.bigBuckBunnySourceUrl) -> getBigBuckBunnySourceDescription(
+                context
+            )
+            context.getString(R.string.sintelSourceUrl) -> getSintelSourceDescription(context)
+            context.getString(R.string.tearsOfStealSourceUrl) -> getTearsOfSteelSourceDescription(
+                context
+            )
+            context.getString(R.string.elephantsDreamSourceUrl) -> getElephantsDreamSourceDescription(
+                context
+            )
+            else -> null
         }
-        if (sourceUrl == context.getString(R.string.sintelSourceUrl)) {
-            return getSintelSourceDescription(context)
-        }
-        if (sourceUrl == context.getString(R.string.tearsOfStealSourceUrl)) {
-            return getTearsOfSteelSourceDescription(context)
-        }
-        return if (sourceUrl == context.getString(R.string.elephantsDreamSourceUrl)) {
-            getElephantsDreamSourceDescription(context)
-        } else null
-    }
 
     private fun getBigBuckBunnySourceDescription(context: Context): SourceDescription {
         return SourceDescription.Builder(

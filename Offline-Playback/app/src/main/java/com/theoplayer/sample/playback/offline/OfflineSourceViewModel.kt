@@ -18,8 +18,30 @@ import java.util.concurrent.TimeUnit
 
 class OfflineSourceViewModel(application: Application) : AndroidViewModel(application) {
     private val theoCache: Cache?
-    var offlineSources: List<OfflineSource>? = null
-        private set
+
+    // Creating list of sources that can be cached and watched offline.
+    var offlineSources: List<OfflineSource>? = listOf(
+        OfflineSource(
+            getApplication<Application>().getString(R.string.bigBuckBunnyTitle),
+            getApplication<Application>().getString(R.string.bigBuckBunnyPoster),
+            getApplication<Application>().getString(R.string.bigBuckBunnySourceUrl)
+        ),
+        OfflineSource(
+            getApplication<Application>().getString(R.string.sintelTitle),
+            getApplication<Application>().getString(R.string.sintelPoster),
+            getApplication<Application>().getString(R.string.sintelSourceUrl)
+        ),
+        OfflineSource(
+            getApplication<Application>().getString(R.string.tearsOfStealTitle),
+            getApplication<Application>().getString(R.string.tearsOfStealPoster),
+            getApplication<Application>().getString(R.string.tearsOfStealSourceUrl)
+        ),
+        OfflineSource(
+            getApplication<Application>().getString(R.string.elephantsDreamTitle),
+            getApplication<Application>().getString(R.string.elephantsDreamPoster),
+            getApplication<Application>().getString(R.string.elephantsDreamSourceUrl)
+        )
+    )
 
     init {
         theoCache = THEOplayerGlobal.getSharedInstance(application).cache
@@ -41,29 +63,6 @@ class OfflineSourceViewModel(application: Application) : AndroidViewModel(applic
     }
 
     private fun initializeOfflineSources() {
-        // Creating list of sources that can be cached and watched offline.
-        offlineSources = Arrays.asList(
-            OfflineSource(
-                getApplication<Application>().getString(R.string.bigBuckBunnyTitle),
-                getApplication<Application>().getString(R.string.bigBuckBunnyPoster),
-                getApplication<Application>().getString(R.string.bigBuckBunnySourceUrl)
-            ),
-            OfflineSource(
-                getApplication<Application>().getString(R.string.sintelTitle),
-                getApplication<Application>().getString(R.string.sintelPoster),
-                getApplication<Application>().getString(R.string.sintelSourceUrl)
-            ),
-            OfflineSource(
-                getApplication<Application>().getString(R.string.tearsOfStealTitle),
-                getApplication<Application>().getString(R.string.tearsOfStealPoster),
-                getApplication<Application>().getString(R.string.tearsOfStealSourceUrl)
-            ),
-            OfflineSource(
-                getApplication<Application>().getString(R.string.elephantsDreamTitle),
-                getApplication<Application>().getString(R.string.elephantsDreamPoster),
-                getApplication<Application>().getString(R.string.elephantsDreamSourceUrl)
-            )
-        )
 
         // Updating offline sources state by corresponding caching tasks if exists.
         // Note that, there can be cases when content is being cached (or is cached), but view was
@@ -74,7 +73,7 @@ class OfflineSourceViewModel(application: Application) : AndroidViewModel(applic
                 loadExistingCachingTasks()
             } else {
                 theoCache.addEventListener(CacheEventTypes.CACHE_STATE_CHANGE,
-                    EventListener { event: CacheStateChangeEvent? -> loadExistingCachingTasks() })
+                    EventListener { loadExistingCachingTasks() })
             }
         }
     }
