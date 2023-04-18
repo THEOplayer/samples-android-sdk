@@ -1,5 +1,6 @@
 package com.theoplayer.demo.remotejson;
 
+import android.annotation.TargetApi;
 import android.app.PictureInPictureParams;
 import android.content.Context;
 import android.content.Intent;
@@ -55,23 +56,23 @@ public class PlayerActivity extends AppCompatActivity {
     private static final String PLAYER_PARAM__CONFIG_JSON = "CONFIG_JSON";
     private static final String PLAYER_PARAM__SOURCE_URL = "SOURCE_URL";
 
-    private static boolean SUPPORTS_PIP = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
+    private static final boolean SUPPORTS_PIP = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
 
     private ActivityPlayerBinding viewBinding;
     private THEOplayerView theoPlayerView;
     private Player theoPlayer;
 
-    private MutableLiveData<TimeRanges> bufferedMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<Date> dateTimeMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<TimeRanges> playedMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<TimeRanges> seekableMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<List<Ad>> currentAdsLiveData = new MutableLiveData<>();
-    private MutableLiveData<List<Ad>> scheduledAdsLiveData = new MutableLiveData<>();
+    private final MutableLiveData<TimeRanges> bufferedMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Date> dateTimeMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<TimeRanges> playedMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<TimeRanges> seekableMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Ad>> currentAdsLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Ad>> scheduledAdsLiveData = new MutableLiveData<>();
 
     private TimeUpdateEvent latestTimeUpdateEvent;
 
     private String playerState;
-    private StringBuilder eventLog = new StringBuilder();
+    private final StringBuilder eventLog = new StringBuilder();
 
     public static void play(Context context, String playerConfigJson, String sourceJson) {
         Intent playIntent = new Intent(context, PlayerActivity.class);
@@ -164,7 +165,7 @@ public class PlayerActivity extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
 
         // getting information about video tracks
-        if (theoPlayer.getVideoTracks() != null && theoPlayer.getVideoTracks().length() > 0) {
+        if (theoPlayer.getVideoTracks().length() > 0) {
             sb.append(String.format(getString(R.string.videoTracksHeader)));
             for (MediaTrack videoTrack : theoPlayer.getVideoTracks()) {
                 sb.append(String.format(getString(R.string.id), videoTrack.getId()));
@@ -175,7 +176,7 @@ public class PlayerActivity extends AppCompatActivity {
         }
 
         // getting information about audio tracks
-        if (theoPlayer.getAudioTracks() != null && theoPlayer.getAudioTracks().length() > 0) {
+        if (theoPlayer.getAudioTracks().length() > 0) {
             sb.append(String.format(getString(R.string.audioTracksHeader)));
             for (MediaTrack audioTrack : theoPlayer.getAudioTracks()) {
                 sb.append(String.format(getString(R.string.id), audioTrack.getId()));
@@ -186,7 +187,7 @@ public class PlayerActivity extends AppCompatActivity {
         }
 
         // getting information about text tracks
-        if (theoPlayer.getTextTracks() != null && theoPlayer.getTextTracks().length() > 0) {
+        if (theoPlayer.getTextTracks().length() > 0) {
             sb.append(String.format(getString(R.string.textTracksHeader)));
             for (TextTrack textTrack : theoPlayer.getTextTracks()) {
                 sb.append(String.format(getString(R.string.id), textTrack.getId()));
@@ -252,8 +253,7 @@ public class PlayerActivity extends AppCompatActivity {
             sb.append(String.format(getString(R.string.currentAds)));
             for (Ad currentAd : currentAds) {
                 sb.append(String.format(getString(R.string.integration), currentAd.getIntegration().toString()));
-                if (currentAd.getId() != null)
-                    sb.append(String.format(getString(R.string.adId), currentAd.getId()));
+                sb.append(String.format(getString(R.string.adId), currentAd.getId()));
                 sb.append(String.format(getString(R.string.skipOffset), currentAd.getSkipOffset()));
                 if (currentAd.getAdBreak() != null) {
                     sb.append(String.format(getString(R.string.offset), currentAd.getAdBreak().getTimeOffset()));
@@ -269,8 +269,7 @@ public class PlayerActivity extends AppCompatActivity {
             sb.append(String.format(getString(R.string.scheduledAds)));
             for (Ad scheduledAd : scheduledAds) {
                 sb.append(String.format(getString(R.string.integration), scheduledAd.getIntegration().toString()));
-                if (scheduledAd.getId() != null)
-                    sb.append(String.format(getString(R.string.adId), scheduledAd.getId()));
+                sb.append(String.format(getString(R.string.adId), scheduledAd.getId()));
                 sb.append(String.format(getString(R.string.skipOffset), scheduledAd.getSkipOffset()));
                 if (scheduledAd.getAdBreak() != null) {
                     sb.append(String.format(getString(R.string.offset), scheduledAd.getAdBreak().getTimeOffset()));
@@ -394,6 +393,7 @@ public class PlayerActivity extends AppCompatActivity {
         updatePlayerStateInfo();
     };
 
+    @TargetApi(Build.VERSION_CODES.O)
     @Override
     public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
         if (isInPictureInPictureMode) {

@@ -12,7 +12,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 class TabbedPagerAdapter extends PagerAdapter {
 
-    private Tab[] tabs = new Tab[]{
+    private final Tab[] tabs = new Tab[]{
             new Tab(R.string.tabTime, R.layout.time_tab_layout),
             new Tab(R.string.tabTracks, R.layout.tracks_tab_layout),
             new Tab(R.string.tabState, R.layout.state_tab_layout),
@@ -57,9 +57,9 @@ class TabbedPagerAdapter extends PagerAdapter {
     private static class Tab {
 
         @StringRes
-        private int titleResId;
+        private final int titleResId;
         @LayoutRes
-        private int layoutResId;
+        private final int layoutResId;
 
         Tab(@StringRes int titleResId, @LayoutRes int layoutResId) {
             this.titleResId = titleResId;
