@@ -3,6 +3,7 @@ package com.theoplayer.sample.ads.custom;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -65,18 +66,16 @@ public class PlayerActivity extends AppCompatActivity {
         viewBinding.theoPlayerView.getSettings().setFullScreenOrientationCoupled(true);
 
         // Creating a TypedSource builder that defines the location of a single stream source.
-        TypedSource.Builder typedSource = TypedSource.Builder.typedSource(sourceUrl);
+        TypedSource.Builder typedSource = new TypedSource.Builder(sourceUrl);
 
         // Creating a GoogleImaAdDescription builder that defines the location of an ad and its
         // time offset.
-        GoogleImaAdDescription.Builder adDescription = GoogleImaAdDescription.Builder
-                .googleImaAdDescription(adUrl)
+        GoogleImaAdDescription.Builder adDescription = new GoogleImaAdDescription.Builder(adUrl)
                 .timeOffset(adTimeOffset);
 
         // Creating a SourceDescription builder that contains the settings to be applied as a new
         // THEOplayer source including ads configuration.
-        SourceDescription.Builder sourceDescription = SourceDescription.Builder
-                .sourceDescription(typedSource.build())
+        SourceDescription.Builder sourceDescription = new SourceDescription.Builder(typedSource.build())
                 .ads(adDescription.build());
 
         // Configuring THEOplayer with defined SourceDescription object to be played automatically.
@@ -88,7 +87,7 @@ public class PlayerActivity extends AppCompatActivity {
         theoPlayer.addEventListener(PlayerEventTypes.PLAYING, event -> Log.i(TAG, "Event: PLAYING"));
         theoPlayer.addEventListener(PlayerEventTypes.PAUSE, event -> Log.i(TAG, "Event: PAUSE"));
         theoPlayer.addEventListener(PlayerEventTypes.ENDED, event -> Log.i(TAG, "Event: ENDED"));
-        theoPlayer.addEventListener(PlayerEventTypes.ERROR, event -> Log.i(TAG, "Event: ERROR, error=" + event.getError()));
+        theoPlayer.addEventListener(PlayerEventTypes.ERROR, event -> Log.i(TAG, "Event: ERROR, error=" + event.getErrorObject()));
 
         // Adding listeners to THEOplayer basic ad events.
         theoPlayer.getAds().addEventListener(AdsEventTypes.AD_BEGIN, event -> Log.i(TAG, "Event: AD_BEGIN, ad=" + event.getAd()));

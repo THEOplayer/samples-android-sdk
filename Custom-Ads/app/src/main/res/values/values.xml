@@ -23,4 +23,5 @@
     <string name="defaultPreRollAddPlacement">start</string>
     <string name="defaultMidRollAddPlacement">15</string>
     <string name="defaultPostRollAddPlacement">end</string>
+    <string name="theoplayer_test_license"></string>
 </resources>
