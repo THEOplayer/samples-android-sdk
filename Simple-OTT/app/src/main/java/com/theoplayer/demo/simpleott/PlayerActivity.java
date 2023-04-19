@@ -1,5 +1,6 @@
 package com.theoplayer.demo.simpleott;
 
+import android.annotation.TargetApi;
 import android.app.PictureInPictureParams;
 import android.content.Context;
 import android.content.Intent;
@@ -85,7 +86,6 @@ public class PlayerActivity extends AppCompatActivity {
                 .sourceDescription(typedSource.build())
                 .metadata(chromecastMetadata.build());
 
-        theoPlayer.setSource(null);
         theoPlayer.setAutoplay(true);
 
         // Configuring THEOplayer with defined SourceDescription object to be played automatically.
@@ -96,9 +96,10 @@ public class PlayerActivity extends AppCompatActivity {
         theoPlayer.addEventListener(PlayerEventTypes.PLAYING, event -> Log.i(TAG, "Event: PLAYING"));
         theoPlayer.addEventListener(PlayerEventTypes.PAUSE, event -> Log.i(TAG, "Event: PAUSE"));
         theoPlayer.addEventListener(PlayerEventTypes.ENDED, event -> Log.i(TAG, "Event: ENDED"));
-        theoPlayer.addEventListener(PlayerEventTypes.ERROR, event -> Log.i(TAG, "Event: ERROR, error=" + event.getError()));
+        theoPlayer.addEventListener(PlayerEventTypes.ERROR, event -> Log.i(TAG, "Event: ERROR, error=" + event.getErrorObject()));
     }
 
+    @TargetApi(Build.VERSION_CODES.O)
     @Override
     public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
         viewBinding.theoPlayerView.getSettings().setFullScreenOrientationCoupled(!isInPictureInPictureMode);
