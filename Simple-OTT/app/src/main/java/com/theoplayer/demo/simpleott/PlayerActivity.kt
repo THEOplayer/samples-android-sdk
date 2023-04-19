@@ -43,18 +43,16 @@ class PlayerActivity : AppCompatActivity() {
         viewBinding.theoPlayerView.settings.isFullScreenOrientationCoupled = true
 
         // Creating a TypedSource builder that defines the location of a single stream source.
-        val typedSource = TypedSource.Builder.typedSource(source)
+        val typedSource = TypedSource.Builder(source)
 
         // Creating a ChromecastMetadataDescription builder that defines stream metadata to be
         // displayed on cast sender and receiver while casting.
-        val chromecastMetadata = ChromecastMetadataDescription.Builder
-            .chromecastMetadata()
+        val chromecastMetadata = ChromecastMetadataDescription.Builder()
             .title(title)
 
         // Creating a SourceDescription that contains the tab_settings to be applied as a new
         // THEOplayer source.
-        val sourceDescription = SourceDescription.Builder
-            .sourceDescription(typedSource.build())
+        val sourceDescription = SourceDescription.Builder(typedSource.build())
             .metadata(chromecastMetadata.build())
         theoPlayer.isAutoplay = true
 
@@ -62,35 +60,20 @@ class PlayerActivity : AppCompatActivity() {
         theoPlayer.source = sourceDescription.build()
 
         // Adding listeners to THEOplayer basic playback events.
-        theoPlayer.addEventListener(PlayerEventTypes.PLAY) { event: PlayEvent? ->
-            Log.i(
-                TAG,
-                "Event: PLAY"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.PLAY) {
+            Log.i(TAG, "Event: PLAY")
         }
-        theoPlayer.addEventListener(PlayerEventTypes.PLAYING) { event: PlayingEvent? ->
-            Log.i(
-                TAG,
-                "Event: PLAYING"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.PLAYING) {
+            Log.i(TAG, "Event: PLAYING")
         }
-        theoPlayer.addEventListener(PlayerEventTypes.PAUSE) { event: PauseEvent? ->
-            Log.i(
-                TAG,
-                "Event: PAUSE"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.PAUSE) {
+            Log.i(TAG, "Event: PAUSE")
         }
-        theoPlayer.addEventListener(PlayerEventTypes.ENDED) { event: EndedEvent? ->
-            Log.i(
-                TAG,
-                "Event: ENDED"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.ENDED) {
+            Log.i(TAG, "Event: ENDED")
         }
         theoPlayer.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
-            Log.i(
-                TAG,
-                "Event: ERROR, error=" + event.errorObject
-            )
+            Log.i(TAG, "Event: ERROR, error=" + event.errorObject)
         }
     }
 
