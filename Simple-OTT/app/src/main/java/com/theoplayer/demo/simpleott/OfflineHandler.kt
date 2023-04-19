@@ -186,7 +186,7 @@ class OfflineHandler(
     private fun filterOfflineSourcesByState(vararg status: CachingTaskStatus): ArrayList<OfflineSource> {
         val result = ArrayList<OfflineSource>()
         for (of in offlineSources) {
-            if (Arrays.asList<CachingTaskStatus?>(*status).indexOf(of.cachingTaskStatus) > -1) {
+            if (listOf<CachingTaskStatus?>(*status).indexOf(of.getCachingTaskStatus()) > -1) {
                 result.add(of)
             }
         }

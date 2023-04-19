@@ -33,28 +33,28 @@ class StreamSourceRepository(context: Context) {
      * @return live stream sources.
      */
     val liveStreamSources: List<StreamSource>?
-        get() = if (streamSources != null) streamSources.live else ArrayList()
+        get() = streamSources?.live ?: ArrayList()
 
     /**
      * Returns stream sources to be displayed on "ON DEMAND" tab.
      *
      * @return on demand stream sources.
      */
-    val onDemandStreamSources: List<StreamSource>?
-        get() = if (streamSources != null) streamSources.onDemand else ArrayList()
+    val onDemandStreamSources: List<StreamSource>
+        get() = streamSources?.onDemand ?: ArrayList()
 
     /**
      * Returns stream sources to be displayed on "OFFLINE" tab.
      *
      * @return offline stream sources.
      */
-    val offlineStreamSources: List<StreamSource>?
+    val offlineStreamSources: List<StreamSource>
         get() = if (streamSources != null) streamSources.offline else ArrayList()
 
     private class StreamSources {
-        var live: List<StreamSource>? = null
-        var onDemand: List<StreamSource>? = null
-        var offline: List<StreamSource>? = null
+        lateinit var live: List<StreamSource>
+        lateinit var onDemand: List<StreamSource>
+        lateinit var offline: List<StreamSource>
     }
 
     companion object {

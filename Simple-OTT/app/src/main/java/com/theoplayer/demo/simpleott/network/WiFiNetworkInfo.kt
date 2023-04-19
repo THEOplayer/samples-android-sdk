@@ -11,7 +11,6 @@ import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.net.wifi.WifiManager
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -64,7 +63,7 @@ class WiFiNetworkInfo(context: Context) {
      *
      * @return `true` if WiFi is connected; `false` otherwise.
      */
-    fun isConnectedToWiFi(): Boolean {
+    val isConnectedToWiFi: Boolean get() {
         return if (connectedToWiFi.value != null) connectedToWiFi.value!! else false
     }
 
@@ -82,7 +81,7 @@ class WiFiNetworkInfo(context: Context) {
      *
      * @return `true` if download is allowed when WiFi is connected; `false` otherwise.
      */
-    fun isDownloadOnlyOnWiFi(): Boolean {
+    val isDownloadOnlyOnWiFi: Boolean get() {
         return if (downloadOnlyOnWiFi.value != null) downloadOnlyOnWiFi.value!! else true
     }
 
@@ -123,7 +122,6 @@ class WiFiNetworkInfo(context: Context) {
      *
      * @param context - The current context.
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private fun registerModernWifiMonitor(context: Context) {
         val wifiRequest = NetworkRequest.Builder()
             .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
@@ -139,7 +137,7 @@ class WiFiNetworkInfo(context: Context) {
         }
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        connectivityManager?.registerNetworkCallback(wifiRequest, wifiSateCallback)
+        connectivityManager.registerNetworkCallback(wifiRequest, wifiSateCallback)
     }
 
     /**
@@ -155,7 +153,7 @@ class WiFiNetworkInfo(context: Context) {
                     context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
                 val wifiConnected =
                     wifiManager != null && wifiManager.isWifiEnabled && wifiManager.connectionInfo.networkId != -1 // Connected to an access point
-                if (isConnectedToWiFi() != wifiConnected) {
+                if (isConnectedToWiFi != wifiConnected) {
                     connectedToWiFi.setValue(wifiConnected)
                 }
             }

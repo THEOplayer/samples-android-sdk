@@ -23,7 +23,7 @@ open class StreamSource internal constructor(
      *
      * @return the source URL of stream source.
      */
-    val source: String?,
+    val source: String,
     /**
      * Returns stream source image drawable resource identifier.
      *

@@ -37,7 +37,12 @@ class OfflineSourceDownloader(
 ) {
     private val theoCache: Cache?
     private val wiFiNetworkInfo: WiFiNetworkInfo
-    private val offlineSources: MutableList<OfflineSource>
+    /**
+     * Returns offline stream sources wrapped in `OfflineSource` object.
+     *
+     * @return - offline sources.
+     */
+    val offlineSources: MutableList<OfflineSource>
 
     init {
         theoCache = THEOplayerGlobal.getSharedInstance(context).cache
@@ -78,14 +83,6 @@ class OfflineSourceDownloader(
         }
     }
 
-    /**
-     * Returns offline stream sources wrapped in `OfflineSource` object.
-     *
-     * @return - offline sources.
-     */
-    fun getOfflineSources(): List<OfflineSource> {
-        return offlineSources
-    }
 
     /**
      * Starts caching task to download stream content for given `offlineSource`.

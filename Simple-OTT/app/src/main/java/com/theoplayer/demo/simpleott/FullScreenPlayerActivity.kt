@@ -11,8 +11,8 @@ import com.theoplayer.android.api.player.Player
 import com.theoplayer.demo.simpleott.databinding.ActivityPlayerBinding
 
 class FullScreenPlayerActivity : AppCompatActivity() {
-    private var viewBinding: ActivityPlayerBinding? = null
-    private var theoPlayer: Player? = null
+    private lateinit var viewBinding: ActivityPlayerBinding
+    private lateinit var theoPlayer: Player
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,47 +32,32 @@ class FullScreenPlayerActivity : AppCompatActivity() {
         // Coupling the orientation of the device with the fullscreen state.
         // The player will go fullscreen when the device is rotated to landscape
         // and will also exit fullscreen when the device is rotated back to portrait.
-        viewBinding!!.theoPlayerView.settings.isFullScreenOrientationCoupled = true
+        viewBinding.theoPlayerView.settings.isFullScreenOrientationCoupled = true
 
         // Creating a SourceDescription that contains the settings to be applied as a new
         // THEOplayer source.
         val sourceDescription = SourceDescriptionUtil.getBySourceUrl(sourceUrl)
-        theoPlayer!!.source = null
-        theoPlayer!!.isAutoplay = true
+        theoPlayer.source = null
+        theoPlayer.isAutoplay = true
 
         // Configuring THEOplayer with defined SourceDescription object to be played automatically.
-        theoPlayer!!.source = sourceDescription
+        theoPlayer.source = sourceDescription
 
         // Adding listeners to THEOplayer basic playback events.
-        theoPlayer!!.addEventListener(PlayerEventTypes.PLAY) { event: PlayEvent? ->
-            Log.i(
-                TAG,
-                "Event: PLAY"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.PLAY) {
+            Log.i(TAG, "Event: PLAY")
         }
-        theoPlayer!!.addEventListener(PlayerEventTypes.PLAYING) { event: PlayingEvent? ->
-            Log.i(
-                TAG,
-                "Event: PLAYING"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.PLAYING) {
+            Log.i(TAG, "Event: PLAYING")
         }
-        theoPlayer!!.addEventListener(PlayerEventTypes.PAUSE) { event: PauseEvent? ->
-            Log.i(
-                TAG,
-                "Event: PAUSE"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.PAUSE) {
+            Log.i(TAG, "Event: PAUSE")
         }
-        theoPlayer!!.addEventListener(PlayerEventTypes.ENDED) { event: EndedEvent? ->
-            Log.i(
-                TAG,
-                "Event: ENDED"
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.ENDED) {
+            Log.i(TAG, "Event: ENDED")
         }
-        theoPlayer!!.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
-            Log.i(
-                TAG,
-                "Event: ERROR, error=" + event.errorObject
-            )
+        theoPlayer.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
+            Log.i(TAG, "Event: ERROR, error=" + event.errorObject)
         }
     }
 
@@ -82,13 +67,13 @@ class FullScreenPlayerActivity : AppCompatActivity() {
     // activity methods are called.
     override fun onPause() {
         super.onPause()
-        viewBinding!!.theoPlayerView.onPause()
+        viewBinding.theoPlayerView.onPause()
     }
 
     override fun onResume() {
         super.onResume()
         try {
-            viewBinding!!.theoPlayerView.onResume()
+            viewBinding.theoPlayerView.onResume()
         } catch (exception: Exception) {
             Log.i(TAG, "", exception)
         }
@@ -96,7 +81,7 @@ class FullScreenPlayerActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        viewBinding!!.theoPlayerView.onDestroy()
+        viewBinding.theoPlayerView.onDestroy()
     }
 
     companion object {

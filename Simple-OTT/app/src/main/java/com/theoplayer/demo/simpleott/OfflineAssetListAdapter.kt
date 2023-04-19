@@ -48,7 +48,7 @@ class OfflineAssetListAdapter(
 
         // Clicking on progress bar should either start or resume the task
         binding.progressBar.setOnClickListener { v: View? ->
-            if (items[position].cachingTaskStatus == CachingTaskStatus.LOADING) {
+            if (items[position].cachingTaskStatus.value == CachingTaskStatus.LOADING) {
                 items[position].pauseCachingTask()
             } else {
                 items[position].startCachingTask()

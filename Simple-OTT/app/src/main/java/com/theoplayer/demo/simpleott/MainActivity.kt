@@ -18,9 +18,9 @@ import com.theoplayer.demo.simpleott.view.StreamSourceAdapter
 import com.theoplayer.demo.simpleott.view.TabbedPagerAdapter
 
 class MainActivity : AppCompatActivity() {
-    private var wiFiNetworkInfo: WiFiNetworkInfo? = null
-    private var streamSourceRepository: StreamSourceRepository? = null
-    private var offlineSourceDownloader: OfflineSourceDownloader? = null
+    private lateinit var wiFiNetworkInfo: WiFiNetworkInfo
+    private lateinit var streamSourceRepository: StreamSourceRepository
+    private lateinit var offlineSourceDownloader: OfflineSourceDownloader
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.TheoTheme_Base)
         super.onCreate(savedInstanceState)
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         // Initiating repositories that allow to get needed stream sources lists.
         streamSourceRepository = StreamSourceRepository(this)
         offlineSourceDownloader =
-            OfflineSourceDownloader(this, streamSourceRepository!!, wiFiNetworkInfo!!)
+            OfflineSourceDownloader(this, streamSourceRepository, wiFiNetworkInfo)
 
         // Initializing pager adapter for tabs view
         val pagerAdapter = TabbedPagerAdapter(this)
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     private fun bindLiveTabView(): View {
         val viewBinding = TabStreamSourceBinding.inflate(LayoutInflater.from(this), null, false)
         viewBinding.streamSourceList.adapter =
-            StreamSourceAdapter(this, streamSourceRepository.getLiveStreamSources())
+            StreamSourceAdapter(this, streamSourceRepository.liveStreamSources)
         return viewBinding.root
     }
 
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     private fun bindOnDemandTabView(): View {
         val viewBinding = TabStreamSourceBinding.inflate(LayoutInflater.from(this), null, false)
         viewBinding.streamSourceList.adapter =
-            StreamSourceAdapter(this, streamSourceRepository.getOnDemandStreamSources())
+            StreamSourceAdapter(this, streamSourceRepository.onDemandStreamSources)
         return viewBinding.root
     }
 
@@ -91,12 +91,12 @@ class MainActivity : AppCompatActivity() {
         val viewBinding = TabSettingsBinding.inflate(LayoutInflater.from(this), null, false)
 
         // Showing confirmation dialog after hitting clear cache button
-        viewBinding.removeAllButton.setOnClickListener { v: View? -> offlineSourceDownloader!!.removeAllCachingTasks() }
+        viewBinding.removeAllButton.setOnClickListener { v: View? -> offlineSourceDownloader.removeAllCachingTasks() }
 
         // The switch for "Download only on wifi" setting
-        viewBinding.downloadOnWiFiSwitch.isChecked = wiFiNetworkInfo!!.isDownloadOnlyOnWiFi
+        viewBinding.downloadOnWiFiSwitch.isChecked = wiFiNetworkInfo.isDownloadOnlyOnWiFi
         viewBinding.downloadOnWiFiSwitch.setOnCheckedChangeListener { button: CompoundButton?, isChecked: Boolean ->
-            wiFiNetworkInfo!!.isDownloadOnlyOnWiFi = isChecked
+            wiFiNetworkInfo.setDownloadOnlyOnWiFi(isChecked)
         }
         return viewBinding.root
     }

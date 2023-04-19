@@ -14,9 +14,9 @@ import com.theoplayer.demo.simpleott.FullScreenPlayerActivity
 
 class OfflineSource(item: AssetItem) : AssetItem() {
     private var cachingTask: CachingTask?
-    private val cachingTaskStatus: MutableLiveData<CachingTaskStatus?>
+    val cachingTaskStatus: MutableLiveData<CachingTaskStatus?>
     private val cachingTaskProgress: MutableLiveData<Double>
-    private val uiEnabled: MutableLiveData<Boolean?>
+    private val uiEnabled: MutableLiveData<Boolean>
 
     init {
         name = item.name
@@ -93,7 +93,7 @@ class OfflineSource(item: AssetItem) : AssetItem() {
     }
 
     fun play(context: Context) {
-        FullScreenPlayerActivity.Companion.play(context, videoSource)
+        FullScreenPlayerActivity.play(context, videoSource)
     }
 
     companion object {

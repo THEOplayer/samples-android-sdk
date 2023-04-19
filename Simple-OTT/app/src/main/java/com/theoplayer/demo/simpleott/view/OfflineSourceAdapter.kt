@@ -14,12 +14,12 @@ import com.theoplayer.demo.simpleott.model.OfflineSourceDownloader
 
 class OfflineSourceAdapter(
     context: Context?,
-    private val offlineSourceDownloader: OfflineSourceDownloader?
+    private val offlineSourceDownloader: OfflineSourceDownloader
 ) : ArrayAdapter<OfflineSource?>(
     context!!, 0
 ) {
     init {
-        addAll(offlineSourceDownloader!!.offlineSources)
+        addAll(offlineSourceDownloader.offlineSources)
     }
 
     override fun getView(position: Int, rowView: View?, parent: ViewGroup): View {
@@ -40,7 +40,7 @@ class OfflineSourceAdapter(
         if (offlineSource != null) {
             rowView.isClickable = true
             rowView.setOnClickListener(View.OnClickListener { v: View? ->
-                PlayerActivity.Companion.play(
+                PlayerActivity.play(
                     context, offlineSource
                 )
             })

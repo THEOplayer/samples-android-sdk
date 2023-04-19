@@ -10,14 +10,14 @@ class SimpleOTTConfiguration {
     }
 
     class Live {
-        var channels: Array<AssetItem>
+        lateinit var channels: Array<AssetItem>
     }
 
     class OnDemand {
-        var vods: Array<AssetItem>
+        lateinit var vods: Array<AssetItem>
     }
 
     class Offline {
-        var vods: Array<AssetItem>
+        lateinit var vods: Array<AssetItem>
     }
 }
