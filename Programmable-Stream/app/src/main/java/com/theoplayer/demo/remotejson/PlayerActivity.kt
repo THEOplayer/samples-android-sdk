@@ -135,136 +135,111 @@ class PlayerActivity : AppCompatActivity() {
         theoPlayer.addEventListener(PlayerEventTypes.ERROR, onErrorEventListener)
     }
 
-    private fun formatAllTracks(): String {
-        val sb = StringBuilder()
+    private fun formatAllTracks() = buildString {
 
         // getting information about video tracks
         if (theoPlayer.videoTracks.length() > 0) {
-            sb.append(String.format(getString(R.string.videoTracksHeader)))
+            append(String.format(getString(R.string.videoTracksHeader)))
             for (videoTrack in theoPlayer.videoTracks) {
-                sb.append(String.format(getString(R.string.id), videoTrack.id))
-                sb.append(String.format(getString(R.string.label), videoTrack.label))
-                sb.append(String.format(getString(R.string.enabled), videoTrack.isEnabled))
+                append(String.format(getString(R.string.id), videoTrack.id))
+                append(String.format(getString(R.string.label), videoTrack.label))
+                append(String.format(getString(R.string.enabled), videoTrack.isEnabled))
             }
-            sb.append(String.format("%n"))
+            append(String.format("%n"))
         }
 
         // getting information about audio tracks
         if (theoPlayer.audioTracks.length() > 0) {
-            sb.append(String.format(getString(R.string.audioTracksHeader)))
+            append(String.format(getString(R.string.audioTracksHeader)))
             for (audioTrack in theoPlayer.audioTracks) {
-                sb.append(String.format(getString(R.string.id), audioTrack.id))
-                sb.append(String.format(getString(R.string.label), audioTrack.label))
-                sb.append(String.format(getString(R.string.enabled), audioTrack.isEnabled))
+                append(String.format(getString(R.string.id), audioTrack.id))
+                append(String.format(getString(R.string.label), audioTrack.label))
+                append(String.format(getString(R.string.enabled), audioTrack.isEnabled))
             }
-            sb.append(String.format("%n"))
+            append(String.format("%n"))
         }
 
         // getting information about text tracks
         if (theoPlayer.textTracks.length() > 0) {
-            sb.append(String.format(getString(R.string.textTracksHeader)))
+            append(String.format(getString(R.string.textTracksHeader)))
             for (textTrack in theoPlayer.textTracks) {
-                sb.append(String.format(getString(R.string.id), textTrack.id))
-                sb.append(String.format(getString(R.string.label), textTrack.label))
+                append(String.format(getString(R.string.id), textTrack.id))
+                append(String.format(getString(R.string.label), textTrack.label))
                 if (textTrack.activeCues != null && textTrack.activeCues!!.length() > 0) {
-                    sb.append(String.format(getString(R.string.activeCuesHeader)))
+                    append(String.format(getString(R.string.activeCuesHeader)))
                     for (cue in textTrack.activeCues!!) {
-                        sb.append(String.format(getString(R.string.id), cue.id))
-                        sb.append(String.format(getString(R.string.cueStartTime), cue.startTime))
-                        sb.append(String.format(getString(R.string.cueEndTime), cue.endTime))
+                        append(String.format(getString(R.string.id), cue.id))
+                        append(String.format(getString(R.string.cueStartTime), cue.startTime))
+                        append(String.format(getString(R.string.cueEndTime), cue.endTime))
                     }
                 }
             }
-            sb.append(String.format("%n"))
+            append(String.format("%n"))
         }
-        return sb.toString()
     }
 
-    private fun formatTimeInfo(event: TimeUpdateEvent?): String {
-        val sb = StringBuilder()
-        sb.append(String.format(getString(R.string.currentTime), event?.currentTime))
-        sb.append(String.format(getString(R.string.duration), theoPlayer.duration))
+    private fun formatTimeInfo(event: TimeUpdateEvent?) = buildString {
+        append(String.format(getString(R.string.currentTime), event?.currentTime))
+        append(String.format(getString(R.string.duration), theoPlayer.duration))
 
         // getting current program time from livedata object
-        if (dateTimeMutableLiveData.value != null) {
-            sb.append(
-                String.format(
-                    getString(R.string.currentProgramTime),
-                    dateTimeMutableLiveData.value
-                )
-            )
+        dateTimeMutableLiveData.value?.apply {
+            append(String.format(getString(R.string.currentProgramTime), this))
         }
 
         // getting buffered ranges from livedata object
-        if (bufferedMutableLiveData.value != null) {
-            sb.append(
-                String.format(
-                    getString(R.string.bufferedRangesLength), bufferedMutableLiveData.value!!
-                        .length()
-                )
-            )
-            for (r in bufferedMutableLiveData.value!!) {
-                sb.append(String.format(getString(R.string.rangeFormat), r.start, r.end))
+        bufferedMutableLiveData.value?.apply {
+            append(String.format(getString(R.string.bufferedRangesLength), length()))
+            forEach {
+                append(String.format(getString(R.string.rangeFormat), it.start, it.end))
             }
         }
 
         // getting played ranges from livedata object
-        if (playedMutableLiveData.value != null) {
-            sb.append(
-                String.format(
-                    getString(R.string.playedRangesLength), playedMutableLiveData.value!!
-                        .length()
-                )
-            )
-            for (r in playedMutableLiveData.value!!) {
-                sb.append(String.format(getString(R.string.rangeFormat), r.start, r.end))
+        playedMutableLiveData.value?.apply {
+            append(String.format(getString(R.string.playedRangesLength), length()))
+            forEach {
+                append(String.format(getString(R.string.rangeFormat), it.start, it.end))
             }
         }
 
         // getting seekable ranges from livedata object
-        if (seekableMutableLiveData.value != null) {
-            sb.append(
-                String.format(
-                    getString(R.string.seekableRangesLength), seekableMutableLiveData.value!!
-                        .length()
-                )
-            )
-            for (r in seekableMutableLiveData.value!!) {
-                sb.append(String.format(getString(R.string.rangeFormat), r.start, r.end))
+        seekableMutableLiveData.value?.apply {
+            append(String.format(getString(R.string.seekableRangesLength), length()))
+            forEach {
+                append(String.format(getString(R.string.rangeFormat), it.start, it.end))
             }
         }
-        return sb.toString()
     }
 
-    private fun formatAdsInfo(): String {
-        val sb = StringBuilder()
+    private fun formatAdsInfo() = buildString {
         val currentAds = currentAdsLiveData.value
         // displaying current ads info
         if (!currentAds.isNullOrEmpty()) {
-            sb.append(String.format(getString(R.string.currentAds)))
-            for (currentAd in currentAds) {
-                sb.append(
+            append(String.format(getString(R.string.currentAds)))
+            currentAds.forEach { currentAd ->
+                append(
                     String.format(
                         getString(R.string.integration),
                         currentAd.integration.toString()
                     )
                 )
-                sb.append(String.format(getString(R.string.adId), currentAd.id))
-                sb.append(String.format(getString(R.string.skipOffset), currentAd.skipOffset))
+                append(String.format(getString(R.string.adId), currentAd.id))
+                append(String.format(getString(R.string.skipOffset), currentAd.skipOffset))
                 if (currentAd.adBreak != null) {
-                    sb.append(
+                    append(
                         String.format(
                             getString(R.string.offset), currentAd.adBreak!!
                                 .timeOffset
                         )
                     )
-                    sb.append(
+                    append(
                         String.format(
                             getString(R.string.maxDuration), currentAd.adBreak!!
                                 .maxDuration
                         )
                     )
-                    sb.append(
+                    append(
                         String.format(
                             getString(R.string.maxRemainingDuration), currentAd.adBreak!!
                                 .maxRemainingDuration
@@ -276,30 +251,30 @@ class PlayerActivity : AppCompatActivity() {
         val scheduledAds = scheduledAdsLiveData.value
         // displaying scheduled ads info
         if (!scheduledAds.isNullOrEmpty()) {
-            sb.append(String.format(getString(R.string.scheduledAds)))
+            append(String.format(getString(R.string.scheduledAds)))
             for (scheduledAd in scheduledAds) {
-                sb.append(
+                append(
                     String.format(
                         getString(R.string.integration),
                         scheduledAd.integration.toString()
                     )
                 )
-                sb.append(String.format(getString(R.string.adId), scheduledAd.id))
-                sb.append(String.format(getString(R.string.skipOffset), scheduledAd.skipOffset))
+                append(String.format(getString(R.string.adId), scheduledAd.id))
+                append(String.format(getString(R.string.skipOffset), scheduledAd.skipOffset))
                 if (scheduledAd.adBreak != null) {
-                    sb.append(
+                    append(
                         String.format(
                             getString(R.string.offset), scheduledAd.adBreak!!
                                 .timeOffset
                         )
                     )
-                    sb.append(
+                    append(
                         String.format(
                             getString(R.string.maxDuration), scheduledAd.adBreak!!
                                 .maxDuration
                         )
                     )
-                    sb.append(
+                    append(
                         String.format(
                             getString(R.string.maxRemainingDuration), scheduledAd.adBreak!!
                                 .maxRemainingDuration
@@ -308,16 +283,11 @@ class PlayerActivity : AppCompatActivity() {
                 }
             }
         }
-        return sb.toString()
     }
 
-    private fun formatStateInfo(): String {
-        return String.format(getString(R.string.playerState), playerState)
-    }
+    private fun formatStateInfo() = String.format(getString(R.string.playerState), playerState)
 
-    private fun formatPreloadInfo(): String {
-        return String.format(getString(R.string.preload), theoPlayer.preload.type)
-    }
+    private fun formatPreloadInfo() = String.format(getString(R.string.preload), theoPlayer.preload.type)
 
     private fun updateAdsInfo() {
         (findViewById<View>(R.id.ads_output) as TextView).text = formatAdsInfo()

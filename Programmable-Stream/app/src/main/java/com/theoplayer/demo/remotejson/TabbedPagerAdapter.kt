@@ -27,17 +27,13 @@ internal class TabbedPagerAdapter(private val context: Context) : PagerAdapter()
         collection.removeView(view as View)
     }
 
-    override fun getCount(): Int {
-        return tabs.size
-    }
+    override fun getCount() = tabs.size
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view === `object`
     }
 
-    override fun getPageTitle(position: Int): CharSequence {
-        return context.getString(tabs[position].titleResId)
-    }
+    override fun getPageTitle(position: Int) = context.getString(tabs[position].titleResId)
 
     private class Tab constructor(
         @field:StringRes @param:StringRes val titleResId: Int,

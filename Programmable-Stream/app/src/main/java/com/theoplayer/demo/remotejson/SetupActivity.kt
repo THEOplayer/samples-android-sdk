@@ -1,9 +1,6 @@
 package com.theoplayer.demo.remotejson
 
 import android.os.Bundle
-import android.text.Layout
-import android.text.SpannableString
-import android.text.style.AlignmentSpan
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +9,6 @@ import com.theoplayer.demo.remotejson.databinding.ActivitySetupBinding
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.BufferedReader
-import java.io.InputStreamReader
 import java.net.URL
 
 class SetupActivity : AppCompatActivity() {
@@ -47,36 +43,25 @@ class SetupActivity : AppCompatActivity() {
 
     private fun createDownloadRemoteJsonJob(url: String): Runnable {
         return Runnable {
-            val stringBuilder = StringBuilder()
+            var jsonConfiguration: String
             try {
-                BufferedReader(InputStreamReader(URL(url).openStream())).use { reader ->
-                    var line: String?
-                    while (reader.readLine().also { line = it } != null) {
-                        stringBuilder.append(line)
-                    }
-                }
+                jsonConfiguration = URL(url).openStream().bufferedReader().use (BufferedReader::readText)
             } catch (exception: Exception) {
+                jsonConfiguration = ""
                 Log.d(TAG, "Remote JSON download failed", exception)
             }
             runOnUiThread {
                 viewBinding.playButton.isEnabled = true
                 try {
                     // Reading the json file from given URL
-                    val jsonObject = prepareJsonConfig(stringBuilder)
+                    val jsonObject = prepareJsonConfig(jsonConfiguration)
                     val playerConfiguration =
                         jsonObject.getJSONObject("playerConfiguration").toString()
                     val source = jsonObject.getJSONObject("source").toString()
                     PlayerActivity.play(this@SetupActivity, playerConfiguration, source)
                 } catch (exception: JSONException) {
                     Log.e(TAG, "Not a valid JSON configuration.", exception)
-                    val toastMessage =
-                        SpannableString.valueOf(this.getString(R.string.incorrectJsonConfiguration))
-                    toastMessage.setSpan(
-                        AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER),
-                        0,
-                        toastMessage.length,
-                        0
-                    )
+                    val toastMessage = this.getString(R.string.incorrectJsonConfiguration)
                     Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show()
                 }
             }
@@ -84,9 +69,9 @@ class SetupActivity : AppCompatActivity() {
     }
 
     @Throws(JSONException::class)
-    private fun prepareJsonConfig(jsonString: StringBuilder): JSONObject {
+    private fun prepareJsonConfig(jsonString: String): JSONObject {
         // the JSON file should be stripped from analytics object, as this app doesn't support it
-        val jsonObject = JSONObject(jsonString.toString())
+        val jsonObject = JSONObject(jsonString)
         jsonObject.getJSONObject("playerConfiguration").remove("analytics")
         jsonObject.getJSONObject("source").remove("analytics")
         return jsonObject
