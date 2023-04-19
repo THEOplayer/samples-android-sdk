@@ -1,58 +1,53 @@
-package com.theoplayer.demo.simpleott.network;
+package com.theoplayer.demo.simpleott.network
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.ConnectivityManager.NetworkCallback;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.net.NetworkRequest;
-import android.net.wifi.WifiManager;
-import android.os.Build;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
+import android.net.ConnectivityManager.NetworkCallback
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
+import android.net.wifi.WifiManager
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
 /**
  * This class is responsible for keeping WiFi connection state info.
- * <p/>
+ *
+ *
  * It registers WiFi monitor to keep application informed about WiFi connectivity changes.
- * <p/>
+ *
+ *
  * It keep setting about download allowance depending on WiFi connectivity state. This value is
- * also persisted in <code>SharedPreferences</code>, so it can be restored after application restart.
- * <p/>
- * Appropriate <code>LiveData</code> objects are provided to observe WiFi network info changes.
+ * also persisted in `SharedPreferences`, so it can be restored after application restart.
+ *
+ *
+ * Appropriate `LiveData` objects are provided to observe WiFi network info changes.
  */
-public class WiFiNetworkInfo {
-
-    private static final String SETTINGS_FILE = "wifiNetworkInfoSettings";
-    private static final String SETTING_DOWNLOAD_ONLY_ON_WIFI = "downloadOnlyOnWiFi";
-
+class WiFiNetworkInfo(context: Context) {
     /**
      * Keeps information about WiFi connectivity state.
      */
-    private MutableLiveData<Boolean> connectedToWiFi = new MutableLiveData<>();
+    private val connectedToWiFi = MutableLiveData<Boolean>()
 
     /**
      * Keeps information about download allowance depending on WiFi connectivity state.
      */
-    private MutableLiveData<Boolean> downloadOnlyOnWiFi = new MutableLiveData<>();
+    private val downloadOnlyOnWiFi = MutableLiveData<Boolean>()
 
-    public WiFiNetworkInfo(Context context) {
+    init {
         // Choosing a Wifi monitor depending on the Android API version.
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
-            registerModernWifiMonitor(context);
+            registerModernWifiMonitor(context)
         } else {
-            registerLegacyWifiMonitor(context);
+            registerLegacyWifiMonitor(context)
         }
-
-        loadDownloadOnlyOnWiFiValue(context);
+        loadDownloadOnlyOnWiFiValue(context)
     }
 
     /**
@@ -60,17 +55,17 @@ public class WiFiNetworkInfo {
      *
      * @return WiFi connectivity state holder.
      */
-    public LiveData<Boolean> connectedToWiFi() {
-        return connectedToWiFi;
+    fun connectedToWiFi(): LiveData<Boolean> {
+        return connectedToWiFi
     }
 
     /**
      * Returns current WiFi connectivity state.
      *
-     * @return <code>true</code> if WiFi is connected; <code>false</code> otherwise.
+     * @return `true` if WiFi is connected; `false` otherwise.
      */
-    public boolean isConnectedToWiFi() {
-        return connectedToWiFi.getValue() != null ? connectedToWiFi.getValue() : false;
+    fun isConnectedToWiFi(): Boolean {
+        return if (connectedToWiFi.value != null) connectedToWiFi.value!! else false
     }
 
     /**
@@ -78,101 +73,100 @@ public class WiFiNetworkInfo {
      *
      * @return download allowance depending on WiFi connectivity state holder.
      */
-    public LiveData<Boolean> downloadOnlyOnWiFi() {
-        return downloadOnlyOnWiFi;
+    fun downloadOnlyOnWiFi(): LiveData<Boolean> {
+        return downloadOnlyOnWiFi
     }
 
     /**
      * Returns current value of download allowance depending on WiFi connectivity state setting.
      *
-     * @return <code>true</code> if download is allowed when WiFi is connected; <code>false</code> otherwise.
+     * @return `true` if download is allowed when WiFi is connected; `false` otherwise.
      */
-    public boolean isDownloadOnlyOnWiFi() {
-        return downloadOnlyOnWiFi.getValue() != null ? downloadOnlyOnWiFi.getValue() : true;
+    fun isDownloadOnlyOnWiFi(): Boolean {
+        return if (downloadOnlyOnWiFi.value != null) downloadOnlyOnWiFi.value!! else true
     }
 
     /**
      * Allows to change value of download allowance depending on WiFi connectivity state setting.
      *
-     * @param shouldDownloadOnlyOnWiFi <code>true</code> if download is allowed when WiFi is connected;
-     *                                 <code>false</code> otherwise.
+     * @param shouldDownloadOnlyOnWiFi `true` if download is allowed when WiFi is connected;
+     * `false` otherwise.
      */
-    public void setDownloadOnlyOnWiFi(boolean shouldDownloadOnlyOnWiFi) {
-        downloadOnlyOnWiFi.postValue(shouldDownloadOnlyOnWiFi);
+    fun setDownloadOnlyOnWiFi(shouldDownloadOnlyOnWiFi: Boolean) {
+        downloadOnlyOnWiFi.postValue(shouldDownloadOnlyOnWiFi)
     }
 
     /**
      * Loads value of download allowance depending on WiFi connectivity state setting from
-     * <code>SharedPreferences</code>.
+     * `SharedPreferences`.
      *
      * @param context - The current context.
      */
-    private void loadDownloadOnlyOnWiFiValue(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SETTINGS_FILE, Context.MODE_PRIVATE);
-
-        downloadOnlyOnWiFi.postValue(sharedPreferences.getBoolean(SETTING_DOWNLOAD_ONLY_ON_WIFI, true));
-
-        downloadOnlyOnWiFi.observe((LifecycleOwner) context, downloadOnlyOnWiFi -> {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(SETTING_DOWNLOAD_ONLY_ON_WIFI, downloadOnlyOnWiFi);
-            editor.apply();
-        });
+    private fun loadDownloadOnlyOnWiFiValue(context: Context) {
+        val sharedPreferences = context.getSharedPreferences(SETTINGS_FILE, Context.MODE_PRIVATE)
+        downloadOnlyOnWiFi.postValue(
+            sharedPreferences.getBoolean(
+                SETTING_DOWNLOAD_ONLY_ON_WIFI,
+                true
+            )
+        )
+        downloadOnlyOnWiFi.observe((context as LifecycleOwner)) { downloadOnlyOnWiFi: Boolean? ->
+            val editor = sharedPreferences.edit()
+            editor.putBoolean(SETTING_DOWNLOAD_ONLY_ON_WIFI, downloadOnlyOnWiFi!!)
+            editor.apply()
+        }
     }
 
     /**
-     * Registers WiFi connectivity state monitor using <code>NetworkCallback</code>.
+     * Registers WiFi connectivity state monitor using `NetworkCallback`.
      * Solution for API Level >= 21.
      *
      * @param context - The current context.
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void registerModernWifiMonitor(Context context) {
-        NetworkRequest wifiRequest = (new NetworkRequest.Builder())
-                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-                .build();
-
-        NetworkCallback wifiSateCallback = new NetworkCallback() {
-            @Override
-            public void onAvailable(@NonNull Network network) {
-                connectedToWiFi.postValue(true);
+    private fun registerModernWifiMonitor(context: Context) {
+        val wifiRequest = NetworkRequest.Builder()
+            .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+            .build()
+        val wifiSateCallback: NetworkCallback = object : NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                connectedToWiFi.postValue(true)
             }
 
-            @Override
-            public void onLost(@NonNull Network network) {
-                connectedToWiFi.postValue(false);
+            override fun onLost(network: Network) {
+                connectedToWiFi.postValue(false)
             }
-        };
-
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager != null) {
-            connectivityManager.registerNetworkCallback(wifiRequest, wifiSateCallback);
         }
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        connectivityManager?.registerNetworkCallback(wifiRequest, wifiSateCallback)
     }
 
     /**
-     * Registers WiFi connectivity state monitor using <code>BroadcastReceiver</code>.
+     * Registers WiFi connectivity state monitor using `BroadcastReceiver`.
      * Solution for API Level < 21.
      *
      * @param context - The current context.
      */
-    private void registerLegacyWifiMonitor(Context context) {
-        BroadcastReceiver wifiStateReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-
-                boolean wifiConnected = wifiManager != null
-                        && wifiManager.isWifiEnabled()                           // Wi-Fi adapter is ON
-                        && wifiManager.getConnectionInfo().getNetworkId() != -1; // Connected to an access point
-
+    private fun registerLegacyWifiMonitor(context: Context) {
+        val wifiStateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                val wifiManager =
+                    context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+                val wifiConnected =
+                    wifiManager != null && wifiManager.isWifiEnabled && wifiManager.connectionInfo.networkId != -1 // Connected to an access point
                 if (isConnectedToWiFi() != wifiConnected) {
-                    connectedToWiFi.setValue(wifiConnected);
+                    connectedToWiFi.setValue(wifiConnected)
                 }
             }
-        };
+        }
+        val intentFilter = IntentFilter()
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE")
+        context.registerReceiver(wifiStateReceiver, intentFilter)
+    }
 
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        context.registerReceiver(wifiStateReceiver, intentFilter);
+    companion object {
+        private const val SETTINGS_FILE = "wifiNetworkInfoSettings"
+        private const val SETTING_DOWNLOAD_ONLY_ON_WIFI = "downloadOnlyOnWiFi"
     }
 }

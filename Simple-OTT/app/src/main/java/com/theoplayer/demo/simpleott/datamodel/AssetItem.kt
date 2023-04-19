@@ -1,9 +1,12 @@
-package com.theoplayer.demo.simpleott.datamodel;
+package com.theoplayer.demo.simpleott.datamodel
 
-public class AssetItem {
-    public String name;
-    public String description;
-    public int imageId;
-    public String imageUrl;
-    public String videoSource;
+open class AssetItem {
+    @JvmField
+    var name: String? = null
+    @JvmField
+    var description: String? = null
+    @JvmField
+    var imageId = 0
+    var imageUrl: String? = null
+    var videoSource: String? = null
 }

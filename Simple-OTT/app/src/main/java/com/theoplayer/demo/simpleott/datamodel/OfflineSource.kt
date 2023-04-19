@@ -1,102 +1,102 @@
-package com.theoplayer.demo.simpleott.datamodel;
+package com.theoplayer.demo.simpleott.datamodel
 
-import android.content.Context;
-import android.util.Log;
+import android.content.*
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.theoplayer.android.api.cache.CachingTask
+import com.theoplayer.android.api.cache.CachingTaskStatus
+import com.theoplayer.android.api.event.EventListener
+import com.theoplayer.android.api.event.cache.task.CachingTaskEventTypes
+import com.theoplayer.android.api.event.cache.task.CachingTaskProgressEvent
+import com.theoplayer.android.api.event.cache.task.CachingTaskStateChangeEvent
+import com.theoplayer.demo.simpleott.FullScreenPlayerActivity
 
-import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+class OfflineSource(item: AssetItem) : AssetItem() {
+    private var cachingTask: CachingTask?
+    private val cachingTaskStatus: MutableLiveData<CachingTaskStatus?>
+    private val cachingTaskProgress: MutableLiveData<Double>
+    private val uiEnabled: MutableLiveData<Boolean?>
 
-import com.theoplayer.android.api.cache.CachingTask;
-import com.theoplayer.android.api.cache.CachingTaskStatus;
-import com.theoplayer.android.api.event.cache.task.CachingTaskEventTypes;
-import com.theoplayer.demo.simpleott.FullScreenPlayerActivity;
-
-public class OfflineSource extends AssetItem {
-
-    private static final String TAG = OfflineSource.class.getSimpleName();
-
-    private CachingTask cachingTask;
-    private final MutableLiveData<CachingTaskStatus> cachingTaskStatus;
-    private final MutableLiveData<Double> cachingTaskProgress;
-    private final MutableLiveData<Boolean> uiEnabled;
-
-    public OfflineSource(AssetItem item) {
-        this.name = item.name;
-        this.description = item.description;
-        this.imageUrl = item.imageUrl;
-        this.videoSource = item.videoSource;
-        this.cachingTask = null;
-        this.cachingTaskStatus = new MutableLiveData<>();
-        this.cachingTaskProgress = new MutableLiveData<>();
-        this.uiEnabled = new MutableLiveData<>();
+    init {
+        name = item.name
+        description = item.description
+        imageUrl = item.imageUrl
+        videoSource = item.videoSource
+        cachingTask = null
+        cachingTaskStatus = MutableLiveData()
+        cachingTaskProgress = MutableLiveData()
+        uiEnabled = MutableLiveData()
     }
 
-    public void setCachingTask(@Nullable CachingTask cachingTask) {
-        this.cachingTask = cachingTask;
-        cachingTaskStatus.setValue(cachingTask == null ? CachingTaskStatus.EVICTED : cachingTask.getStatus());
-        cachingTaskProgress.setValue(cachingTask == null ? 0.0D : cachingTask.getPercentageCached());
-
+    fun setCachingTask(cachingTask: CachingTask?) {
+        this.cachingTask = cachingTask
+        cachingTaskStatus.setValue(cachingTask?.status ?: CachingTaskStatus.EVICTED)
+        cachingTaskProgress.setValue(cachingTask?.percentageCached ?: 0.0)
         if (cachingTask != null) {
-
             cachingTask.addEventListener(CachingTaskEventTypes.CACHING_TASK_PROGRESS,
-                    event -> {
-                        Log.i(TAG, "Event: CACHING_TASK_PROGRESS, title='" + name + "', progress=" + cachingTask.getPercentageCached());
-                        cachingTaskProgress.setValue(cachingTask.getPercentageCached());
-                    });
+                EventListener { event: CachingTaskProgressEvent? ->
+                    Log.i(
+                        TAG,
+                        "Event: CACHING_TASK_PROGRESS, title='" + name + "', progress=" + cachingTask.percentageCached
+                    )
+                    cachingTaskProgress.setValue(cachingTask.percentageCached)
+                })
             // Changing the task status is asynchronous and the code has to react on the status change
             cachingTask.addEventListener(CachingTaskEventTypes.CACHING_TASK_STATE_CHANGE,
-                    event -> {
-                        Log.i(TAG, "Event: CACHING_TASK_STATE_CHANGE, title='" + name + "', status=" + cachingTask.getStatus() + ", progress=" + cachingTask.getPercentageCached());
-                        cachingTaskStatus.setValue(cachingTask.getStatus());
-                        cachingTaskProgress.setValue(cachingTask.getPercentageCached());
-                        uiEnabled.setValue(true);
-                    });
+                EventListener { event: CachingTaskStateChangeEvent? ->
+                    Log.i(
+                        TAG,
+                        "Event: CACHING_TASK_STATE_CHANGE, title='" + name + "', status=" + cachingTask.status + ", progress=" + cachingTask.percentageCached
+                    )
+                    cachingTaskStatus.setValue(cachingTask.status)
+                    cachingTaskProgress.setValue(cachingTask.percentageCached)
+                    uiEnabled.setValue(true)
+                })
         }
     }
 
-    public LiveData<CachingTaskStatus> getCachingTaskStatusLiveData() {
-        return cachingTaskStatus;
+    val cachingTaskStatusLiveData: LiveData<CachingTaskStatus?>
+        get() = cachingTaskStatus
+
+    fun getCachingTaskStatus(): CachingTaskStatus? {
+        return if (cachingTask != null) cachingTask!!.status else null
     }
 
-    public CachingTaskStatus getCachingTaskStatus() {
-        return cachingTask != null ? cachingTask.getStatus() : null;
-    }
+    val uiEnabledLiveData: LiveData<Boolean?>
+        get() = uiEnabled
+    val cachingTaskProgressLiveData: LiveData<Double>
+        get() = cachingTaskProgress
 
-    public LiveData<Boolean> getUiEnabledLiveData() {
-        return uiEnabled;
-    }
-
-    public LiveData<Double> getCachingTaskProgressLiveData() {
-        return cachingTaskProgress;
-    }
-
-    public void startCachingTask() {
-        uiEnabled.setValue(false);
+    fun startCachingTask() {
+        uiEnabled.value = false
         if (cachingTask != null) {
-            Log.i(TAG, "Starting caching task, title='" + name + "'");
-            cachingTask.start();
+            Log.i(TAG, "Starting caching task, title='$name'")
+            cachingTask!!.start()
         }
     }
 
-    public void pauseCachingTask() {
-        uiEnabled.setValue(false);
+    fun pauseCachingTask() {
+        uiEnabled.value = false
         if (cachingTask != null) {
-            Log.i(TAG, "Pausing caching task, title='" + name + "'");
-            cachingTask.pause();
+            Log.i(TAG, "Pausing caching task, title='$name'")
+            cachingTask!!.pause()
         }
     }
 
-    public void removeCachingTask() {
-        uiEnabled.setValue(false);
+    fun removeCachingTask() {
+        uiEnabled.value = false
         if (cachingTask != null) {
-            Log.i(TAG, "Removing caching task, title='" + name + "'");
-            cachingTask.remove();
+            Log.i(TAG, "Removing caching task, title='$name'")
+            cachingTask!!.remove()
         }
     }
 
-    public void play(Context context) {
-        FullScreenPlayerActivity.play(context, videoSource);
+    fun play(context: Context) {
+        FullScreenPlayerActivity.Companion.play(context, videoSource)
     }
 
+    companion object {
+        private val TAG = OfflineSource::class.java.simpleName
+    }
 }

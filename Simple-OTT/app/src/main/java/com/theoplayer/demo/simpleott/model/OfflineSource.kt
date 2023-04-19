@@ -1,44 +1,37 @@
-package com.theoplayer.demo.simpleott.model;
+package com.theoplayer.demo.simpleott.model
 
-import android.util.Log;
-
-import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
-import com.theoplayer.android.api.cache.CachingTask;
-import com.theoplayer.android.api.cache.CachingTaskStatus;
-import com.theoplayer.android.api.event.cache.task.CachingTaskEventTypes;
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.theoplayer.android.api.cache.CachingTask
+import com.theoplayer.android.api.cache.CachingTaskStatus
+import com.theoplayer.android.api.event.EventListener
+import com.theoplayer.android.api.event.cache.task.CachingTaskEventTypes
+import com.theoplayer.android.api.event.cache.task.CachingTaskProgressEvent
+import com.theoplayer.android.api.event.cache.task.CachingTaskStateChangeEvent
 
 /**
  * Wrapper for stream source definition. It is flavored with caching task so stream source can be
  * downloaded and UI can be updated with download state and progress.
  */
-public class OfflineSource extends StreamSource {
-
-    private static final String TAG = OfflineSource.class.getSimpleName();
-
-    private CachingTask cachingTask;
-    private final MutableLiveData<CachingTaskStatus> cachingTaskStatus = new MutableLiveData<>();
-    private final MutableLiveData<Double> cachingTaskProgress = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> stateUpToDate = new MutableLiveData<>();
-
-    OfflineSource(StreamSource streamSource) {
-        super(
-                streamSource.getTitle(),
-                streamSource.getDescription(),
-                streamSource.getSource(),
-                streamSource.getImageResId()
-        );
-    }
+class OfflineSource internal constructor(streamSource: StreamSource?) : StreamSource(
+    streamSource.getTitle(),
+    streamSource.getDescription(),
+    streamSource.getSource(),
+    streamSource.getImageResId()
+) {
+    private var cachingTask: CachingTask? = null
+    private val cachingTaskStatus = MutableLiveData<CachingTaskStatus?>()
+    private val cachingTaskProgress = MutableLiveData<Double?>()
+    private val stateUpToDate = MutableLiveData<Boolean?>()
 
     /**
-     * Provides holder of this <code>OfflineSource</code> instance state up-to-dateness that can be observed.
+     * Provides holder of this `OfflineSource` instance state up-to-dateness that can be observed.
      *
-     * @return this <code>OfflineSource</code> instance state up-to-dateness holder.
+     * @return this `OfflineSource` instance state up-to-dateness holder.
      */
-    public LiveData<Boolean> isStateUpToDate() {
-        return stateUpToDate;
+    fun isStateUpToDate(): LiveData<Boolean?> {
+        return stateUpToDate
     }
 
     /**
@@ -46,8 +39,8 @@ public class OfflineSource extends StreamSource {
      *
      * @return caching task status holder.
      */
-    public LiveData<CachingTaskStatus> getCachingTaskStatus() {
-        return cachingTaskStatus;
+    fun getCachingTaskStatus(): LiveData<CachingTaskStatus?> {
+        return cachingTaskStatus
     }
 
     /**
@@ -55,83 +48,91 @@ public class OfflineSource extends StreamSource {
      *
      * @return caching task progress holder.
      */
-    public LiveData<Double> getCachingTaskProgress() {
-        return cachingTaskProgress;
+    fun getCachingTaskProgress(): LiveData<Double?> {
+        return cachingTaskProgress
     }
 
     /**
-     * Assigns <code>CachingTask</code> instance and configures current <code>OfflineSource</code>
+     * Assigns `CachingTask` instance and configures current `OfflineSource`
      * instances with it.
      *
      * @param cachingTask - The corresponding caching task.
      */
-    void assignCachingTask(@Nullable CachingTask cachingTask) {
-        this.cachingTask = cachingTask;
-        stateUpToDate.setValue(false);
-        cachingTaskStatus.setValue(cachingTask == null ? CachingTaskStatus.EVICTED : cachingTask.getStatus());
-        cachingTaskProgress.setValue(cachingTask == null ? 0.0D : cachingTask.getPercentageCached());
-
+    fun assignCachingTask(cachingTask: CachingTask?) {
+        this.cachingTask = cachingTask
+        stateUpToDate.value = false
+        cachingTaskStatus.value = cachingTask?.status ?: CachingTaskStatus.EVICTED
+        cachingTaskProgress.value = cachingTask?.percentageCached ?: 0.0
         if (cachingTask != null) {
             cachingTask.addEventListener(CachingTaskEventTypes.CACHING_TASK_PROGRESS,
-                    event -> {
-                        Log.i(TAG, "Event: CACHING_TASK_PROGRESS, title='" + getTitle() + "', progress=" + cachingTask.getPercentageCached());
-                        cachingTaskProgress.setValue(cachingTask.getPercentageCached());
-                    });
+                EventListener { event: CachingTaskProgressEvent? ->
+                    Log.i(
+                        TAG,
+                        "Event: CACHING_TASK_PROGRESS, title='" + title + "', progress=" + cachingTask.percentageCached
+                    )
+                    cachingTaskProgress.setValue(cachingTask.percentageCached)
+                })
             cachingTask.addEventListener(CachingTaskEventTypes.CACHING_TASK_STATE_CHANGE,
-                    event -> {
-                        Log.i(TAG, "Event: CACHING_TASK_STATE_CHANGE, title='" + getTitle() + "', status=" + cachingTask.getStatus() + ", progress=" + cachingTask.getPercentageCached());
-                        cachingTaskStatus.setValue(cachingTask.getStatus());
-                        cachingTaskProgress.setValue(cachingTask.getPercentageCached());
-                        stateUpToDate.setValue(true);
-                    });
+                EventListener { event: CachingTaskStateChangeEvent? ->
+                    Log.i(
+                        TAG,
+                        "Event: CACHING_TASK_STATE_CHANGE, title='" + title + "', status=" + cachingTask.status + ", progress=" + cachingTask.percentageCached
+                    )
+                    cachingTaskStatus.setValue(cachingTask.status)
+                    cachingTaskProgress.setValue(cachingTask.percentageCached)
+                    stateUpToDate.setValue(true)
+                })
         }
-        stateUpToDate.setValue(true);
+        stateUpToDate.setValue(true)
     }
 
     /**
      * Checks if assigned caching task is in given status.
      *
      * @param cachingTaskStatus - caching task status to check
-     * @return <code>true</code> - if assigned caching task is in queried status; <code>false</code> otherwise.
+     * @return `true` - if assigned caching task is in queried status; `false` otherwise.
      */
-    boolean hasStatus(CachingTaskStatus cachingTaskStatus) {
-        return cachingTask != null && cachingTask.getStatus() == cachingTaskStatus;
+    fun hasStatus(cachingTaskStatus: CachingTaskStatus): Boolean {
+        return cachingTask != null && cachingTask!!.status == cachingTaskStatus
     }
 
     /**
-     * Allows to start assigned caching task updating this <code>OfflineSource</code> instance
+     * Allows to start assigned caching task updating this `OfflineSource` instance
      * state accordingly. Source is being downloaded.
      */
-    void startCachingTask() {
+    fun startCachingTask() {
         if (cachingTask != null) {
-            Log.i(TAG, "Starting caching task, title='" + getTitle() + "'");
-            stateUpToDate.setValue(false);
-            cachingTask.start();
+            Log.i(TAG, "Starting caching task, title='$title'")
+            stateUpToDate.value = false
+            cachingTask!!.start()
         }
     }
 
     /**
-     * Allows to pause assigned caching task updating this <code>OfflineSource</code> instance
+     * Allows to pause assigned caching task updating this `OfflineSource` instance
      * state accordingly. Source downloading is on-hold.
      */
-    void pauseCachingTask() {
+    fun pauseCachingTask() {
         if (cachingTask != null) {
-            Log.i(TAG, "Pausing caching task, title='" + getTitle() + "'");
-            stateUpToDate.setValue(false);
-            cachingTask.pause();
+            Log.i(TAG, "Pausing caching task, title='$title'")
+            stateUpToDate.value = false
+            cachingTask!!.pause()
         }
     }
 
     /**
-     * Allows to remove assigned caching task updating this <code>OfflineSource</code> instance
+     * Allows to remove assigned caching task updating this `OfflineSource` instance
      * state accordingly. Active caching task is cancelled. Any downloaded content is purged.
      */
-    void removeCachingTask() {
+    fun removeCachingTask() {
         if (cachingTask != null) {
-            Log.i(TAG, "Removing caching task, title='" + getTitle() + "'");
-            stateUpToDate.setValue(false);
-            cachingTask.remove();
+            Log.i(TAG, "Removing caching task, title='$title'")
+            stateUpToDate.value = false
+            cachingTask!!.remove()
         }
     }
 
+    companion object {
+        private val TAG = OfflineSource::class.java.simpleName
+    }
 }

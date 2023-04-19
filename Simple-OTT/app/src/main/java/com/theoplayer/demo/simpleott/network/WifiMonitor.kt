@@ -1,30 +1,19 @@
-package com.theoplayer.demo.simpleott.network;
+package com.theoplayer.demo.simpleott.network
 
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.os.Build;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.lifecycle.MutableLiveData;
+import android.net.ConnectivityManager.NetworkCallback
+import android.net.Network
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.MutableLiveData
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-public class WifiMonitor extends ConnectivityManager.NetworkCallback implements SimpleOTTWifiMonitor {
-
-    private MutableLiveData<Boolean> isConnectedLiveData = new MutableLiveData<>();
-
-    @Override
-    public void onAvailable(@NonNull Network network) {
-        isConnectedLiveData.postValue(true);
+class WifiMonitor : NetworkCallback(), SimpleOTTWifiMonitor {
+    override val isConnectedLiveData = MutableLiveData<Boolean?>()
+    override fun onAvailable(network: Network) {
+        isConnectedLiveData.postValue(true)
     }
 
-    @Override
-    public void onLost(@NonNull Network network) {
-        isConnectedLiveData.postValue(false);
-    }
-
-    public MutableLiveData<Boolean> getIsConnectedLiveData() {
-        return isConnectedLiveData;
+    override fun onLost(network: Network) {
+        isConnectedLiveData.postValue(false)
     }
 }
-

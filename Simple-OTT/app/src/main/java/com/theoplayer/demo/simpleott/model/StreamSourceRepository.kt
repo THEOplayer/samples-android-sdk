@@ -1,34 +1,30 @@
-package com.theoplayer.demo.simpleott.model;
+package com.theoplayer.demo.simpleott.model
 
-import android.content.Context;
-
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonObject;
-import com.theoplayer.demo.simpleott.R;
-
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import android.content.Context
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.theoplayer.demo.simpleott.R
+import java.lang.reflect.Type
+import java.util.*
 
 /**
  * Provides stream source definitions.
- * <p/>
+ *
+ *
  * Stream source definitions are loaded from 'raw/stream_source.json' configuration.
  */
-public class StreamSourceRepository {
+class StreamSourceRepository(context: Context) {
+    private val streamSources: StreamSources?
 
-    private StreamSources streamSources;
-
-    public StreamSourceRepository(Context context) {
-        InputStream configInputStream = context.getResources().openRawResource(R.raw.stream_sources);
-        String jsonString = new Scanner(configInputStream).useDelimiter("\\Z").next();
-
-        streamSources = new GsonBuilder()
-                .registerTypeAdapter(StreamSource.class, streamSourceDeserializer(context))
-                .create()
-                .fromJson(jsonString, StreamSources.class);
+    init {
+        val configInputStream = context.resources.openRawResource(R.raw.stream_sources)
+        val jsonString = Scanner(configInputStream).useDelimiter("\\Z").next()
+        streamSources = GsonBuilder()
+            .registerTypeAdapter(StreamSource::class.java, streamSourceDeserializer(context))
+            .create()
+            .fromJson(jsonString, StreamSources::class.java)
     }
 
     /**
@@ -36,52 +32,50 @@ public class StreamSourceRepository {
      *
      * @return live stream sources.
      */
-    public List<StreamSource> getLiveStreamSources() {
-        return streamSources != null ? streamSources.live : new ArrayList<>();
-    }
+    val liveStreamSources: List<StreamSource>?
+        get() = if (streamSources != null) streamSources.live else ArrayList()
 
     /**
      * Returns stream sources to be displayed on "ON DEMAND" tab.
      *
      * @return on demand stream sources.
      */
-    public List<StreamSource> getOnDemandStreamSources() {
-        return streamSources != null ? streamSources.onDemand : new ArrayList<>();
-    }
+    val onDemandStreamSources: List<StreamSource>?
+        get() = if (streamSources != null) streamSources.onDemand else ArrayList()
 
     /**
      * Returns stream sources to be displayed on "OFFLINE" tab.
      *
      * @return offline stream sources.
      */
-    public List<StreamSource> getOfflineStreamSources() {
-        return streamSources != null ? streamSources.offline : new ArrayList<>();
+    val offlineStreamSources: List<StreamSource>?
+        get() = if (streamSources != null) streamSources.offline else ArrayList()
+
+    private class StreamSources {
+        var live: List<StreamSource>? = null
+        var onDemand: List<StreamSource>? = null
+        var offline: List<StreamSource>? = null
     }
 
-    private static JsonDeserializer<StreamSource> streamSourceDeserializer(Context context) {
-        return (jsonElement, typeOfT, jsonContext) -> {
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
+    companion object {
+        private fun streamSourceDeserializer(context: Context): JsonDeserializer<StreamSource> {
+            return JsonDeserializer { jsonElement: JsonElement, typeOfT: Type?, jsonContext: JsonDeserializationContext? ->
+                val jsonObject = jsonElement.asJsonObject
 
-            // Finding real drawable resource identifier for image reference string.
-            int imageResId = 0;
-            String image = jsonObject.get("image").getAsString();
-            if (image != null) {
-                imageResId = context.getResources().getIdentifier(image, "drawable", context.getPackageName());
+                // Finding real drawable resource identifier for image reference string.
+                var imageResId = 0
+                val image = jsonObject["image"].asString
+                if (image != null) {
+                    imageResId =
+                        context.resources.getIdentifier(image, "drawable", context.packageName)
+                }
+                StreamSource(
+                    jsonObject["title"].asString,
+                    jsonObject["description"].asString,
+                    jsonObject["source"].asString,
+                    if (imageResId != 0) imageResId else R.mipmap.ic_launcher
+                )
             }
-
-            return new StreamSource(
-                    jsonObject.get("title").getAsString(),
-                    jsonObject.get("description").getAsString(),
-                    jsonObject.get("source").getAsString(),
-                    (imageResId != 0) ? imageResId : R.mipmap.ic_launcher
-            );
-        };
+        }
     }
-
-    private static class StreamSources {
-        List<StreamSource> live;
-        List<StreamSource> onDemand;
-        List<StreamSource> offline;
-    }
-
 }

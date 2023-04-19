@@ -1,7 +1,7 @@
-package com.theoplayer.demo.simpleott.network;
+package com.theoplayer.demo.simpleott.network
 
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.MutableLiveData
 
-public interface SimpleOTTWifiMonitor {
-    MutableLiveData<Boolean> getIsConnectedLiveData();
+interface SimpleOTTWifiMonitor {
+    val isConnectedLiveData: MutableLiveData<Boolean?>
 }

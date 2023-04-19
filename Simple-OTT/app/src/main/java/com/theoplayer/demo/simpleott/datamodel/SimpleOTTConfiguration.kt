@@ -1,27 +1,23 @@
-package com.theoplayer.demo.simpleott.datamodel;
+package com.theoplayer.demo.simpleott.datamodel
 
-public class SimpleOTTConfiguration {
+class SimpleOTTConfiguration {
+    var config: Config? = null
 
-    public Config config;
-
-    public static class Config {
-        public Live live;
-        public OnDemand onDemand;
-        public Offline offline;
+    class Config {
+        var live: Live? = null
+        var onDemand: OnDemand? = null
+        var offline: Offline? = null
     }
 
-    public static class Live {
-        public AssetItem[] channels;
+    class Live {
+        var channels: Array<AssetItem>
     }
 
-    public static class OnDemand {
-        public  AssetItem[] vods;
+    class OnDemand {
+        var vods: Array<AssetItem>
     }
 
-    public static class Offline {
-        public AssetItem[] vods;
+    class Offline {
+        var vods: Array<AssetItem>
     }
-
-
-
 }
