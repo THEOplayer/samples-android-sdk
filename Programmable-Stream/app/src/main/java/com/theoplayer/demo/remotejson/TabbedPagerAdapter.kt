@@ -1,71 +1,46 @@
-package com.theoplayer.demo.remotejson;
+package com.theoplayer.demo.remotejson
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
+import androidx.viewpager.widget.PagerAdapter
 
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
-import androidx.viewpager.widget.PagerAdapter;
+internal class TabbedPagerAdapter(private val context: Context) : PagerAdapter() {
+    private val tabs = arrayOf(
+        Tab(R.string.tabTime, R.layout.time_tab_layout),
+        Tab(R.string.tabTracks, R.layout.tracks_tab_layout),
+        Tab(R.string.tabState, R.layout.state_tab_layout),
+        Tab(R.string.tabAds, R.layout.ads_tab_layout)
+    )
 
-class TabbedPagerAdapter extends PagerAdapter {
-
-    private final Tab[] tabs = new Tab[]{
-            new Tab(R.string.tabTime, R.layout.time_tab_layout),
-            new Tab(R.string.tabTracks, R.layout.tracks_tab_layout),
-            new Tab(R.string.tabState, R.layout.state_tab_layout),
-            new Tab(R.string.tabAds, R.layout.ads_tab_layout)
-    };
-
-    private final Context context;
-
-    TabbedPagerAdapter(Context context) {
-        this.context = context;
+    override fun instantiateItem(collection: ViewGroup, position: Int): Any {
+        val inflater = LayoutInflater.from(context)
+        val layout = inflater.inflate(tabs[position].layoutResId, collection, false) as ViewGroup
+        collection.addView(layout)
+        return layout
     }
 
-    @NonNull
-    @Override
-    public Object instantiateItem(@NonNull ViewGroup collection, int position) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        ViewGroup layout = (ViewGroup) inflater.inflate(tabs[position].layoutResId, collection, false);
-        collection.addView(layout);
-        return layout;
+    override fun destroyItem(collection: ViewGroup, position: Int, view: Any) {
+        collection.removeView(view as View)
     }
 
-    @Override
-    public void destroyItem(ViewGroup collection, int position, @NonNull Object view) {
-        collection.removeView((View) view);
+    override fun getCount(): Int {
+        return tabs.size
     }
 
-    @Override
-    public int getCount() {
-        return tabs.length;
+    override fun isViewFromObject(view: View, `object`: Any): Boolean {
+        return view === `object`
     }
 
-    @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == object;
+    override fun getPageTitle(position: Int): CharSequence {
+        return context.getString(tabs[position].titleResId)
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return context.getString(tabs[position].titleResId);
-    }
-
-    private static class Tab {
-
-        @StringRes
-        private final int titleResId;
-        @LayoutRes
-        private final int layoutResId;
-
-        Tab(@StringRes int titleResId, @LayoutRes int layoutResId) {
-            this.titleResId = titleResId;
-            this.layoutResId = layoutResId;
-        }
-    }
+    private class Tab constructor(
+        @field:StringRes @param:StringRes val titleResId: Int,
+        @field:LayoutRes @param:LayoutRes val layoutResId: Int
+    )
 }
-
-

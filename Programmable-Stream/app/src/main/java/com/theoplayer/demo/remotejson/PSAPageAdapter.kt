@@ -1,50 +1,34 @@
-package com.theoplayer.demo.remotejson;
+package com.theoplayer.demo.remotejson
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.viewpager.widget.PagerAdapter
 
-import androidx.viewpager.widget.PagerAdapter;
-
-class PSAPageAdapter extends PagerAdapter {
-
-    private final Context mContext;
-
-    public PSAPageAdapter(Context context) {
-        mContext = context;
+internal class PSAPageAdapter(private val mContext: Context) : PagerAdapter() {
+    override fun instantiateItem(collection: ViewGroup, position: Int): Any {
+        val modelObject = ModelObject.values()[position]
+        val inflater = LayoutInflater.from(mContext)
+        val layout = inflater.inflate(modelObject.layoutResId, collection, false) as ViewGroup
+        collection.addView(layout)
+        return layout
     }
 
-    @Override
-    public Object instantiateItem(ViewGroup collection, int position) {
-        ModelObject modelObject = ModelObject.values()[position];
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        ViewGroup layout = (ViewGroup) inflater.inflate(modelObject.getLayoutResId(), collection, false);
-        collection.addView(layout);
-        return layout;
+    override fun destroyItem(collection: ViewGroup, position: Int, view: Any) {
+        collection.removeView(view as View)
     }
 
-    @Override
-    public void destroyItem(ViewGroup collection, int position, Object view) {
-        collection.removeView((View) view);
+    override fun getCount(): Int {
+        return ModelObject.values().size
     }
 
-    @Override
-    public int getCount() {
-        return ModelObject.values().length;
+    override fun isViewFromObject(view: View, `object`: Any): Boolean {
+        return view === `object`
     }
 
-    @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return view == object;
+    override fun getPageTitle(position: Int): CharSequence {
+        val customPagerEnum = ModelObject.values()[position]
+        return mContext.getString(customPagerEnum.titleResId)
     }
-
-    @Override
-    public CharSequence getPageTitle(int position) {
-        ModelObject customPagerEnum = ModelObject.values()[position];
-        return mContext.getString(customPagerEnum.getTitleResId());
-    }
-
 }
-
-
