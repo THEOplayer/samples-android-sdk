@@ -103,7 +103,7 @@ public class PlayerActivity extends AppCompatActivity {
         theoplayer.addEventListener(PlayerEventTypes.PLAYING, event -> Log.i(TAG, "Event: PLAYING"));
         theoplayer.addEventListener(PlayerEventTypes.PAUSE, event -> Log.i(TAG, "Event: PAUSE"));
         theoplayer.addEventListener(PlayerEventTypes.ENDED, event -> Log.i(TAG, "Event: ENDED"));
-        theoplayer.addEventListener(PlayerEventTypes.ERROR, event -> Log.i(TAG, "Event: ERROR, error=" + event.getError()));
+        theoplayer.addEventListener(PlayerEventTypes.ERROR, event -> Log.i(TAG, "Event: ERROR, error=" + event.getErrorObject()));
 
         // Adding listeners to THEOplayer Verizon Media events.
         theoplayer.getVerizonMedia().addEventListener(VerizonMediaEventTypes.PREPLAYRESPONSE, event -> Log.i(TAG, "Event: PREPLAYRESPONSE"));
