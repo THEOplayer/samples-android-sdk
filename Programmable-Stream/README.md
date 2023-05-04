@@ -5,35 +5,53 @@ The purpose of this app is to easily reproduce any [THEOplayer] configuration.
 For quick start, please proceed with the [Quick Start](#quick-start) guide.  
 For application architecture, please proceed with the [Application Architecture](#application-architecture) guide.
 
-## Guides
+## THEO Docs
 
 This app is an extension of [THEO Basic Playback] application. For help with getting started with
-THEOplayer or Android Studio feel free to check related guides:
-
-  * [THEO Knowledge Base - Android Studio Setup]
-  * [THEO Knowledge Base - Virtual and Physical Devices]
-  * [THEOplayer How To's - THEOplayer Android SDK Integration]
+THEOplayer or Android Studio feel free to check [THEOplayer documentation]
 
 
 ## Quick Start
 
-1. Obtain THEOplayer Android SDK with **Ads** and **Chromecast** features enabled and unzip it.
+### Using THEOplayer distribution from public repository
 
-   Please visit [Get Started with THEOplayer] to get required THEOplayer Android SDK.
+This project is already set up to use THEOplayer from jitpack.io so you need to check it out and build.
+Below is a short explanation about how to include THEOplayer in the project.
+For the more comprehensive explanation please refer to [THEOplayer documentation].
 
-2. Copy **`theoplayer-android-[name]-[version]-minapi16-release.aar`** file from unzipped SDK into
+To use THEOplayer from jitpack.io, you need to include it in the build.gradle file on the project level:
+
+      allprojects {
+          repositories {
+              ...
+              maven { url 'https://jitpack.io' }
+              ...
+          }
+      }
+
+Then, to use the library, specify the following in the module's level build.gradle file:
+
+      dependencies {
+          ...
+          // THEOplayer required dependencies.
+           implementation 'com.theoplayer.theoplayer-sdk-android:basic-minapi21:4.12.0'
+          ...
+      }
+
+### Using library downloaded from [THEO Portal]
+
+To use THEOplayer from a library downloaded from THEO Portal, follow these steps:
+1. Obtain THEOplayer Android SDK and unzip it.
+
+   Please visit [THEOplayer documentation] to get required THEOplayer Android SDK.
+
+2. Copy **`theoplayer-android-[name]-[version]-minapi21-release.aar`** file from unzipped SDK into
    application **[libs]** folder and rename it to **`theoplayer.aar`**.
 
    Project is configured to load SDK with such name, for using other name please change
    `implementation ':theoplayer@aar'` dependency in [app-level build.gradle] file accordingly.
 
-   Please check [THEOplayer How To's - THEOplayer Android SDK Integration] guide for more information
-   about integrating THEOplayer Android SDK.
-
 3. Open _**THEO Programmable Stream**_ application in Android Studio.
-
-   For more information about installing Android Studio please check
-   [THEO Knowledge Base - Android Studio Setup] guide.
 
    Android Studio should automatically synchronize and rebuild project. If this won't happen please
    select **File > Sync Project with Gradle Files** menu item to do it manually. Please note, that
@@ -41,9 +59,6 @@ THEOplayer or Android Studio feel free to check related guides:
 
 4. Select **Run > Run 'app'** menu item to run application on a device selected by default.
 
-   To change the device please select **Run > Select Device...** menu item. For more information
-   about working with Android devices please check [THEO Knowledge Base - Virtual and Physical Devices]
-   guide.
 
 
 ## Application Architecture
@@ -109,14 +124,12 @@ This project is licensed under the BSD 3 Clause License - see the [LICENSE] file
 
 [//]: # (Links and Guides reference)
 [THEOplayer]: https://www.theoplayer.com/
+[THEOplayer documentation]: https://docs.theoplayer.com/getting-started/01-sdks/02-android/00-getting-started.md#getting-started-on-android
 [THEO Basic Playback]: ../Basic-Playback
-[THEO Knowledge Base - Android Studio Setup]: ../Basic-Playback/guides/knowledgebase-android-studio-setup/README.md
-[THEO Knowledge Base - Virtual and Physical Devices]: ../Basic-Playback/guides/knowledgebase-virtual-and-physical-devices/README.md
-[THEOplayer How To's - THEOplayer Android SDK Integration]: ../Basic-Playback/guides/howto-theoplayer-android-sdk-integration/README.md
 [Get Started with THEOplayer]: https://www.theoplayer.com/licensing
 [EZ DRM]: https://ezdrm.com/
-[PlayerConfiguration]: https://docs.portal.theoplayer.com/docs/api-reference/theoplayer-playerconfiguration
-[SourceDescription]: https://docs.portal.theoplayer.com/docs/api-reference/theoplayer-sourcedescription
+[PlayerConfiguration]: https://docs.theoplayer.com/api-reference/web/theoplayer.playerconfiguration.md
+[SourceDescription]: https://docs.theoplayer.com/api-reference/web/theoplayer.source.md
 
 [//]: # (Project files reference)
 [LICENSE]: LICENSE

@@ -72,5 +72,6 @@
     <string name="event">Event: %s</string>
     <string name="eventWithTimestamp">Event: %s, currentTime=%.2f</string>
     <string name="eventWithError">Event: %s, error=%s</string>
+    <string name="theoplayer_test_license"></string>
 
 </resources>

@@ -4,13 +4,13 @@
       "title": "Channel 1",
       "description": "LIVE",
       "image": "@drawable/image_live",
-      "source": "https://b028.wpc.azureedge.net/80B028/Samples/a38e6323-95e9-4f1f-9b38-75eba91704e4/5f2ce531-d508-49fb-8152-647eba422aec.ism/Manifest(format=m3u8-aapl-v3)"
+      "source": "https://contentserver.prudentgiraffe.com/videos/dash/big_buck_bunny/BigBuckBunny_10s_simple_2014_05_09.mpd"
     },
     {
       "title": "Channel 2",
       "description": "LIVE",
       "image": "@drawable/image_live",
-      "source": "https://b028.wpc.azureedge.net/80B028/Samples/0e8848ca-1db7-41a3-8867-fe911144c045/d34d8807-5597-47a1-8408-52ec5fc99027.ism/Manifest(format=m3u8-aapl-v3)"
+      "source": "https://cdn.theoplayer.com/video/big_buck_bunny_encrypted/stream-800/index-dvr.m3u8"
     }
   ],
   "onDemand": [

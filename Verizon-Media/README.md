@@ -6,6 +6,12 @@ playback of a sample stream.
 For quick start, please proceed with the [Quick Start](#quick-start) guide.
 
 
+## THEO Docs
+
+This app is an extension of [THEO Basic Playback] application. For help with getting started with
+THEOplayer or Android Studio feel free to check [THEOplayer documentation]
+
+
 ## Guides
 
 The guides below will provide an end-to-end explanation of how to setup an Android application with
@@ -20,33 +26,23 @@ to the activity and running the application.
 
 ## Quick Start
 
+To use THEOplayer from a library downloaded from THEO Portal, follow these steps:
 1. Obtain THEOplayer Android SDK and unzip it.
 
-   Please visit [Get Started with THEOplayer] to get required THEOplayer Android SDK.
+   Please visit [THEOplayer documentation] to get required THEOplayer Android SDK.
 
-2. Copy **`theoplayer-android-[name]-[version]-minapi16-release.aar`** file from unzipped SDK into
+2. Copy **`theoplayer-android-[name]-[version]-minapi21-release.aar`** file from unzipped SDK into
    application **[libs]** folder and rename it to **`theoplayer.aar`**.
 
    Project is configured to load SDK with such name, for using other name please change
    `implementation ':theoplayer@aar'` dependency in [app-level build.gradle] file accordingly.
 
-   Please check [THEOplayer How To's - THEOplayer Android SDK Integration] guide for more information
-   about integrating THEOplayer Android SDK.
-
-3. Open _**THEO Basic Playback**_ application in Android Studio.
-
-   For more information about installing Android Studio please check
-   [THEO Knowledge Base - Android Studio Setup] guide.
-
+3. Open _**THEO Verizon Media**_ application in Android Studio.
    Android Studio should automatically synchronize and rebuild project. If this won't happen please
    select **File > Sync Project with Gradle Files** menu item to do it manually. Please note, that
    in very rare cases it will be required to synchronize project twice.
 
 4. Select **Run > Run 'app'** menu item to run application on a device selected by default.
-
-   To change the device please select **Run > Select Device...** menu item. For more information
-   about working with Android devices please check [THEO Knowledge Base - Virtual and Physical Devices]
-   guide.
 
 
 ## Streams/Content Rights:
