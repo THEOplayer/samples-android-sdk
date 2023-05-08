@@ -29,6 +29,6 @@ dependencies {
 
     // Local THEOplayer required dependencies.
     implementation ':theoplayer@aar' // THEOplayer Android SDK
-    implementation 'com.google.ads.interactivemedia.v3:interactivemedia:3.22.2' // Google IMA Android SDK
+    implementation 'com.google.ads.interactivemedia.v3:interactivemedia:3.25.1' // Google IMA Android SDK
     implementation 'com.google.code.gson:gson:2.8.9'
 }
