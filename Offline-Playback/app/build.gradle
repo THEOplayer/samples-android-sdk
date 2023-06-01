@@ -37,6 +37,6 @@ dependencies {
     // Local THEOplayer required dependencies.
 //    implementation ':theoplayer@aar'
 //    implementation 'com.google.android.exoplayer:exoplayer:2.18.5'
-    implementation 'com.google.android.gms:play-services-location:21.0.1'
+//    implementation 'com.google.android.gms:play-services-location:21.0.1'
     implementation 'com.google.code.gson:gson:2.8.9'
 }
