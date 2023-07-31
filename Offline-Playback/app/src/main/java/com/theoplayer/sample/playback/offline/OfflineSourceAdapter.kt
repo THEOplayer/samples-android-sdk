@@ -10,13 +10,15 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.theoplayer.android.api.cache.CachingTaskStatus
 import com.theoplayer.sample.playback.offline.databinding.LayoutOfflineSourceBinding
+import kotlin.math.roundToInt
 
 internal class OfflineSourceAdapter(
-    private val offlineSources: List<OfflineSource?>,
-    private val onStartCachingTaskHandler: Consumer<OfflineSource?>,
-    private val onPauseCachingTaskHandler: Consumer<OfflineSource?>,
-    private val onRemoveCacheTaskHandler: Consumer<OfflineSource?>,
-    private val onPlaySourceHandler: Consumer<OfflineSource?>
+    private val offlineSources: List<OfflineSource>,
+    private val onStartCachingTaskHandler: Consumer<OfflineSource>,
+    private val onPauseCachingTaskHandler: Consumer<OfflineSource>,
+    private val onRenewCacheTaskHandler: Consumer<OfflineSource>,
+    private val onRemoveCacheTaskHandler: Consumer<OfflineSource>,
+    private val onPlaySourceHandler: Consumer<OfflineSource>
 ) : RecyclerView.Adapter<OfflineSourceAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewBinding = LayoutOfflineSourceBinding.inflate(
@@ -39,12 +41,12 @@ internal class OfflineSourceAdapter(
         ) {
         private val context: Context = viewBinding.root.context
 
-        fun bind(offlineSource: OfflineSource?) {
+        fun bind(offlineSource: OfflineSource) {
             // View tag is used to determine if requested poster already loaded and shown.
             // If so, there's no need to reload it.
-            if (offlineSource?.poster != viewBinding.posterImageView.tag) {
+            if (offlineSource.poster != viewBinding.posterImageView.tag) {
                 try {
-                    context.assets.open(offlineSource!!.poster).use { posterInputStream ->
+                    context.assets.open(offlineSource.poster).use { posterInputStream ->
                         val posterDrawable = Drawable.createFromStream(posterInputStream, null)
                         viewBinding.posterImageView.setImageDrawable(posterDrawable)
                         viewBinding.posterImageView.tag = offlineSource.poster
@@ -54,7 +56,7 @@ internal class OfflineSourceAdapter(
                     viewBinding.posterImageView.setImageResource(R.mipmap.ic_launcher)
                 }
             }
-            viewBinding.titleTextView.text = offlineSource?.title
+            viewBinding.titleTextView.text = offlineSource.title
             viewBinding.startButton.setOnClickListener { button: View? ->
                 onStartCachingTaskHandler.accept(
                     offlineSource
@@ -62,6 +64,11 @@ internal class OfflineSourceAdapter(
             }
             viewBinding.pauseButton.setOnClickListener { button: View? ->
                 onPauseCachingTaskHandler.accept(
+                    offlineSource
+                )
+            }
+            viewBinding.renewLicenseButton.setOnClickListener { button: View? ->
+                onRenewCacheTaskHandler.accept(
                     offlineSource
                 )
             }
@@ -75,7 +82,7 @@ internal class OfflineSourceAdapter(
                     offlineSource
                 )
             }
-            offlineSource!!.isStateUpToDate.observe(context as LifecycleOwner) { isUpToDate: Boolean? ->
+            offlineSource.isStateUpToDate.observe(context as LifecycleOwner) { isUpToDate: Boolean? ->
                 handleStateUpToDateChange(
                     isUpToDate
                 )
@@ -106,9 +113,7 @@ internal class OfflineSourceAdapter(
         }
 
         private fun handleProgressChange(progress: Double?) {
-            var progress = progress
-            progress = progress ?: 0.0
-            val progressInt = Math.round(progress * 100).toInt()
+            val progressInt = ((progress ?: 0.0) * 100).roundToInt()
             viewBinding.progressBar.progress = progressInt
             viewBinding.progressTextView.text = context.getString(
                 R.string.progressLabel,
@@ -126,6 +131,7 @@ internal class OfflineSourceAdapter(
                     viewBinding.removeButton.visibility = View.VISIBLE
                     viewBinding.progressBar.visibility = View.VISIBLE
                     viewBinding.progressTextView.visibility = View.VISIBLE
+                    viewBinding.renewLicenseButton.visibility = View.VISIBLE
                     viewBinding.container.strokeColor = 0
                 }
                 CachingTaskStatus.LOADING -> {
@@ -134,6 +140,7 @@ internal class OfflineSourceAdapter(
                     viewBinding.removeButton.visibility = View.VISIBLE
                     viewBinding.progressBar.visibility = View.VISIBLE
                     viewBinding.progressTextView.visibility = View.VISIBLE
+                    viewBinding.renewLicenseButton.visibility = View.GONE
                     viewBinding.container.strokeColor = 0
                 }
                 CachingTaskStatus.DONE -> {
@@ -142,6 +149,7 @@ internal class OfflineSourceAdapter(
                     viewBinding.removeButton.visibility = View.VISIBLE
                     viewBinding.progressBar.visibility = View.VISIBLE
                     viewBinding.progressTextView.visibility = View.VISIBLE
+                    viewBinding.renewLicenseButton.visibility = View.VISIBLE
                     viewBinding.container.strokeColor = 0
                 }
                 CachingTaskStatus.ERROR -> {
@@ -150,6 +158,7 @@ internal class OfflineSourceAdapter(
                     viewBinding.removeButton.visibility = View.VISIBLE
                     viewBinding.progressBar.visibility = View.VISIBLE
                     viewBinding.progressTextView.visibility = View.VISIBLE
+                    viewBinding.renewLicenseButton.visibility = View.VISIBLE
                     viewBinding.container.strokeColor =
                         context.resources.getColor(R.color.theoError)
                 }
@@ -159,6 +168,7 @@ internal class OfflineSourceAdapter(
                     viewBinding.removeButton.visibility = View.GONE
                     viewBinding.progressBar.visibility = View.GONE
                     viewBinding.progressTextView.visibility = View.GONE
+                    viewBinding.renewLicenseButton.visibility = View.GONE
                     viewBinding.container.strokeColor = 0
                 }
             }
