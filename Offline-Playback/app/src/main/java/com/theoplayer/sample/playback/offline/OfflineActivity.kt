@@ -41,13 +41,11 @@ class OfflineActivity : AppCompatActivity() {
         viewBinding.downloadableSourcesView.adapter = viewModel.offlineSources?.let {
             OfflineSourceAdapter(
                 it,
-                { offlineSource: OfflineSource? -> onStartCachingTaskHandler(offlineSource) },
-                { offlineSource: OfflineSource? -> onPauseCachingTaskHandler(offlineSource) },
-                { offlineSource: OfflineSource? -> onRemoveCachingTaskHandler(offlineSource) }) { offlineSource: OfflineSource? ->
-                onPlaySourceHandler(
-                    offlineSource
-                )
-            }
+                this::onStartCachingTaskHandler,
+                this::onPauseCachingTaskHandler,
+                this::onRenewLicenseTaskHandler,
+                this::onRemoveCachingTaskHandler,
+                this::onPlaySourceHandler)
         }
     }
 
@@ -118,6 +116,10 @@ class OfflineActivity : AppCompatActivity() {
         } else {
             offlineSource.removeCachingTask()
         }
+    }
+
+    private fun onRenewLicenseTaskHandler(offlineSource: OfflineSource?) {
+        offlineSource?.renewLicense()
     }
 
     private fun onPlaySourceHandler(offlineSource: OfflineSource?) {

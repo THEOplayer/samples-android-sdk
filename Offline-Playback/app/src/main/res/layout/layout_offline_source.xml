@@ -41,49 +41,51 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spaceMarginSmall"
-                android:layout_marginLeft="@dimen/spaceMarginSmall"
                 android:text="@string/titleLabel"
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 app:layout_constraintBottom_toTopOf="@id/progressBar"
-                app:layout_constraintEnd_toStartOf="@id/startButton"
+                app:layout_constraintEnd_toStartOf="@id/buttons"
                 app:layout_constraintStart_toEndOf="@id/posterImageView"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/startButton"
-                style="?attr/materialImageButtonStyle"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/buttons"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spaceMarginSmall"
-                android:layout_marginLeft="@dimen/spaceMarginSmall"
-                app:icon="@drawable/ic_file_download"
-                app:layout_constraintEnd_toStartOf="@id/pauseButton"
-                app:layout_constraintStart_toEndOf="@id/titleTextView"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/pauseButton"
-                style="?attr/materialImageButtonStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spaceMarginSmall"
-                android:layout_marginLeft="@dimen/spaceMarginSmall"
-                app:icon="@drawable/ic_pause"
-                app:layout_constraintEnd_toStartOf="@id/removeButton"
-                app:layout_constraintStart_toEndOf="@id/startButton"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/removeButton"
-                style="?attr/materialImageButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spaceMarginSmall"
-                android:layout_marginLeft="@dimen/spaceMarginSmall"
-                app:icon="@drawable/ic_delete_forever"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/pauseButton"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/startButton"
+                    style="?attr/materialImageButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spaceMarginSmall"
+                    app:icon="@drawable/ic_file_download" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/pauseButton"
+                    style="?attr/materialImageButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spaceMarginSmall"
+                    app:icon="@drawable/ic_pause" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/renewLicenseButton"
+                    style="?attr/materialImageButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spaceMarginSmall"
+                    app:icon="@drawable/ic_renew_license" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/removeButton"
+                    style="?attr/materialImageButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spaceMarginSmall"
+                    app:icon="@drawable/ic_delete_forever" />
+            </LinearLayout>
 
             <ProgressBar
                 android:id="@+id/progressBar"

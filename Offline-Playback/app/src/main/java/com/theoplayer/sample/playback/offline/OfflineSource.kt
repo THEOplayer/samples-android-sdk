@@ -73,6 +73,13 @@ class OfflineSource internal constructor(
         }
     }
 
+    fun renewLicense() {
+        if (cachingTask != null) {
+            Log.i(TAG, "Renewing license for caching task, title='$title'")
+            cachingTask!!.license().renew()
+        }
+    }
+
     companion object {
         private val TAG = OfflineSource::class.java.simpleName
     }
