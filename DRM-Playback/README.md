@@ -5,7 +5,6 @@ stream with [THEOplayer].
 
 For quick start, please proceed with the [Quick Start](#quick-start) guide.
 
-
 ## THEO Docs
 
 The [THEOplayer documentation] below will provide a detailed explanation about DRM systems and their capabilities on
@@ -13,7 +12,6 @@ Android devices. We will also show how to configure DRM protected streams in THE
 
 This app is an extension of [THEO Basic Playback] application. For help with getting started with
 THEOplayer or Android Studio feel free to check related [THEOplayer documentation]
-
 
 ## Quick Start
 
@@ -38,33 +36,9 @@ Then, to use the library, specify the following in the module's level build.grad
      dependencies {
          ...
          // THEOplayer required dependencies.
-          implementation 'com.theoplayer.theoplayer-sdk-android:basic-minapi21:4.12.0'
+          implementation 'com.theoplayer.theoplayer-sdk-android:core:6.1.0'
          ...
      }
-
-### Using library downloaded from [THEO Portal]
-
-To use THEOplayer from a library downloaded from THEO Portal, follow these steps:
-
-1. Obtain THEOplayer Android SDK and unzip it.
-
-   Please visit [Get Started with THEOplayer] to get required THEOplayer Android SDK.
-
-2. Copy **`theoplayer-android-[name]-[version]-minapi21-release.aar`** file from unzipped SDK into
-   application **[libs]** folder and rename it to **`theoplayer.aar`**.
-
-   Project is configured to load SDK with such name, for using other name please change
-   `implementation ':theoplayer@aar'` dependency in [app-level build.gradle] file accordingly.
-
-3. Open _**THEO DRM Playback**_ application in Android Studio.
-
-   Android Studio should automatically synchronize and rebuild project. If this won't happen please
-   select **File > Sync Project with Gradle Files** menu item to do it manually. Please note, that
-   in very rare cases it will be required to synchronize project twice.
-
-4. Select **Run > Run 'app'** menu item to run application on a device selected by default.
-
-
 
 ## Streams/Content Rights:
 
