@@ -1,34 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="LockedOrientationActivity">
-
-    <!-- In order to play online streams or ads it is needed to add permissions below -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    package="com.theoplayer.sample.playback.basic">
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/appName"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
         android:theme="@style/TheoTheme.Base">
-
         <activity
             android:name=".PlayerActivity"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/TheoTheme.SplashScreen"
-            android:exported="true">
-
+            android:exported="true"
+            android:screenOrientation="userPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <meta-data
             android:name="THEOPLAYER_LICENSE"
             android:value="@string/theoplayer_test_license" />
-
     </application>
-
 </manifest>

@@ -4,7 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.theoplayer.android.api.event.player.*
+import com.theoplayer.android.api.event.player.ErrorEvent
+import com.theoplayer.android.api.event.player.PlayerEventTypes
 import com.theoplayer.android.api.player.Player
 import com.theoplayer.android.api.source.SourceDescription
 import com.theoplayer.android.api.source.TypedSource
@@ -13,9 +14,7 @@ import com.theoplayer.sample.playback.basic.databinding.ActivityPlayerBinding
 class PlayerActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityPlayerBinding
     private lateinit var theoPlayer: Player
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.TheoTheme_Base)
         super.onCreate(savedInstanceState)
 
         // Inflating view and obtaining an instance of the binding class.
@@ -47,6 +46,9 @@ class PlayerActivity : AppCompatActivity() {
 
         // Configuring THEOplayer with defined SourceDescription object.
         theoPlayer.source = sourceDescription.build()
+
+        //  Set autoplay to start video whenever player is visible
+        theoPlayer.isAutoplay = true
 
         // Adding listeners to THEOplayer basic playback events.
         theoPlayer.addEventListener(PlayerEventTypes.PLAY) {
@@ -86,6 +88,6 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     companion object {
-        private val TAG = PlayerActivity::class.java.simpleName
+        private val TAG: String = PlayerActivity::class.java.simpleName
     }
 }
