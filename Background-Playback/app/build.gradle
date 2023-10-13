@@ -3,13 +3,15 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+apply from: "${rootDir}/../Common/common.gradle"
+
 android {
-    compileSdk 33
+    compileSdk compile_sdk
 
     defaultConfig {
-        applicationId "com.theoplayer.android.mediasession.background.demo"
-        minSdk 23
-        targetSdk 33
+        applicationId 'com.theoplayer.sample.playback.background'
+        minSdk min_sdk
+        targetSdk target_sdk
         versionCode 1
         versionName '1.0'
     }
@@ -36,12 +38,12 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.8.0-beta01'
-    implementation 'androidx.media:media:1.6.0'
+    implementation "androidx.core:core-ktx:$androidx_core_version"
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
+    implementation "com.google.android.material:material:$material_version"
+    implementation "androidx.media:media:$androidx_media_version"
 
     // THEOplayer required dependencies.
-    implementation "com.theoplayer.theoplayer-sdk-android:unified:$sdkVersion"
-    implementation "com.theoplayer.android-connector:mediasession:$sdkVersion"
+    implementation "com.theoplayer.theoplayer-sdk-android:core:$theoplayer_sdk"
+    implementation "com.theoplayer.android-connector:mediasession:$theoplayer_sdk"
 }

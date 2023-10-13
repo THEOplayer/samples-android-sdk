@@ -3,23 +3,30 @@ package com.theoplayer.sample.playback.background.media
 import android.text.TextUtils
 import android.util.Log
 import com.google.gson.Gson
+import com.theoplayer.android.api.error.ErrorCode
+import com.theoplayer.android.api.error.THEOplayerException
 import com.theoplayer.android.api.event.ads.AdIntegrationKind
 import com.theoplayer.android.api.player.track.texttrack.TextTrackKind
 import com.theoplayer.android.api.source.*
 import com.theoplayer.android.api.source.addescription.AdDescription
 import com.theoplayer.android.api.source.addescription.GoogleImaAdDescription
-import com.theoplayer.android.api.source.drm.DRMConfiguration
-import com.theoplayer.android.api.source.drm.DRMIntegrationId
+import com.theoplayer.android.api.source.dash.DashPlaybackConfiguration
 import com.theoplayer.android.api.source.drm.preintegration.*
+import com.theoplayer.android.api.source.hls.HlsPlaybackConfiguration
 import com.theoplayer.android.api.source.metadata.MetadataDescription
 import com.theoplayer.android.api.source.ssai.SsaiIntegration
-import com.theoplayer.android.api.source.ssai.YoSpaceDescription
 import com.theoplayer.android.api.source.ssai.dai.GoogleDaiLiveConfiguration
 import com.theoplayer.android.api.source.ssai.dai.GoogleDaiVodConfiguration
 import org.json.JSONException
 import org.json.JSONObject
 
 private const val TAG = "SourceHelper"
+private const val PROP_CONTENT_PROTECTION = "contentProtection"
+private const val PROP_LIVE_OFFSET = "liveOffset"
+private const val PROP_HLS_DATERANGE = "hlsDateRange"
+private const val PROP_HLS_PLAYBACK_CONFIG = "hls"
+private const val PROP_TIME_SERVER = "timeServer"
+private const val PROP_METADATA = "metadata"
 private const val PROP_SSAI = "ssai"
 private const val PROP_TYPE = "type"
 private const val PROP_SRC = "src"
@@ -29,14 +36,15 @@ private const val PROP_LABEL = "label"
 private const val PROP_KIND = "kind"
 private const val PROP_TIME_OFFSET = "timeOffset"
 private const val PROP_INTEGRATION = "integration"
-private const val PROP_CONTENT_PROTECTION = "contentProtection"
-private const val PROP_CONTENT_PROTECTION_INTEGRATION = "integration"
 private const val PROP_TEXT_TRACKS = "textTracks"
 private const val PROP_POSTER = "poster"
 private const val PROP_ADS = "ads"
 private const val PROP_AVAILABILITY_TYPE = "availabilityType"
-private const val PROP_LIVE_OFFSET = "liveOffset"
-private const val PROP_METADATA = "metadata"
+private const val PROP_DASH = "dash"
+private const val PROP_DASH_IGNORE_AVAILABILITYWINDOW = "ignoreAvailabilityWindow"
+private const val ERROR_UNSUPPORTED_SSAI_INTEGRATION = "Unsupported SSAI integration"
+private const val ERROR_MISSING_SSAI_INTEGRATION = "Missing SSAI integration"
+private const val ERROR_CONTENT_PROTECTION_NYI = "Sources with content protection NYI"
 
 /**
  * Source parsing helper class, because we don't support GSON object deserialization currently
@@ -113,135 +121,71 @@ class SourceHelper {
         return null
     }
 
+    @Throws(THEOplayerException::class)
     private fun parseTypedSource(jsonTypedSource: JSONObject): TypedSource? {
         try {
-            var tsBuilder = TypedSource.Builder.typedSource()
+            var tsBuilder = TypedSource.Builder(jsonTypedSource.optString(PROP_SRC))
+            val sourceType = parseSourceType(jsonTypedSource)
             if (jsonTypedSource.has(PROP_SSAI)) {
                 val ssaiJson = jsonTypedSource.getJSONObject(PROP_SSAI)
 
                 // Check for valid SsaiIntegration
-                val ssaiIntegration = SsaiIntegration.from(ssaiJson.optString(PROP_INTEGRATION))
-                if (ssaiIntegration != null) {
-                    when (ssaiIntegration) {
-                        SsaiIntegration.GOOGLE_DAI -> tsBuilder = if (ssaiJson.optString(
-                                PROP_AVAILABILITY_TYPE
-                            ) == "vod"
-                        ) {
-                            GoogleDaiTypedSource.Builder(
-                                gson.fromJson(
-                                    ssaiJson.toString(),
-                                    GoogleDaiVodConfiguration::class.java
-                                )
-                            )
-                        } else {
-                            GoogleDaiTypedSource.Builder(
-                                gson.fromJson(
-                                    ssaiJson.toString(),
-                                    GoogleDaiLiveConfiguration::class.java
-                                )
-                            )
-                        }
-                        SsaiIntegration.YOSPACE -> tsBuilder.ssai(
-                            gson.fromJson(
-                                ssaiJson.toString(),
-                                YoSpaceDescription::class.java
-                            )
+                val ssaiIntegrationStr = ssaiJson.optString(PROP_INTEGRATION)
+                if (!TextUtils.isEmpty(ssaiIntegrationStr)) {
+                    val ssaiIntegration = SsaiIntegration.from(ssaiIntegrationStr)
+                        ?: throw THEOplayerException(
+                            ErrorCode.AD_ERROR,
+                            "$ERROR_UNSUPPORTED_SSAI_INTEGRATION: $ssaiIntegrationStr"
                         )
-                        else -> Log.e(TAG, "SSAI integration not supported: $ssaiIntegration")
+                    when (ssaiIntegration) {
+                        SsaiIntegration.GOOGLE_DAI -> {
+                            tsBuilder = if (ssaiJson.optString(PROP_AVAILABILITY_TYPE) == "vod") {
+                                GoogleDaiTypedSource.Builder(
+                                    gson.fromJson(ssaiJson.toString(), GoogleDaiVodConfiguration::class.java)
+                                )
+                            } else {
+                                GoogleDaiTypedSource.Builder(
+                                    gson.fromJson(ssaiJson.toString(), GoogleDaiLiveConfiguration::class.java)
+                                )
+                            }
+                            // Prefer DASH if not SSAI type specified
+                            if (sourceType == null) {
+                                tsBuilder.type(SourceType.DASH)
+                            }
+                        }
+                        else -> throw THEOplayerException(
+                            ErrorCode.AD_ERROR,
+                            "$ERROR_UNSUPPORTED_SSAI_INTEGRATION: $ssaiIntegrationStr"
+                        )
                     }
                 } else {
-                    Log.e(TAG, "Missing SSAI integration")
+                    throw THEOplayerException(ErrorCode.AD_ERROR, ERROR_MISSING_SSAI_INTEGRATION)
                 }
             }
-            tsBuilder.src(jsonTypedSource.optString(PROP_SRC))
-            val sourceType = parseSourceType(jsonTypedSource)
             if (sourceType != null) {
                 tsBuilder.type(sourceType)
+            }
+            if (jsonTypedSource.has(PROP_DASH)) {
+                tsBuilder.dash(parseDashConfig(jsonTypedSource.getJSONObject(PROP_DASH)))
             }
             if (jsonTypedSource.has(PROP_LIVE_OFFSET)) {
                 tsBuilder.liveOffset(jsonTypedSource.getDouble(PROP_LIVE_OFFSET))
             }
+            if (jsonTypedSource.has(PROP_HLS_DATERANGE)) {
+                tsBuilder.hlsDateRange(jsonTypedSource.getBoolean(PROP_HLS_DATERANGE))
+            }
+            if (jsonTypedSource.has(PROP_HLS_PLAYBACK_CONFIG)) {
+                val hlsConfig = gson.fromJson(
+                    jsonTypedSource[PROP_HLS_PLAYBACK_CONFIG].toString(),
+                    HlsPlaybackConfiguration::class.java
+                )
+                tsBuilder.hls(hlsConfig)
+            }
+            if (jsonTypedSource.has(PROP_TIME_SERVER)) {
+                tsBuilder.timeServer(jsonTypedSource.getString(PROP_TIME_SERVER))
+            }
             if (jsonTypedSource.has(PROP_CONTENT_PROTECTION)) {
-                val contentProtection = jsonTypedSource.getJSONObject(PROP_CONTENT_PROTECTION)
-
-                // Look for specific DRM pre-integration, otherwise use default.
-                val integration = contentProtection.optString(PROP_CONTENT_PROTECTION_INTEGRATION)
-                var integrationId: DRMIntegrationId? = null
-                if (!TextUtils.isEmpty(integration)) {
-                    integrationId = DRMIntegrationId.from(integration)
-                    if (integrationId == null) {
-                        Log.e(TAG, "ContentProtection integration not supported: $integration")
-                    }
-                }
-                if (integrationId != null) {
-                    when (integrationId) {
-                        DRMIntegrationId.AXINOM -> tsBuilder.drm(
-                            gson.fromJson(
-                                contentProtection.toString(),
-                                AxinomDRMConfiguration::class.java
-                            )
-                        )
-                        DRMIntegrationId.AZURE -> tsBuilder.drm(
-                            gson.fromJson(
-                                contentProtection.toString(),
-                                AzureDRMConfiguration::class.java
-                            )
-                        )
-                        DRMIntegrationId.CONAX -> tsBuilder.drm(
-                            gson.fromJson(
-                                contentProtection.toString(),
-                                ConaxDRMConfiguration::class.java
-                            )
-                        )
-                        DRMIntegrationId.DRMTODAY -> tsBuilder.drm(
-                            gson.fromJson(
-                                contentProtection.toString(),
-                                DRMTodayConfiguration::class.java
-                            )
-                        )
-                        DRMIntegrationId.IRDETO -> tsBuilder.drm(
-                            gson.fromJson(
-                                contentProtection.toString(),
-                                IrdetoConfiguration::class.java
-                            )
-                        )
-                        DRMIntegrationId.KEYOS -> tsBuilder.drm(
-                            gson.fromJson(
-                                contentProtection.toString(),
-                                KeyOSDRMConfiguration::class.java
-                            )
-                        )
-                        DRMIntegrationId.TITANIUM -> tsBuilder.drm(
-                            gson.fromJson(
-                                contentProtection.toString(),
-                                TitaniumDRMConfiguration::class.java
-                            )
-                        )
-                        DRMIntegrationId.VUDRM -> tsBuilder.drm(
-                            gson.fromJson(
-                                contentProtection.toString(),
-                                VudrmDRMConfiguration::class.java
-                            )
-                        )
-                        DRMIntegrationId.XSTREAM -> tsBuilder.drm(
-                            gson.fromJson(
-                                contentProtection.toString(),
-                                XstreamConfiguration::class.java
-                            )
-                        )
-                        else -> Log.e(
-                            TAG,
-                            "ContentProtection integration not supported: $integration"
-                        )
-                    }
-                } else {
-                    tsBuilder.drm(
-                        gson.fromJson(
-                            jsonTypedSource[PROP_CONTENT_PROTECTION].toString(),
-                            DRMConfiguration::class.java
-                        )
-                    )
-                }
+                throw THEOplayerException(ErrorCode.SOURCE_INVALID, ERROR_CONTENT_PROTECTION_NYI)
             }
             return tsBuilder.build()
         } catch (e: JSONException) {
@@ -250,14 +194,10 @@ class SourceHelper {
         return null
     }
 
-    fun parseAdFromJSON(json: String?): AdDescription? {
-        return try {
-            val jsonAdDescription = JSONObject(json)
-            parseAdFromJS(jsonAdDescription)
-        } catch (e: JSONException) {
-            e.printStackTrace()
-            null
-        }
+    private fun parseDashConfig(dashConfig: JSONObject): DashPlaybackConfiguration {
+        return DashPlaybackConfiguration.Builder()
+            .ignoreAvailabilityWindow(dashConfig.optBoolean(PROP_DASH_IGNORE_AVAILABILITYWINDOW))
+            .build()
     }
 
     private fun parseSourceType(jsonTypedSource: JSONObject): SourceType? {
@@ -309,7 +249,7 @@ class SourceHelper {
         )
         return when (integrationKind) {
             AdIntegrationKind.GOOGLE_IMA -> parseImaAdFromJS(jsonAdDescription)
-            AdIntegrationKind.DEFAULT, AdIntegrationKind.THEO, AdIntegrationKind.FREEWHEEL, AdIntegrationKind.SPOTX -> {
+            AdIntegrationKind.DEFAULT -> {
                 Log.e(
                     TAG,
                     "Ad integration not supported: $integrationKind"
@@ -335,17 +275,15 @@ class SourceHelper {
         } else {
             jsonAdDescription.optString(PROP_SOURCES)
         }
-        return GoogleImaAdDescription.Builder.googleImaAdDescription()
-            .source(source)
+        return GoogleImaAdDescription.Builder(source)
             .timeOffset(jsonAdDescription.optString(PROP_TIME_OFFSET))
             .build()
     }
 
     @Throws(JSONException::class)
     private fun parseTextTrackFromJS(jsonTextTrack: JSONObject): TextTrackDescription {
-        val builder = TextTrackDescription.Builder.textTrackDescription()
+        val builder = TextTrackDescription.Builder(jsonTextTrack.optString(PROP_SRC))
             .isDefault(jsonTextTrack.optBoolean(PROP_DEFAULT))
-            .src(jsonTextTrack.optString(PROP_SRC))
             .label(jsonTextTrack.optString(PROP_LABEL))
             .kind(parseTextTrackKind(jsonTextTrack.optString(PROP_KIND))!!)
         return builder.build()
@@ -365,7 +303,7 @@ class SourceHelper {
         return null
     }
 
-    private fun parseMetadataDescription(metadataDescription: JSONObject): MetadataDescription? {
+    private fun parseMetadataDescription(metadataDescription: JSONObject): MetadataDescription {
         val metadata = HashMap<String, Any>()
         val keys = metadataDescription.keys()
         while (keys.hasNext()) {
