@@ -1,0 +1,21 @@
+ext {
+    theoplayer_sdk = '6.1.0'
+
+    material_version = '1.9.0'
+    kotlin_version = '1.9.10'
+    androidx_core_version = '1.9.0'
+    androidx_media_version = '1.6.0'
+    androidx_lifecycle_version = '2.2.0'
+    androidx_constraintlayout_version = '2.1.4'
+    androidx_recyclerview_version = '1.2.1'
+    androidx_appcompat_version = '1.6.1'
+    androidx_mediarouter_version = '1.1.0'
+    material_version = '1.8.0'
+    gson_version = '2.8.9'
+    cast_framework_version = '20.1.0'
+    ima_version = '3.25.1'
+
+    min_sdk = 21
+    compile_sdk = 33
+    target_sdk = 33
+}
