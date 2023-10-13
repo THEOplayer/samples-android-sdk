@@ -6,6 +6,7 @@
 
     <!-- In order to play online streams or ads it is needed to add permissions below -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="false"
@@ -34,7 +35,7 @@
 
         <meta-data
             android:name="THEOPLAYER_LICENSE"
-            android:value="your_license_here" />
+            android:value="@string/theoplayer_test_license" />
 
     </application>
 

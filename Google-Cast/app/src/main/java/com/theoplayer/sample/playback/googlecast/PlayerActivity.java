@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.google.android.gms.cast.framework.CastButtonFactory;
+import com.theoplayer.android.api.cast.CastIntegration;
+import com.theoplayer.android.api.cast.CastIntegrationFactory;
 import com.theoplayer.android.api.cast.chromecast.Chromecast;
 import com.theoplayer.android.api.cast.chromecast.ChromecastConnectionCallback;
 import com.theoplayer.android.api.event.chromecast.ChromecastEventTypes;
@@ -37,7 +39,14 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Gathering THEO objects references.
         theoPlayer = viewBinding.theoPlayerView.getPlayer();
-        theoChromecast = viewBinding.theoPlayerView.getCast().getChromecast();
+
+        // Add Cast integration
+        CastIntegration castIntegration = CastIntegrationFactory.createCastIntegration(viewBinding.theoPlayerView);
+        theoPlayer.addIntegration(castIntegration);
+
+        if (viewBinding.theoPlayerView.getCast() != null) {
+            theoChromecast = viewBinding.theoPlayerView.getCast().getChromecast();
+        }
 
         // Configuring action bar.
         setSupportActionBar(viewBinding.toolbarLayout.toolbar);
@@ -76,6 +85,8 @@ public class PlayerActivity extends AppCompatActivity {
             .poster(getString(R.string.defaultPosterUrl))
             .metadata(chromecastMetadata.build());
 
+        theoPlayer.setAutoplay(true);
+
         // Configuring THEOplayer with defined SourceDescription object.
         theoPlayer.setSource(sourceDescription.build());
         theoPlayer.play();
@@ -99,7 +110,6 @@ public class PlayerActivity extends AppCompatActivity {
 //        theoChromecast.stop();
 //        theoChromecast.join();
 //        theoChromecast.leave();
-
 
         // Some streaming setups requires casting a different stream to a Cast Receiver device
         // than the one playing on a Cast Sender device, e.g. different DRM capabilities.
@@ -190,5 +200,4 @@ public class PlayerActivity extends AppCompatActivity {
         super.onDestroy();
         viewBinding.theoPlayerView.onDestroy();
     }
-
 }

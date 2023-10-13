@@ -31,7 +31,7 @@ Media Router libraries under the `dependencies` node in [app-level build.gradle]
 dependencies {
     // ...
 
-    implementation 'androidx.mediarouter:mediarouter:1.1.0'
+    implementation "androidx.mediarouter:mediarouter:$androidx_mediarouter_version"
     implementation 'com.google.android.gms:play-services-cast-framework:18.1.0'
 
     // ...
