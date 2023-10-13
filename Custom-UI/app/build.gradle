@@ -1,36 +1,47 @@
-apply plugin: 'com.android.application'
-apply plugin: 'org.jetbrains.kotlin.android'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+apply from: "${rootDir}/../Common/common.gradle"
 
 android {
-    compileSdkVersion 33
+    compileSdk compile_sdk
+
     defaultConfig {
         applicationId 'com.theoplayer.sample.ui.custom'
-        minSdkVersion 21
-        targetSdkVersion 33
+        minSdk min_sdk
+        targetSdk target_sdk
         versionCode 1
         versionName '1.0'
     }
-    dataBinding.enabled = true
+
+    dataBinding {
+        enabled = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    namespace 'com.theoplayer.sample.ui.custom'
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'com.theoplayer.theoplayer-sdk-android:unified:4.12.0'
+    implementation "com.google.android.material:material:$material_version"
+    implementation "androidx.constraintlayout:constraintlayout:$androidx_constraintlayout_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$androidx_lifecycle_version"
 
     // THEOplayer required dependencies.
-//    implementation ':theoplayer@aar'
-//    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation "com.theoplayer.theoplayer-sdk-android:core:$theoplayer_sdk"
 }

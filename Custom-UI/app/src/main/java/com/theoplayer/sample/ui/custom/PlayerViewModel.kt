@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.math.roundToLong
 
 class PlayerViewModel : ViewModel() {
     /**
@@ -231,7 +232,7 @@ class PlayerViewModel : ViewModel() {
      * @return Time converted to 'HH:mm:ss' or 'mm:ss' format.
      */
     fun formatTimeValue(time: Double): String {
-        val timeInSeconds = Math.round(time)
+        val timeInSeconds = time.roundToLong()
         val timeFormat = if (TimeUnit.SECONDS.toHours(timeInSeconds) > 0) "HH:mm:ss" else "mm:ss"
         val dateTime = Date(TimeUnit.SECONDS.toMillis(timeInSeconds))
         return SimpleDateFormat(timeFormat, Locale.ENGLISH).format(dateTime)

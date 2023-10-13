@@ -24,7 +24,7 @@ class PlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Inflating view and obtaining an instance of the binding and model classes.
-        viewModel = ViewModelProvider(this).get(PlayerViewModel::class.java)
+        viewModel = ViewModelProvider(this)[PlayerViewModel::class.java]
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_player)
         viewBinding.lifecycleOwner = this
         viewBinding.viewModel = viewModel
