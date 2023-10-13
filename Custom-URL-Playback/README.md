@@ -33,46 +33,18 @@ Then, to use the library, specify the following in the module's level build.grad
      dependencies {
          ...
          // THEOplayer required dependencies.
-          implementation 'com.theoplayer.theoplayer-sdk-android:basic-minapi21:4.12.0'
+          implementation 'com.theoplayer.theoplayer-sdk-android:core:6.1.0'
          ...
      }
-
-### Using library downloaded from [THEO Portal]
-
-To use THEOplayer from a library downloaded from THEO Portal, follow these steps:
-1. Obtain THEOplayer Android SDK and unzip it.
-
-   Please visit [THEOplayer documentation] to get required THEOplayer Android SDK.
-
-2. Copy **`theoplayer-android-[name]-[version]-minapi21-release.aar`** file from unzipped SDK into
-   application **[libs]** folder and rename it to **`theoplayer.aar`**.
-
-   Project is configured to load SDK with such name, for using other name please change
-   `implementation ':theoplayer@aar'` dependency in [app-level build.gradle] file accordingly.
-
-   Please check [THEOplayer How To's - THEOplayer Android SDK Integration] guide for more information
-   about integrating THEOplayer Android SDK.
-
-3. Open _**THEO Custom URL Playback**_ application in Android Studio.
-
-   Android Studio should automatically synchronize and rebuild project. If this won't happen please
-   select **File > Sync Project with Gradle Files** menu item to do it manually. Please note, that
-   in very rare cases it will be required to synchronize project twice.
-
-4. Select **Run > Run 'app'** menu item to run application on a device selected by default.
-
-
 
 ## Streams/Content Rights:
 
 The DRM streams used in this app (if any) are provided by our Partner: [EZ DRM] and hold all
 the rights for the content. These streams are DRM protected and cannot be used for any other purposes.
 
-
 ## License
 
 This project is licensed under the BSD 3 Clause License - see the [LICENSE] file for details.
-
 
 [//]: # (Links and Guides reference)
 [THEOplayer]: https://www.theoplayer.com/

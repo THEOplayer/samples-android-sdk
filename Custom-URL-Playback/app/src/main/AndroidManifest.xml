@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-        tools:ignore="LockedOrientationActivity">
+    package="com.theoplayer.sample.playback.custom"
+    tools:ignore="LockedOrientationActivity">
 
     <!-- In order to play online streams or ads it is needed to add permissions below -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,10 +15,10 @@
 
         <activity
             android:name=".SetupActivity"
+            android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/TheoTheme.SplashScreen"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:exported="true">
+            android:windowSoftInputMode="stateAlwaysHidden">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
