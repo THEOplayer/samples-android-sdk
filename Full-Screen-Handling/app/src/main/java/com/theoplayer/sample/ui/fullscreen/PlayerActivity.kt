@@ -47,7 +47,7 @@ class PlayerActivity : AppCompatActivity() {
 
         // Always go into a particular orientation when in fullscreen.
         // For all possible values see `ActivityInfo.SCREEN_ORIENTATION_*`.
-        viewBinding.theoPlayerView.settings.fullscreenOrientation = ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE;
+        viewBinding.theoPlayerView.settings.fullscreenOrientation = ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE
 
         // Setting custom full screen activity which allows to change behavior
         // and/or look of the full screen activity.
@@ -60,6 +60,8 @@ class PlayerActivity : AppCompatActivity() {
         // THEOplayer source.
         val sourceDescription = SourceDescription.Builder(typedSource.build())
             .poster(getString(R.string.defaultPosterUrl))
+
+        theoPlayer.isAutoplay = true
 
         // Configuring THEOplayer with defined SourceDescription object.
         theoPlayer.source = sourceDescription.build()

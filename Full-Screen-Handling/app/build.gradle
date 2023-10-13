@@ -1,36 +1,46 @@
-apply plugin: 'com.android.application'
-apply plugin: 'org.jetbrains.kotlin.android'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+apply from: "${rootDir}/../Common/common.gradle"
 
 android {
-    compileSdkVersion 33
-    namespace 'com.theoplayer.sample.ui.fullscreen'
+    compileSdk compile_sdk
+
     defaultConfig {
         applicationId 'com.theoplayer.sample.ui.fullscreen'
-        minSdkVersion 21
-        targetSdkVersion 33
+        minSdk min_sdk
+        targetSdk target_sdk
         versionCode 1
         versionName '1.0'
     }
-    dataBinding.enabled = true
+
+    dataBinding {
+        enabled = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation "com.google.android.material:material:$material_version"
 
-    // Remote THEOplayer required dependencies.
-    implementation 'com.theoplayer.theoplayer-sdk-android:basic-minapi21:4.12.0'
-
-    // Local THEOplayer required dependencies.
-//    implementation ':theoplayer@aar'
-//    implementation 'com.google.code.gson:gson:2.8.5'
+    // THEOplayer required dependencies.
+    implementation "com.theoplayer.theoplayer-sdk-android:core:$theoplayer_sdk"
+    implementation "com.google.code.gson:gson:$gson_version"
 }
