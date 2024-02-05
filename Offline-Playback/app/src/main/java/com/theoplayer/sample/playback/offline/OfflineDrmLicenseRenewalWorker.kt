@@ -12,7 +12,7 @@ class OfflineDrmLicenseRenewalWorker(context: Context, workerParams: WorkerParam
     Worker(context, workerParams) {
     override fun doWork(): Result {
         val theoCache = THEOplayerGlobal.getSharedInstance(applicationContext).cache
-        if (theoCache != null && theoCache.status == CacheStatus.INITIALISED) {
+        if (theoCache.status == CacheStatus.INITIALISED) {
             for (cachingTask in theoCache.tasks) {
                 if (cachingTask.status != CachingTaskStatus.EVICTED) {
                     Log.i(TAG, "Renewing license, sourceUrl=" + cachingTask.source.sources[0].src)
