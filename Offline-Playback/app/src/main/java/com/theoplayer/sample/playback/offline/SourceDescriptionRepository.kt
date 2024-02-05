@@ -13,28 +13,22 @@ object SourceDescriptionRepository {
             context.getString(R.string.bigBuckBunnySourceUrl) -> getBigBuckBunnySourceDescription(
                 context
             )
+
             context.getString(R.string.sintelSourceUrl) -> getSintelSourceDescription(context)
             context.getString(R.string.tearsOfStealSourceUrl) -> getTearsOfSteelSourceDescription(
                 context
             )
+
             context.getString(R.string.elephantsDreamSourceUrl) -> getElephantsDreamSourceDescription(
                 context
             )
+
             else -> null
         }
 
     private fun getBigBuckBunnySourceDescription(context: Context): SourceDescription {
         return SourceDescription.Builder(
             TypedSource.Builder(context.getString(R.string.bigBuckBunnySourceUrl))
-                .drm(
-                    DRMConfiguration.Builder()
-                        .widevine( // Note that license has to have PERSISTENT type configured
-                            // to be cached and to allow offline playback.
-                            KeySystemConfiguration.Builder(context.getString(R.string.bigBuckBunnyLicenseUrl))
-                                .licenseType(LicenseType.PERSISTENT)
-                                .build()
-                        ).build()
-                )
                 .build()
         ).build()
     }
@@ -51,6 +45,14 @@ object SourceDescriptionRepository {
         return SourceDescription.Builder(
             TypedSource.Builder(
                 context.getString(R.string.tearsOfStealSourceUrl)
+            ).drm(
+                DRMConfiguration.Builder()
+                    .widevine( // Note that license has to have PERSISTENT type configured
+                        // to be cached and to allow offline playback.
+                        KeySystemConfiguration.Builder(context.getString(R.string.tearsOfStealLicenseUrl))
+                            .licenseType(LicenseType.PERSISTENT)
+                            .build()
+                    ).build()
             ).build()
         ).build()
     }

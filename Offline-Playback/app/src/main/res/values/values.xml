@@ -13,8 +13,7 @@
 
     <string name="bigBuckBunnyTitle">Big Buck Bunny</string>
     <string name="bigBuckBunnyPoster">poster_big_buck_bunny.png</string>
-    <string name="bigBuckBunnySourceUrl">https://wvm.ezdrm.com/demo/stream.mpd</string>
-    <string name="bigBuckBunnyLicenseUrl">https://widevine-dash.ezdrm.com/proxy?pX=BF9CEB</string>
+    <string name="bigBuckBunnySourceUrl">https://cdn.theoplayer.com/video/dash/big_buck_bunny/BigBuckBunny_10s_simple_2014_05_09.mpd</string>
 
     <string name="sintelTitle">Sintel</string>
     <string name="sintelPoster">poster_sintel.png</string>
@@ -22,7 +21,8 @@
 
     <string name="tearsOfStealTitle">Tears of Steel</string>
     <string name="tearsOfStealPoster">poster_tears_of_steel.png</string>
-    <string name="tearsOfStealSourceUrl">https://cdn.theoplayer.com/video/tears_of_steel/index.m3u8</string>
+    <string name="tearsOfStealSourceUrl">https://cdn.theoplayer.com/video/dash/tos-dash-widevine/tos_h264_main.mpd</string>
+    <string name="tearsOfStealLicenseUrl">https://widevine-dash.ezdrm.com/proxy?pX=62448C</string>
 
     <string name="elephantsDreamTitle">Elephants Dream</string>
     <string name="elephantsDreamPoster">poster_elephants_dream.png</string>
