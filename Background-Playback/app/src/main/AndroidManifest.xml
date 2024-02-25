@@ -24,6 +24,9 @@
             android:name="THEOPLAYER_LICENSE"
             android:value="@string/theoplayer_test_license" />
 
+        <meta-data android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc"/>
+
         <activity
             android:name=".PlayerActivity"
             android:configChanges="orientation|screenSize"
@@ -52,8 +55,7 @@
 
         <service
             android:name=".MediaPlaybackService"
-            android:exported="true"
-            tools:ignore="ExportedService">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.media.browse.MediaBrowserService" />
             </intent-filter>
