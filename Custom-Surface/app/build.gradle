@@ -1,0 +1,51 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+apply from: "${rootDir}/../Common/common.gradle"
+
+android {
+    namespace 'com.theoplayer.sample.surface'
+    compileSdk compile_sdk
+
+    defaultConfig {
+        applicationId "com.theoplayer.sample.surface"
+        minSdk min_sdk
+        targetSdk target_sdk
+        versionCode 1
+        versionName '1.0'
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation "com.google.android.material:material:$material_version"
+
+    // THEOplayer required dependencies.
+    implementation "com.theoplayer.theoplayer-sdk-android:core:7.3.0"
+}
