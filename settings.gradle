@@ -16,4 +16,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Basic-Playback"
-include ':app'
+include ':basic-playback'
