@@ -27,7 +27,7 @@ THEOplayer or Android Studio feel free to check [THEOplayer documentation]
    select **File > Sync Project with Gradle Files** menu item to do it manually. Please note, that
    in very rare cases it will be required to synchronize project twice.
 
-3. Specify the obtained THEOplayer license in the [AndroidManifest.xml](./app/src/main/AndroidManifest.xml),
+3. Specify the obtained THEOplayer license in the [AndroidManifest.xml](src/main/AndroidManifest.xml),
    if applicable.
 
 ```xml
