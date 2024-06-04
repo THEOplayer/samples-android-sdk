@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
-apply from: "${rootDir}/common/common.gradle"
+apply from: "${rootDir}/common.gradle"
 
 android {
     compileSdk 33
