@@ -19,6 +19,7 @@ rootProject.name = "Samples-THEOplayer-Android-SDK"
 
 include ':basic-playback'
 include ':background-playback'
+include ':google-ima'
 include ':media-session'
 include ':metadata-handling'
 include ':offline-playback'
