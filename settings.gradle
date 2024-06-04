@@ -12,6 +12,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         mavenLocal()
+        maven { url 'https://maven.theoplayer.com/releases' }
         maven { url 'https://jitpack.io' }
     }
 }
