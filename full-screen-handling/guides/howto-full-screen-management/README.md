@@ -342,10 +342,10 @@ For more guides about THEOplayer SDK API usage and tips&tricks please visit [THE
 [Material Design]: https://developer.android.com/guide/topics/ui/look-and-feel
 
 [//]: # (Project files reference)
-[AndroidManifest.xml]: ../../app/src/main/AndroidManifest.xml
-[PlayerActivity.java]: ../../app/src/main/java/com/theoplayer/sample/ui/fullscreen/PlayerActivity.java
-[CustomFullScreenActivity.java]: ../../app/src/main/java/com/theoplayer/sample/ui/fullscreen/CustomFullScreenActivity.java
-[values.xml]: ../../app/src/main/res/values/values.xml
-[styles.xml]: ../../app/src/main/res/values/styles.xml
-[activity_player.xml]: ../../app/src/main/res/layout/activity_player.xml
-[activity_fullscreen.xml]: ../../app/src/main/res/layout/activity_fullscreen.xml
+[AndroidManifest.xml]: ../../src/main/AndroidManifest.xml
+[PlayerActivity.java]: ../../src/main/java/com/theoplayer/sample/ui/fullscreen/PlayerActivity.java
+[CustomFullScreenActivity.java]: ../../src/main/java/com/theoplayer/sample/ui/fullscreen/CustomFullScreenActivity.java
+[values.xml]: ../../src/main/res/values/values.xml
+[styles.xml]: ../../src/main/res/values/styles.xml
+[activity_player.xml]: ../../src/main/res/layout/activity_player.xml
+[activity_fullscreen.xml]: ../../src/main/res/layout/activity_fullscreen.xml
