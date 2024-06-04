@@ -15,7 +15,8 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
     }
 }
-rootProject.name = "Basic-Playback"
+rootProject.name = "Samples-THEOplayer-Android-SDK"
+
 include ':basic-playback'
 include ':background-playback'
 include ':metadata-handling'
