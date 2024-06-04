@@ -48,10 +48,6 @@ Thumbs.db
 *.mov
 *.wmv
 
-.gradle
-build
-local.properties
-.DS_Store
 local.properties
 
 # Gradle files
