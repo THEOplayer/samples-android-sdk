@@ -587,12 +587,12 @@ For more guides about THEOplayer SDK API usage and tips&tricks please visit [THE
 [CachingTask]: https://docs.portal.theoplayer.com/docs/api-reference/theoplayer-cachingtask
 
 [//]: # (Project files reference)
-[app-level build.gradle]: ../../app/build.gradle
-[PlayerActivity.java]: ../../app/src/main/java/com/theoplayer/sample/playback/offline/PlayerActivity.java
-[OfflineActivity.java]: ../../app/src/main/java/com/theoplayer/sample/playback/offline/OfflineActivity.java
-[OfflineSource.java]: ../../app/src/main/java/com/theoplayer/sample/playback/offline/OfflineSource.java
-[OfflineSourceViewModel.java]: ../../app/src/main/java/com/theoplayer/sample/playback/offline/OfflineSourceViewModel.java
-[OfflineDrmLicenseRenewalWorker.java]: ../../app/src/main/java/com/theoplayer/sample/playback/offline/OfflineDrmLicenseRenewalWorker.java
-[SourceDescriptionRepository.java]: ../../app/src/main/java/com/theoplayer/sample/playback/offline/SourceDescriptionRepository.java
-[activity_player.xml]: ../../app/src/main/res/layout/activity_player.xml
-[values.xml]: ../../app/src/main/res/values/values.xml
+[app-level build.gradle]: ../../build.gradle
+[PlayerActivity.java]: ../../src/main/java/com/theoplayer/sample/playback/offline/PlayerActivity.java
+[OfflineActivity.java]: ../../src/main/java/com/theoplayer/sample/playback/offline/OfflineActivity.java
+[OfflineSource.java]: ../../src/main/java/com/theoplayer/sample/playback/offline/OfflineSource.java
+[OfflineSourceViewModel.java]: ../../src/main/java/com/theoplayer/sample/playback/offline/OfflineSourceViewModel.java
+[OfflineDrmLicenseRenewalWorker.java]: ../../src/main/java/com/theoplayer/sample/playback/offline/OfflineDrmLicenseRenewalWorker.java
+[SourceDescriptionRepository.java]: ../../src/main/java/com/theoplayer/sample/playback/offline/SourceDescriptionRepository.java
+[activity_player.xml]: ../../src/main/res/layout/activity_player.xml
+[values.xml]: ../../src/main/res/values/values.xml

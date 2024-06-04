@@ -1,36 +1,47 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
-buildscript {
-    ext {
-        kotlin_version = '1.8.10'
-    }
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url 'https://jitpack.io' }
+apply from: "${rootDir}/common/common.gradle"
 
-        // Attaching project 'libs' folder as a flatRepo allows importing library
-        // as a regular artifact, not as a file.
-        flatDir {
-            dirs 'libs'
+android {
+    compileSdk compile_sdk
+
+    defaultConfig {
+        applicationId "com.theoplayer.sample.playback.offline"
+        minSdk min_sdk
+        targetSdk target_sdk
+        versionCode 1
+        versionName '1.0'
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    namespace 'com.theoplayer.sample.playback.offline'
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+dependencies {
+    implementation "com.google.android.material:material:$material_version"
+    implementation "androidx.constraintlayout:constraintlayout:$androidx_constraintlayout_version"
+    implementation "androidx.recyclerview:recyclerview:$androidx_recyclerview_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$androidx_lifecycle_version"
+    implementation "androidx.work:work-runtime:$work_version"
+
+    // THEOplayer required dependencies.
+    implementation "com.theoplayer.theoplayer-sdk-android:core:$theoplayer_sdk"
+
+    implementation "com.google.code.gson:gson:$gson_version"
 }
