@@ -1,36 +1,36 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
 
-buildscript {
-    ext {
-        kotlin_version = '1.8.10'
+android {
+    compileSdkVersion 33
+    namespace 'com.theoplayer.sample.ui.pip'
+    defaultConfig {
+        applicationId 'com.theoplayer.sample.ui.pip'
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName '1.0'
     }
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url 'https://jitpack.io' }
-
-        // Attaching project 'libs' folder as a flatRepo allows importing library
-        // as a regular artifact, not as a file.
-        flatDir {
-            dirs 'libs'
+    dataBinding.enabled = true
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+dependencies {
+    implementation 'com.google.android.material:material:1.8.0'
+
+    // Remote THEOplayer required dependencies.
+    implementation 'com.theoplayer.theoplayer-sdk-android:basic-minapi21:4.12.0'
+
+    // Local THEOplayer required dependencies.
+//     implementation ':theoplayer@aar'
+//     implementation 'com.google.code.gson:gson:2.8.9'
 }
