@@ -318,10 +318,10 @@ For more guides about THEOplayer SDK API usage and tips&tricks please visit [THE
 [Data Binding Library]: https://developer.android.com/topic/libraries/data-binding
 
 [//]: # (Project files reference)
-[AndroidManifest.xml]: ../../app/src/main/AndroidManifest.xml
-[app-level build.gradle]: ../../app/build.gradle
-[PlayerActivity.java]: ../../app/src/main/java/com/theoplayer/sample/playback/googlecast/PlayerActivity.java
-[activity_player.xml]: ../../app/src/main/res/layout/activity_player.xml
-[menu]: ../../app/src/main/res/menu
-[activity_player_menu.xml]: ../../app/src/main/res/menu/activity_player_menu.xml
-[values.xml]: ../../app/src/main/res/values/values.xml
+[AndroidManifest.xml]: ../../src/main/AndroidManifest.xml
+[app-level build.gradle]: ../../build.gradle
+[PlayerActivity.java]: ../../src/main/java/com/theoplayer/sample/playback/googlecast/PlayerActivity.java
+[activity_player.xml]: ../../src/main/res/layout/activity_player.xml
+[menu]: ../../src/main/res/menu
+[activity_player_menu.xml]: ../../src/main/res/menu/activity_player_menu.xml
+[values.xml]: ../../src/main/res/values/values.xml
