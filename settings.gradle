@@ -18,3 +18,4 @@ dependencyResolutionManagement {
 rootProject.name = "Basic-Playback"
 include ':basic-playback'
 include ':background-playback'
+include ':simple-ott'
