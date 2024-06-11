@@ -26,5 +26,6 @@ android {
 
     dependencies {
         implementation(libs.material)
+        api(libs.theoplayer)
     }
 }

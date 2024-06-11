@@ -7,8 +7,7 @@ import androidx.databinding.DataBindingUtil
 import com.theoplayer.android.api.event.player.ErrorEvent
 import com.theoplayer.android.api.event.player.PlayerEventTypes
 import com.theoplayer.android.api.player.Player
-import com.theoplayer.android.api.source.SourceDescription
-import com.theoplayer.android.api.source.TypedSource
+import com.theoplayer.sample.common.SourceManager
 import com.theoplayer.sample.playback.basic.databinding.ActivityPlayerBinding
 
 class PlayerActivity : AppCompatActivity() {
@@ -36,16 +35,8 @@ class PlayerActivity : AppCompatActivity() {
         // and will also exit fullscreen when the device is rotated back to portrait.
         viewBinding.theoPlayerView.settings.isFullScreenOrientationCoupled = true
 
-        // Creating a TypedSource builder that defines the location of a single stream source.
-        val typedSource = TypedSource.Builder(getString(com.theoplayer.sample.common.R.string.defaultSourceUrl))
-
-        // Creating a SourceDescription builder that contains the settings to be applied as a new
-        // THEOplayer source.
-        val sourceDescription = SourceDescription.Builder(typedSource.build())
-            .poster(getString(com.theoplayer.sample.common.R.string.defaultPosterUrl))
-
         // Configuring THEOplayer with defined SourceDescription object.
-        theoPlayer.source = sourceDescription.build()
+        theoPlayer.source = SourceManager.ELEPHANTS_DREAM_HLS
 
         //  Set autoplay to start video whenever player is visible
         theoPlayer.isAutoplay = true
