@@ -1,6 +1,4 @@
 <resources>
     <string name="app_name">Playback</string>
-    <string name="appDisplayName">THEO Basic Playback</string>
-
-    <string name="theoplayer_test_license"></string>
+    <string name="appDisplayName">Custom Surface Rendering Demo</string>
 </resources>
