@@ -1,0 +1,24 @@
+[versions]
+theoplayer = "7.5.0"
+gradle = "8.4.0"
+kotlin-gradle-plugin = "1.8.0"
+minSdk = "24"
+compileSdk = "34"
+targetSdk = "33"
+material = "1.12.0"
+
+[libraries]
+gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-gradle-plugin" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+# THEOplayer
+theoplayer = { group = "com.theoplayer.theoplayer-sdk-android", name = "core", version.ref = "theoplayer" }
+theoplayer-connector-ima = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ima", version.ref = "theoplayer" }
+theoplayer-connector-dai = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-dai", version.ref = "theoplayer" }
+theoplayer-connector-mediatailor = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-mediatailor", version.ref = "theoplayer" }
+theoplayer-connector-cast = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-cast", version.ref = "theoplayer" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "gradle" }
+android-library = { id = "com.android.library", version.ref = "gradle" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-gradle-plugin" }
