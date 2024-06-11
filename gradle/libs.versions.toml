@@ -11,7 +11,6 @@ material = "1.12.0"
 gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-gradle-plugin" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-# THEOplayer
 theoplayer = { group = "com.theoplayer.theoplayer-sdk-android", name = "core", version.ref = "theoplayer" }
 theoplayer-connector-ima = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ima", version.ref = "theoplayer" }
 theoplayer-connector-dai = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-dai", version.ref = "theoplayer" }
