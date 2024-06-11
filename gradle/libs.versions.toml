@@ -1,5 +1,7 @@
 [versions]
 appcompat = "1.6.1"
+media = "1.6.0"
+mediasession = "7.5.0"
 theoplayer = "7.5.0"
 gradle = "8.4.0"
 kotlin-gradle-plugin = "1.8.0"
@@ -13,11 +15,13 @@ appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat"
 gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-gradle-plugin" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+media = { module = "androidx.media:media", version.ref = "media" }
 theoplayer = { group = "com.theoplayer.theoplayer-sdk-android", name = "core", version.ref = "theoplayer" }
 theoplayer-connector-ima = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ima", version.ref = "theoplayer" }
 theoplayer-connector-dai = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-dai", version.ref = "theoplayer" }
 theoplayer-connector-mediatailor = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-mediatailor", version.ref = "theoplayer" }
 theoplayer-connector-cast = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-cast", version.ref = "theoplayer" }
+theoplayer-connector-mediasession = { module = "com.theoplayer.android-connector:mediasession", version.ref = "mediasession" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradle" }

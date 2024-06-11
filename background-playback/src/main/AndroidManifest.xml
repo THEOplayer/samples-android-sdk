@@ -1,83 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="LockedOrientationActivity">
-
-    <!-- In order to play online streams or ads it is needed to add permissions below -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-
-    <uses-feature android:name="android.software.leanback" android:required="false" />
-    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/appName"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/TheoTheme.Base"
-        android:banner="@mipmap/ic_banner">
-
-        <meta-data
-            android:name="THEOPLAYER_LICENSE"
-            android:value="@string/theoplayer_test_license" />
-
-        <meta-data android:name="com.google.android.gms.car.application"
-            android:resource="@xml/automotive_app_desc"/>
-
+        android:label="@string/app_name"
+        android:theme="@style/TheoTheme.Base">
         <activity
             android:name=".PlayerActivity"
             android:configChanges="orientation|screenSize"
             android:exported="true"
-            android:theme="@style/TheoTheme.SplashScreen">
-
+            android:screenOrientation="userPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-        <activity
-            android:name=".PlayerActivityTV"
-            android:configChanges="orientation|screenSize"
-            android:exported="true"
-            android:theme="@style/TheoTheme.SplashScreen">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-
-        <service
-            android:name=".MediaPlaybackService"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.media.browse.MediaBrowserService" />
-            </intent-filter>
-        </service>
-
-        <!--  If you want to use media buttons in systems earlier than Android 5.0 you must
-        include the MediaButtonReceiver in your manifest with a MEDIA_BUTTON intent filter. -->
-        <receiver
-            android:name=".MediaPlaybackService$MediaReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MEDIA_BUTTON" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name=".MediaPlaybackService$StopServiceBroadcastReceiver"
-            android:exported="false" />
-
-        <receiver
-            android:name=".MediaPlaybackService$RestartServiceBroadcastReceiver"
-            android:exported="false" />
-
+        <meta-data
+            android:name="THEOPLAYER_LICENSE"
+            android:value="@string/theoplayer_test_license" />
     </application>
-
 </manifest>
