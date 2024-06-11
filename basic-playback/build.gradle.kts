@@ -42,4 +42,5 @@ android {
 dependencies {
     implementation(libs.material)
     implementation(libs.theoplayer)
+    implementation(project(":common"))
 }
