@@ -1,4 +1,5 @@
 [versions]
+appcompat = "1.6.1"
 theoplayer = "7.5.0"
 gradle = "8.4.0"
 kotlin-gradle-plugin = "1.8.0"
@@ -8,6 +9,7 @@ targetSdk = "33"
 material = "1.12.0"
 
 [libraries]
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-gradle-plugin" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
