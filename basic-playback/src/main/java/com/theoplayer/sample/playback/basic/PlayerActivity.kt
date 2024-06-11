@@ -33,7 +33,7 @@ class PlayerActivity : AppCompatActivity() {
         // Coupling the orientation of the device with the fullscreen state.
         // The player will go fullscreen when the device is rotated to landscape
         // and will also exit fullscreen when the device is rotated back to portrait.
-        viewBinding.theoPlayerView.settings.isFullScreenOrientationCoupled = true
+        viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true
 
         // Configuring THEOplayer with defined SourceDescription object.
         theoPlayer.source = SourceManager.ELEPHANTS_DREAM_HLS
