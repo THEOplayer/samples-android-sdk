@@ -1,17 +1,5 @@
 <resources>
     <string name="appName">GoogleIMA</string>
     <string name="appDisplayName">THEO Google IMA</string>
-
-    <string name="defaultPosterUrl">https://cdn.theoplayer.com/video/elephants-dream/playlist.png</string>
-    <string name="defaultSourceUrl">https://cdn.theoplayer.com/video/elephants-dream/playlist.m3u8</string>
-
-    <string name="defaultVastLinearPreRollAdUrl">https://cdn.theoplayer.com/demos/ads/vast/dfp-preroll-no-skip.xml</string>
-    <string name="defaultVastLinearMidRollAdUrl">https://cdn.theoplayer.com/demos/ads/vast/dfp-midroll-no-skip.xml</string>
-    <string name="defaultVastNonLinearAdUrl">https://cdn.theoplayer.com/demos/ads/vast/vast-nonlinear.xml</string>
-    <string name="defaultVpaidAdUrl"><![CDATA[https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/ad_rule_samples&ciu_szs=300x250&ad_rule=1&impl=s&gdfp_req=1&env=vp&output=vmap&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ar%3Dpremidpost&cmsid=496&vid=short_onecue&correlator=]]></string>
-    <string name="defaultVmapAdUrl">https://cdn.theoplayer.com/demos/ads/vmap/single-pre-mid-post-no-skip.xml</string>
-
-    <bool name="loadVmapAds">false</bool>
-
 </resources>
 

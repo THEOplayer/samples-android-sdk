@@ -19,9 +19,9 @@ kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 media = { module = "androidx.media:media", version.ref = "media" }
 theoplayer = { group = "com.theoplayer.theoplayer-sdk-android", name = "core", version.ref = "theoplayer" }
-theoplayer-connector-ima = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ima", version.ref = "theoplayer" }
-theoplayer-connector-dai = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-dai", version.ref = "theoplayer" }
-theoplayer-connector-mediatailor = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-mediatailor", version.ref = "theoplayer" }
+theoplayer-connector-ima = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-ima", version.ref = "theoplayer" }
+theoplayer-connector-dai = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-dai", version.ref = "theoplayer" }
+theoplayer-connector-mediatailor = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-mediatailor", version.ref = "theoplayer" }
 theoplayer-connector-cast = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-cast", version.ref = "theoplayer" }
 theoplayer-connector-mediasession = { module = "com.theoplayer.android-connector:mediasession", version.ref = "mediasession" }
 
