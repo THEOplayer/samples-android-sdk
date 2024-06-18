@@ -319,8 +319,8 @@ For more guides about THEOplayer SDK API usage and tips&tricks please visit [THE
 
 [//]: # (Project files reference)
 [AndroidManifest.xml]: ../../src/main/AndroidManifest.xml
-[app-level build.gradle]: ../../build.gradle
-[PlayerActivity.java]: ../../src/main/java/com/theoplayer/sample/playback/googlecast/PlayerActivity.java
+[app-level build.gradle]: ../../build.gradle.kts
+[PlayerActivity.java]: ../../src/main/java/com/theoplayer/sample/playback/cast/PlayerActivity.java
 [activity_player.xml]: ../../src/main/res/layout/activity_player.xml
 [menu]: ../../src/main/res/menu
 [activity_player_menu.xml]: ../../src/main/res/menu/activity_player_menu.xml

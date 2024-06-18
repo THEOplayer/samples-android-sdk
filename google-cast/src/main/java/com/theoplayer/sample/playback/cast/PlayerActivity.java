@@ -1,4 +1,4 @@
-package com.theoplayer.sample.playback.googlecast;
+package com.theoplayer.sample.playback.cast;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,17 +9,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.google.android.gms.cast.framework.CastButtonFactory;
+import com.theoplayer.android.api.cast.CastConfiguration;
 import com.theoplayer.android.api.cast.CastIntegration;
 import com.theoplayer.android.api.cast.CastIntegrationFactory;
+import com.theoplayer.android.api.cast.CastStrategy;
 import com.theoplayer.android.api.cast.chromecast.Chromecast;
 import com.theoplayer.android.api.cast.chromecast.ChromecastConnectionCallback;
 import com.theoplayer.android.api.event.chromecast.ChromecastEventTypes;
 import com.theoplayer.android.api.event.player.PlayerEventTypes;
 import com.theoplayer.android.api.player.Player;
 import com.theoplayer.android.api.source.SourceDescription;
-import com.theoplayer.android.api.source.TypedSource;
-import com.theoplayer.android.api.source.metadata.ChromecastMetadataDescription;
-import com.theoplayer.sample.playback.googlecast.databinding.ActivityPlayerBinding;
+import com.theoplayer.sample.common.SourceManager;
+import com.theoplayer.sample.playback.cast.databinding.ActivityPlayerBinding;
 
 public class PlayerActivity extends AppCompatActivity {
 
@@ -31,7 +32,7 @@ public class PlayerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.TheoTheme_Base);
+        setTheme(com.theoplayer.sample.common.R.style.TheoTheme_Base);
         super.onCreate(savedInstanceState);
 
         // Inflating view and obtaining an instance of the binding class.
@@ -40,8 +41,9 @@ public class PlayerActivity extends AppCompatActivity {
         // Gathering THEO objects references.
         theoPlayer = viewBinding.theoPlayerView.getPlayer();
 
-        // Add Cast integration
-        CastIntegration castIntegration = CastIntegrationFactory.createCastIntegration(viewBinding.theoPlayerView);
+        // Add Cast integration.
+        CastConfiguration configuration = new CastConfiguration.Builder().castStrategy(CastStrategy.AUTO).build();
+        CastIntegration castIntegration = CastIntegrationFactory.createCastIntegration(viewBinding.theoPlayerView, configuration);
         theoPlayer.addIntegration(castIntegration);
 
         if (viewBinding.theoPlayerView.getCast() != null) {
@@ -53,7 +55,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Configuring THEOplayer playback with default parameters.
         configureTHEOplayer();
-        configureChromecast();
+//        configureChromecast();
     }
 
     @Override
@@ -68,27 +70,12 @@ public class PlayerActivity extends AppCompatActivity {
         // Coupling the orientation of the device with the fullscreen state.
         // The player will go fullscreen when the device is rotated to landscape
         // and will also exit fullscreen when the device is rotated back to portrait.
-        viewBinding.theoPlayerView.getSettings().setFullScreenOrientationCoupled(true);
-
-        // Creating a TypedSource builder that defines the location of a single stream source.
-        TypedSource.Builder typedSource = new TypedSource.Builder(getString(R.string.defaultSourceUrl));
-
-        // Creating a ChromecastMetadataDescription builder that defines stream metadata to be
-        // displayed on cast sender and receiver while casting.
-        ChromecastMetadataDescription.Builder chromecastMetadata = new ChromecastMetadataDescription.Builder()
-            .title(getString(R.string.defaultTitle))
-            .images(getString(R.string.defaultPosterUrl));
-
-        // Creating a SourceDescription builder that contains the settings to be applied as a new
-        // THEOplayer source.
-        SourceDescription.Builder sourceDescription = new SourceDescription.Builder(typedSource.build())
-            .poster(getString(R.string.defaultPosterUrl))
-            .metadata(chromecastMetadata.build());
+        viewBinding.theoPlayerView.getFullScreenManager().setFullScreenOrientationCoupled(true);
 
         theoPlayer.setAutoplay(true);
 
         // Configuring THEOplayer with defined SourceDescription object.
-        theoPlayer.setSource(sourceDescription.build());
+        theoPlayer.setSource(SourceManager.Companion.getELEPHANTS_DREAM_HLS_WITH_CAST_METADATA());
         theoPlayer.play();
 
         // Adding listeners to THEOplayer basic playback events.
