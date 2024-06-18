@@ -20,7 +20,7 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityPlayerBinding
     private lateinit var theoPlayer: Player
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.TheoTheme_Base)
+        setTheme(com.theoplayer.sample.common.R.style.TheoTheme_Base)
         super.onCreate(savedInstanceState)
 
         // Inflating view and obtaining an instance of the binding class.
@@ -41,7 +41,7 @@ class PlayerActivity : AppCompatActivity() {
         // Coupling the orientation of the device with the fullscreen state.
         // The player will go fullscreen when the device is rotated to landscape
         // and will also exit fullscreen when the device is rotated back to portrait.
-        viewBinding.theoPlayerView.settings.isFullScreenOrientationCoupled = true
+        viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true
 
         // Creating a TypedSource builder that defines the location of a single stream source.
         val typedSource = TypedSource.Builder(getString(R.string.defaultSourceUrl))

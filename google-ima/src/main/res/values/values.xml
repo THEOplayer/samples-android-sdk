@@ -13,6 +13,5 @@
 
     <bool name="loadVmapAds">false</bool>
 
-    <!-- Insert THEOplayer license -->
-    <string name="theoplayer_test_license"></string>
 </resources>
+
