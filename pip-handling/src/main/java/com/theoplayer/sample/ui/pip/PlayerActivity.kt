@@ -11,7 +11,8 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.theoplayer.android.api.event.player.*
+import com.theoplayer.android.api.event.player.ErrorEvent
+import com.theoplayer.android.api.event.player.PlayerEventTypes
 import com.theoplayer.android.api.pip.PiPType
 import com.theoplayer.android.api.player.Player
 import com.theoplayer.android.api.source.SourceDescription
@@ -55,7 +56,7 @@ class PlayerActivity : AppCompatActivity() {
         // Coupling the orientation of the device with the fullscreen state.
         // The player will go fullscreen when the device is rotated to landscape
         // and will also exit fullscreen when the device is rotated back to portrait.
-        viewBinding.theoPlayerView.settings.isFullScreenOrientationCoupled = true
+        viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true
 
         // Creating a TypedSource builder that defines the location of a single stream source.
         val typedSource = TypedSource.Builder(getString(R.string.defaultSourceUrl))
