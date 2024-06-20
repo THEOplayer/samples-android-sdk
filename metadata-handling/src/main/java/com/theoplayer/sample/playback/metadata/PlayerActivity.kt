@@ -14,7 +14,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.DataBindingUtil
-import com.theoplayer.android.api.event.player.*
+import com.theoplayer.android.api.event.player.ErrorEvent
+import com.theoplayer.android.api.event.player.PlayerEventTypes
+import com.theoplayer.android.api.event.player.TimeUpdateEvent
 import com.theoplayer.android.api.event.track.texttrack.AddCueEvent
 import com.theoplayer.android.api.event.track.texttrack.ExitCueEvent
 import com.theoplayer.android.api.event.track.texttrack.TextTrackEventTypes
@@ -28,7 +30,6 @@ import com.theoplayer.android.api.source.TypedSource
 import com.theoplayer.sample.playback.metadata.databinding.ActivityPlayerBinding
 import org.json.JSONException
 import java.io.ByteArrayOutputStream
-import java.util.*
 
 class PlayerActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityPlayerBinding
@@ -116,11 +117,7 @@ class PlayerActivity : AppCompatActivity() {
             Log.i(TAG, "Event: TIMEUPDATE, currentTime=" + event.currentTime)
 
             // Once we know that EXT-X-PROGRAM-DATE-TIME was updated we have to request for its value.
-            theoPlayer.requestCurrentProgramDateTime { date: Date? ->
-                appendMetadata(
-                    date?.toString() ?: ""
-                )
-            }
+            appendMetadata(theoPlayer.currentProgramDateTime?.toString() ?: "")
         }
     }
 
