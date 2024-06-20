@@ -7,7 +7,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.theoplayer.demo.simpleott.R
 import java.lang.reflect.Type
-import java.util.*
+import java.util.Scanner
 
 /**
  * Provides stream source definitions.
@@ -32,7 +32,7 @@ class StreamSourceRepository(context: Context) {
      *
      * @return live stream sources.
      */
-    val liveStreamSources: List<StreamSource>?
+    val liveStreamSources: List<StreamSource>
         get() = streamSources?.live ?: ArrayList()
 
     /**
@@ -73,7 +73,7 @@ class StreamSourceRepository(context: Context) {
                     jsonObject["title"].asString,
                     jsonObject["description"].asString,
                     jsonObject["source"].asString,
-                    if (imageResId != 0) imageResId else R.mipmap.ic_launcher
+                    if (imageResId != 0) imageResId else com.theoplayer.sample.common.R.mipmap.ic_launcher
                 )
             }
         }

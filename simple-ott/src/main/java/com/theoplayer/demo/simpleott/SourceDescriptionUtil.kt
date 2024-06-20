@@ -9,8 +9,8 @@ internal object SourceDescriptionUtil {
     }
 
     private fun getSimpleSourceDescription(url: String?): SourceDescription {
-        return SourceDescription.Builder.sourceDescription(
-            TypedSource.Builder.typedSource(
+        return SourceDescription.Builder(
+            TypedSource.Builder(
                 url!!
             ).build()
         ).build()

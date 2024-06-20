@@ -18,7 +18,7 @@ import com.theoplayer.android.api.source.TypedSource
 import com.theoplayer.demo.simpleott.R
 import com.theoplayer.demo.simpleott.ToastUtils
 import com.theoplayer.demo.simpleott.network.WiFiNetworkInfo
-import java.util.*
+import java.util.Calendar
 
 /**
  * This class allows to download content of a stream for offline playback.
@@ -112,8 +112,8 @@ class OfflineSourceDownloader(
                 cachingParameters.expirationDate(in7Days.time)
 
                 // Getting prepared source description for given source.
-                val sourceDescription = SourceDescription.Builder.sourceDescription(
-                    TypedSource.Builder.typedSource(offlineSource.source).build()
+                val sourceDescription = SourceDescription.Builder(
+                    TypedSource.Builder(offlineSource.source).build()
                 ).build()
                 if (sourceDescription != null) {
                     // Creating caching task for given source and adding appropriate event listeners to it.

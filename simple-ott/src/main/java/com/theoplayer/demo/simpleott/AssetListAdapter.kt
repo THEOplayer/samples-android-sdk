@@ -14,22 +14,22 @@ internal class AssetListAdapter(
     private val items: Array<AssetItem>
 ) : ArrayAdapter<AssetItem?>(context, R.layout.list_item, items) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var convertView = convertView
+        var view = convertView
         val binding: ListItemBinding
-        if (convertView == null) {
+        if (view == null) {
             binding = DataBindingUtil.inflate(
                 LayoutInflater.from(getContext()),
                 R.layout.list_item, parent, false
             )
-            convertView = binding.root
+            view = binding.root
         } else {
-            binding = convertView.tag as ListItemBinding
+            binding = view.tag as ListItemBinding
         }
         items[position].imageId =
             if (items[position].imageUrl != null) context.resources.getIdentifier(
                 items[position].imageUrl, "drawable", context.packageName
             ) else R.drawable.live
         binding.viewmodel = items[position]
-        return convertView
+        return view
     }
 }

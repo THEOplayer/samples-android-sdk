@@ -2,14 +2,16 @@ package com.theoplayer.demo.simpleott
 
 import android.annotation.TargetApi
 import android.app.PictureInPictureParams
-import android.content.*
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.theoplayer.android.api.event.player.*
+import com.theoplayer.android.api.event.player.ErrorEvent
+import com.theoplayer.android.api.event.player.PlayerEventTypes
 import com.theoplayer.android.api.player.Player
 import com.theoplayer.android.api.source.SourceDescription
 import com.theoplayer.android.api.source.TypedSource
@@ -40,7 +42,7 @@ class PlayerActivity : AppCompatActivity() {
         // Coupling the orientation of the device with the fullscreen state.
         // The player will go fullscreen when the device is rotated to landscape
         // and will also exit fullscreen when the device is rotated back to portrait.
-        viewBinding.theoPlayerView.settings.isFullScreenOrientationCoupled = true
+        viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true
 
         // Creating a TypedSource builder that defines the location of a single stream source.
         val typedSource = TypedSource.Builder(source)
@@ -82,7 +84,7 @@ class PlayerActivity : AppCompatActivity() {
         isInPictureInPictureMode: Boolean,
         newConfig: Configuration
     ) {
-        viewBinding.theoPlayerView.settings.isFullScreenOrientationCoupled =
+        viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled =
             !isInPictureInPictureMode
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
     }
