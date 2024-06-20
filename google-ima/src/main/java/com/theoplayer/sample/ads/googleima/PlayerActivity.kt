@@ -23,7 +23,7 @@ class PlayerActivity : AppCompatActivity() {
         setTheme(com.theoplayer.sample.common.R.style.TheoTheme_Base)
         super.onCreate(savedInstanceState)
 
-        // See basic-playback's PlayerActivity for mor information about basic setup.
+        // See basic-playback's PlayerActivity for more information about basic setup.
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_player)
         theoPlayer = viewBinding.theoPlayerView.player
         setSupportActionBar(viewBinding.toolbarLayout.toolbar)

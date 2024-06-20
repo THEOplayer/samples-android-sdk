@@ -21,7 +21,7 @@ class PlayerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // See basic-playback's PlayerActivity for mor information about basic setup.
+        // See basic-playback's PlayerActivity for more information about basic setup.
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_player)
         theoPlayer = viewBinding.theoPlayerView.player
         setSupportActionBar(viewBinding.toolbar)
