@@ -53,7 +53,7 @@ internal class OfflineSourceAdapter(
                     }
                 } catch (ignore: Exception) {
                     // Displaying poster placeholder in case of any problems with loading requested poster.
-                    viewBinding.posterImageView.setImageResource(R.mipmap.ic_launcher)
+                    viewBinding.posterImageView.setImageResource(com.theoplayer.sample.common.R.mipmap.ic_launcher)
                 }
             }
             viewBinding.titleTextView.text = offlineSource.title

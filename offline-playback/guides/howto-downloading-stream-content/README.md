@@ -91,7 +91,7 @@ or full implementation):
 ```java
 public class OfflineSourceViewModel extends AndroidViewModel {
 
-    private Cache theoCache;
+    private final Cache theoCache;
 
     // ...
 
@@ -587,7 +587,7 @@ For more guides about THEOplayer SDK API usage and tips&tricks please visit [THE
 [CachingTask]: https://docs.portal.theoplayer.com/docs/api-reference/theoplayer-cachingtask
 
 [//]: # (Project files reference)
-[app-level build.gradle]: ../../build.gradle
+[app-level build.gradle]: ../../build.gradle.kts
 [PlayerActivity.java]: ../../src/main/java/com/theoplayer/sample/playback/offline/PlayerActivity.java
 [OfflineActivity.java]: ../../src/main/java/com/theoplayer/sample/playback/offline/OfflineActivity.java
 [OfflineSource.java]: ../../src/main/java/com/theoplayer/sample/playback/offline/OfflineSource.java

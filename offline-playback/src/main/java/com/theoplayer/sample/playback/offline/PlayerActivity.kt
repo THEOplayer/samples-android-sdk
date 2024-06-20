@@ -6,7 +6,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.theoplayer.android.api.event.player.*
+import com.theoplayer.android.api.event.player.EndedEvent
+import com.theoplayer.android.api.event.player.ErrorEvent
+import com.theoplayer.android.api.event.player.PauseEvent
+import com.theoplayer.android.api.event.player.PlayEvent
+import com.theoplayer.android.api.event.player.PlayerEventTypes
+import com.theoplayer.android.api.event.player.PlayingEvent
 import com.theoplayer.android.api.player.Player
 import com.theoplayer.sample.playback.offline.databinding.ActivityPlayerBinding
 
@@ -38,7 +43,7 @@ class PlayerActivity : AppCompatActivity() {
         // Coupling the orientation of the device with the fullscreen state.
         // The player will go fullscreen when the device is rotated to landscape
         // and will also exit fullscreen when the device is rotated back to portrait.
-        viewBinding.theoPlayerView.settings.isFullScreenOrientationCoupled = true
+        viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true
 
         // Creating a SourceDescription that contains the settings to be applied as a new
         // THEOplayer source.

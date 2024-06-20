@@ -63,4 +63,4 @@ This project is licensed under the BSD 3 Clause License - see the [LICENSE] file
 [//]: # (Project files reference)
 [LICENSE]: LICENSE
 [libs]: libs
-[app-level build.gradle]: build.gradle
+[app-level build.gradle]: build.gradle.kts
