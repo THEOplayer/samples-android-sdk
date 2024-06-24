@@ -288,7 +288,7 @@ This guide covered ways of extracting stream metadata of various types.
 For more guides about THEOplayer SDK API usage and tips&tricks please visit [THEO Docs] portal.
 
 [//]: # (Links and Guides reference)
-[THEO Metadata Handling]: README.md
+[THEO Metadata Handling]: ../../README.md
 [THEO Docs]: https://docs.portal.theoplayer.com/
 
 [//]: # (Project files reference)
