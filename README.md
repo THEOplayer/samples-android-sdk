@@ -31,26 +31,19 @@ code which are hard to reproduce, this is most often related to mistakes in the 
 
 ## Reference Apps
 
-In order to keep these apps as simple as possible, we will maintain a set of different sample apps
-over a single sample app showing all different use cases.
+We have provided the following applications showcasing some of the features of THEOplayer. 
+These can be tested locally by opening this repository in Android Studio and selecting which app your want to launch.
 
-  * [THEO Basic Playback](./Basic-Playback/README.md)
-  * [THEO DRM Playback](./DRM-Playback/README.md)
-  * [THEO Basic Ads](./Basic-Ads/README.md)
-  * [THEO Google IMA](./Google-IMA/README.md)
-  * [THEO Custom URL Playback](./Custom-URL-Playback/README.md)
-  * [THEO Custom Ads](./Custom-Ads/README.md)
-  * [THEO Google Cast](./Google-Cast/README.md)
-  * [THEO Full Screen Handling](./Full-Screen-Handling/README.md)
-  * [THEO PiP Handling](./PiP-Handling/README.md)
-  * [THEO Metadata Handling](./Metadata-Handling/README.md)
-  * [THEO Offline Playback](./Offline-Playback/README.md)
-  * [THEO Custom UI](./Custom-UI/README.md)
-  * [THEO Simple OTT](./Simple-OTT/README.md)
-  * [THEO Programmable Stream](./Programmable-Stream/README.md)
-  * [THEO Verizon](./Verizon-Media/README.md)
+  * [THEO Basic Playback](./basic-playback/README.md)
+  * [THEO Open Video UI](./open-video-ui/README.md)
+  * [THEO Background Playback](./background-playback/README.md)
+  * [THEO Google-IMA](./google-ima/README.md)
+  * [THEO Casting](./google-cast/README.md)
+  * [THEO Metadata Handling](./metadata-handling/README.md)
+  * [THEO Full Screen Handling](./full-screen-handling/README.md)
+  * [THEO Custom Surface Rendering](./custom-surface-rendering/README.md)
+  * [THEO Offline Playback](./offline-playback/README.md)
+  * [THEO PiP Handling](./pip-handling/README.md)
+  * [THEO Simple OTT App](./simple-ott/README.md)
 
-## Streams/Content Rights:
-
-The DRM streams are provided by our Partner: [EZ DRM](https://ezdrm.com/) and hold all the rights
-for the content. These streams are DRM protected and cannot be used for any other purposes.
+We highly recommend reading through the [Basic Playback](./basic-playback/README.md) example first.
