@@ -3,99 +3,11 @@
 This guide is going to show how to extract metadata of various types that can be attached to
 played stream.
 
-To obtain THEOplayer Android SDK please visit [Get Started with THEOplayer].
-
 Presented code snippets are taken from [THEO Metadata Handling] reference app. Please note that in
 this app all URLs are defined as an Android resource, but they can be inlined as well. Please check
 [values.xml] file for URLs definition.
 
-
-## Table of Contents
-
-  * [Extracting metadata]
-    * [HLS with ID3 metadata]
-    * [HLS with PROGRAM-DATE-TIME]
-    * [HLS with DATERANGE]
-    * [DASH with EMSG]
-    * [DASH with EventStream]
-  * [Summary]
-
-
-## Extracting metadata
-
-Different stream types can contain different types of metadata. Below we are going to show the most
-popular metadata types. Please note that all examples have similar structure.
-
-All of them are using THEOplayer instance taken from `THEOplayerView` defined in [activity_player.xml]:
-
-```java
-public class PlayerActivity extends AppCompatActivity {
-
-    private Player theoPlayer;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        // ...
-
-        // Inflating view and obtaining an instance of the binding class.
-        viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_player);
-
-        // Gathering THEO objects references.
-        theoPlayer = viewBinding.theoPlayerView.getPlayer();
-
-        // ...
-    }
-}
-```
-
-All of them are using `configureTHEOplayer(...)` method to configure THEOplayer with appropriate
-`TypedSource`:
-
-```java
-public class PlayerActivity extends AppCompatActivity {
-
-    // ...
-
-    private void configureTHEOplayer(TypedSource.Builder typedSource) {
-        // Creating a SourceDescription builder that contains the settings to be applied as a new
-        // THEOplayer source.
-        SourceDescription.Builder sourceDescription = SourceDescription.Builder
-                .sourceDescription(typedSource.build());
-
-        // Configuring THEOplayer with defined SourceDescription object.
-        theoPlayer.setSource(sourceDescription.build());
-        theoPlayer.setAutoplay(true);
-
-        // Adding listeners to THEOplayer basic playback events.
-        // ...
-    }
-}
-```
-
-And finally, all of them are using `appendMetadata(...)` method to display extracted metadata on the
-screen:
-
-```java
-public class PlayerActivity extends AppCompatActivity {
-
-    // ...
-
-    private void appendMetadata(String metadata) {
-        if (viewBinding.metadataTextView.length() == 0) {
-            viewBinding.metadataTextView.setText(metadata);
-        } else {
-            viewBinding.metadataTextView.append("\n\n" + metadata);
-        }
-
-        // ...
-    }
-}
-```
-
-Please visit [activity_player.xml] to check layout definition and [PlayerActivity.java] for full
-implementation.
-
-### HLS with ID3 metadata
+## HLS with ID3 metadata
 
 `ID3` is a metadata container used in conjunction with the HLS streams. It allows information such as
 the title, artist, album, track number, and other information about the stream to be stored in
@@ -147,7 +59,7 @@ public class PlayerActivity extends AppCompatActivity {
 }
 ```
 
-### HLS with PROGRAM-DATE-TIME
+## HLS with PROGRAM-DATE-TIME
 
 THEOplayer has support for associating media segments with an absolute date and time. This can be
 useful for synchronising video playback with displaying other relevant information about the video
@@ -192,7 +104,7 @@ public class PlayerActivity extends AppCompatActivity {
 }
 ```
 
-### HLS with DATERANGE
+## HLS with DATERANGE
 
 HLS supports manifests which contain the `EXT-X-DATERANGE` tag. This is used to define date range
 metadata in a media playlist. A possible use case is defining timed metadata for interstitial regions
@@ -269,7 +181,7 @@ public class PlayerActivity extends AppCompatActivity {
 }
 ```
 
-### DASH with EMSG
+## DASH with EMSG
 
 To extract `EMSG` metadata from DASH stream, listen to `TextTrackListEventTypes.ADDTRACK`
 event on THEO's `TextTrackList` object, looking for text track of type `TextTrackType.EMSG`. Once
@@ -325,7 +237,7 @@ public class PlayerActivity extends AppCompatActivity {
 }
 ```
 
-### DASH with EventStream
+## DASH with EventStream
 
 To extract EventStream metadata from DASH stream, listen to `TextTrackListEventTypes.ADDTRACK`
 event on THEO's `TextTrackList` object, looking for text track of type `TextTrackType.EVENTSTREAM`.
@@ -375,23 +287,11 @@ This guide covered ways of extracting stream metadata of various types.
 
 For more guides about THEOplayer SDK API usage and tips&tricks please visit [THEO Docs] portal.
 
-
-[//]: # (Sections reference)
-[Extracting metadata]: #extracting-metadata
-[HLS with ID3 metadata]: #hls-with-id3-metadata
-[HLS with PROGRAM-DATE-TIME]: #hls-with-program-date-time
-[HLS with DATERANGE]: #hls-with-daterange
-[DASH with EMSG]: #dash-with-emsg
-[DASH with EventStream]: #dash-with-eventstream
-[Summary]: #summary
-
 [//]: # (Links and Guides reference)
-[THEO Metadata Handling]: ../..
+[THEO Metadata Handling]: README.md
 [THEO Docs]: https://docs.portal.theoplayer.com/
-[THEOplayer How To's - THEOplayer Android SDK Integration]: ../../../Basic-Playback/guides/howto-theoplayer-android-sdk-integration/README.md
-[Get Started with THEOplayer]: https://www.theoplayer.com/licensing
 
 [//]: # (Project files reference)
-[PlayerActivity.java]: ../../app/src/main/java/com/theoplayer/sample/playback/metadata/PlayerActivity.java
-[activity_player.xml]: ../../app/src/main/res/layout/activity_player.xml
-[values.xml]: ../../app/src/main/res/values/values.xml
+[PlayerActivity.kt]: ../../src/main/java/com/theoplayer/sample/playback/metadata/PlayerActivity.kt
+[activity_player.xml]: ../../src/main/res/layout/activity_player.xml
+[values.xml]: ../../src/main/res/values/values.xml
