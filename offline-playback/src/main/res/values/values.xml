@@ -27,6 +27,4 @@
     <string name="elephantsDreamTitle">Elephants Dream</string>
     <string name="elephantsDreamPoster">poster_elephants_dream.png</string>
     <string name="elephantsDreamSourceUrl">https://cdn.theoplayer.com/video/elephants-dream/playlist.m3u8</string>
-
-    <string name="theoplayer_test_license"></string>
 </resources>

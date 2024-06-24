@@ -33,6 +33,4 @@
     <string name="clearAllDownloadsMessage">All downloaded movies will be permanently deleted. Are you sure?</string>
     <string name="cachingTaskCancelQuestion">Are you sure you want to delete this video?</string>
     <string name="notOnWifi">You are not currently connected to WiFi and the application is not allowed to use mobile data. To change that go to Settings.</string>
-
-    <string name="theoplayer_test_license"></string>
 </resources>

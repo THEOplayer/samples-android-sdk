@@ -8,7 +8,4 @@
     <string name="defaultDescription">Friends Proog and Emo journey inside the folds of a seemingly infinite Machine, exploring the dark and twisted complex of wires, gears, and cogs, until a moment of conflict negates all their assumptions.</string>
     <string name="defaultPosterUrl">https://cdn.theoplayer.com/video/elephants-dream/playlist.png</string>
     <string name="defaultSourceUrl">https://cdn.theoplayer.com/video/elephants-dream/playlist.m3u8</string>
-
-    <!-- Insert THEOplayer license -->
-    <string name="theoplayer_test_license"></string>
 </resources>
