@@ -58,9 +58,9 @@ class CustomFullScreenActivity : FullScreenActivity() {
 
     private fun adjustPlayPauseButtonIcon() {
         if (theoPlayer.isPaused) {
-            viewBinding.playPauseButton.setIconResource(R.drawable.ic_play)
+            viewBinding.playPauseButton.setIconResource(com.theoplayer.sample.common.R.drawable.ic_play)
         } else {
-            viewBinding.playPauseButton.setIconResource(R.drawable.ic_pause)
+            viewBinding.playPauseButton.setIconResource(com.theoplayer.sample.common.R.drawable.ic_pause)
         }
     }
 }
