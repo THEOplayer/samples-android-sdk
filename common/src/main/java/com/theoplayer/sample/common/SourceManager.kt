@@ -17,7 +17,15 @@ class SourceManager private constructor() {
                 )
                 .poster("https://cdn.theoplayer.com/video/elephants-dream/playlist.png")
                 .build()
-
+        }
+        val BIG_BUCK_BUNNY_HLS: SourceDescription by lazy {
+            SourceDescription
+                .Builder(
+                    TypedSource
+                        .Builder("https://cdn.theoplayer.com/video/big_buck_bunny/big_buck_bunny.m3u8")
+                        .build()
+                )
+                .build()
         }
         val ELEPHANTS_DREAM_HLS_WITH_CAST_METADATA: SourceDescription by lazy {
             SourceDescription

@@ -3,12 +3,17 @@ appcompat = "1.6.1"
 gson = "2.8.9"
 media = "1.6.0"
 theoplayer = "7.5.0"
+theoplayer-open-video-ui = "1.6.0"
 gradle = "8.4.0"
-kotlin-gradle-plugin = "1.8.0"
+kotlin-gradle-plugin = "1.9.0"
 minSdk = "24"
 compileSdk = "34"
 targetSdk = "33"
 material = "1.12.0"
+coreKtx = "1.13.1"
+lifecycleRuntimeKtx = "2.8.2"
+activityCompose = "1.9.0"
+composeBom = "2024.06.00"
 
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
@@ -18,11 +23,21 @@ kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 media = { module = "androidx.media:media", version.ref = "media" }
 theoplayer = { group = "com.theoplayer.theoplayer-sdk-android", name = "core", version.ref = "theoplayer" }
+theoplayer-ui = { group = "com.theoplayer.android-ui", name = "android-ui", version.ref = "theoplayer-open-video-ui" }
 theoplayer-connector-ima = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-ima", version.ref = "theoplayer" }
 theoplayer-connector-dai = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-dai", version.ref = "theoplayer" }
 theoplayer-connector-mediatailor = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-mediatailor", version.ref = "theoplayer" }
 theoplayer-connector-cast = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-cast", version.ref = "theoplayer" }
 theoplayer-connector-mediasession = { group = "com.theoplayer.android-connector", name = "mediasession", version.ref = "theoplayer" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+ui = { group = "androidx.compose.ui", name = "ui" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+material3 = { group = "androidx.compose.material3", name = "material3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradle" }
