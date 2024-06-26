@@ -39,16 +39,18 @@ class SourceManager private constructor() {
                         .Builder()
                         .title("Elephants Dream")
                         .images("https://cdn.theoplayer.com/video/elephants-dream/playlist.png")
-                        .build())
+                        .build()
+                )
                 .poster("https://cdn.theoplayer.com/video/elephants-dream/playlist.png")
                 .build()
-
         }
         val HLS_WITH_VMAP: SourceDescription by lazy {
-            SourceDescription.Builder(
-                TypedSource.Builder("https://cdn.theoplayer.com/video/elephants-dream/playlist.m3u8")
-                    .build()
-            )
+            SourceDescription
+                .Builder(
+                    TypedSource
+                        .Builder("https://cdn.theoplayer.com/video/elephants-dream/playlist.m3u8")
+                        .build()
+                )
                 .ads(
                     GoogleImaAdDescription
                         .Builder("https://cdn.theoplayer.com/demos/ads/vmap/single-pre-mid-post-no-skip.xml")
@@ -56,13 +58,14 @@ class SourceManager private constructor() {
                 )
                 .poster("https://cdn.theoplayer.com/video/elephants-dream/playlist.png")
                 .build()
-
         }
         val HLS_WITH_VAST_PRE_ROLL: SourceDescription by lazy {
-            SourceDescription.Builder(
-                TypedSource.Builder("https://cdn.theoplayer.com/video/elephants-dream/playlist.m3u8")
-                    .build()
-            )
+            SourceDescription
+                .Builder(
+                    TypedSource
+                        .Builder("https://cdn.theoplayer.com/video/elephants-dream/playlist.m3u8")
+                        .build()
+                )
                 .ads(
                     GoogleImaAdDescription
                         .Builder("https://cdn.theoplayer.com/demos/ads/vast/dfp-preroll-no-skip.xml")
@@ -70,7 +73,6 @@ class SourceManager private constructor() {
                 )
                 .poster("https://cdn.theoplayer.com/video/elephants-dream/playlist.png")
                 .build()
-
         }
     }
 }
