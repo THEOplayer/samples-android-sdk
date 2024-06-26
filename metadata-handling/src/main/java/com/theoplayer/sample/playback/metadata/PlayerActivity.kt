@@ -18,7 +18,7 @@ import com.theoplayer.android.api.event.player.ErrorEvent
 import com.theoplayer.android.api.event.player.PlayerEventTypes
 import com.theoplayer.android.api.event.player.TimeUpdateEvent
 import com.theoplayer.android.api.event.track.texttrack.AddCueEvent
-import com.theoplayer.android.api.event.track.texttrack.ExitCueEvent
+import com.theoplayer.android.api.event.track.texttrack.EnterCueEvent
 import com.theoplayer.android.api.event.track.texttrack.TextTrackEventTypes
 import com.theoplayer.android.api.event.track.texttrack.list.AddTrackEvent
 import com.theoplayer.android.api.event.track.texttrack.list.TextTrackListEventTypes
@@ -83,9 +83,9 @@ class PlayerActivity : AppCompatActivity() {
             if (event.track.type == TextTrackType.ID3) {
                 Log.i(TAG, "Event: ADDTRACK, trackType=" + event.track.type)
 
-                // Listening to 'exitcue' event. For ID3 metadata exited cue means "current cue".
-                event.track.addEventListener(TextTrackEventTypes.EXITCUE) { cueEvent: ExitCueEvent ->
-                    Log.i(TAG, "Event: EXITCUE, cue=" + cueEvent.cue)
+                // Listening to 'entercue' event to find the current cue.
+                event.track.addEventListener(TextTrackEventTypes.ENTERCUE) { cueEvent: EnterCueEvent ->
+                    Log.i(TAG, "Event: ENTERCUE, cue=" + cueEvent.cue)
 
                     // Decoding ID3 metadata. In this example, the data received
                     // is in the form: '{"content":{"id":"TXXX","description":"","text":"..."}}}'.
@@ -93,6 +93,7 @@ class PlayerActivity : AppCompatActivity() {
                     try {
                         appendMetadata(cueContent!!.getJSONObject("content").getString("text"))
                     } catch (exception: JSONException) {
+                        appendMetadata(cueContent.toString())
                         appendMetadata(cueContent.toString())
                     }
                 }
