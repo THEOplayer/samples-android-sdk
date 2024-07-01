@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Playback</string>
+    <string name="appDisplayName">Custom Surface Rendering Demo</string>
+</resources>

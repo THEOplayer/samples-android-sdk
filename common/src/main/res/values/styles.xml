@@ -1,0 +1,88 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <color name="theoWhite">#FFFFFF</color>
+    <color name="theoBlack">#000000</color>
+    <color name="theoCello">#344A5E</color>
+    <color name="theoLightningYellow">#FFC713</color>
+
+    <dimen name="spaceMarginSmall">6dp</dimen>
+    <dimen name="spaceMargin">12dp</dimen>
+    <dimen name="cornerSize">10dp</dimen>
+    <dimen name="minTouchTargetWidth">48dp</dimen>
+    <dimen name="minTouchTargetHeight">36dp</dimen>
+
+    <attr name="materialTextViewLabelStyle" format="reference" />
+    <attr name="materialTextViewHeaderStyle" format="reference" />
+    <attr name="materialImageButtonStyle" format="reference" />
+
+    <style name="TheoTheme.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:navigationBarColor">@color/theoCello</item>
+        <item name="android:statusBarColor">@color/theoCello</item>
+        <item name="android:windowBackground">@color/theoCello</item>
+
+        <item name="colorPrimary">@color/theoCello</item>
+        <item name="colorPrimaryDark">@color/theoCello</item>
+        <item name="colorPrimaryVariant">@color/theoCello</item>
+        <item name="colorOnPrimary">@color/theoWhite</item>
+        <item name="colorSecondary">@color/theoLightningYellow</item>
+        <item name="colorSecondaryVariant">@color/theoLightningYellow</item>
+        <item name="colorOnSecondary">@color/theoCello</item>
+        <item name="colorSurface">@color/theoWhite</item>
+        <item name="colorOnSurface">@color/theoCello</item>
+
+        <item name="minTouchTargetSize">@null</item>
+
+        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
+        <item name="materialTextViewLabelStyle">@style/TheoWidget.TextView.Label</item>
+        <item name="materialTextViewHeaderStyle">@style/TheoWidget.TextView.Header</item>
+        <item name="materialCardViewStyle">@style/TheoWidget.CardView</item>
+        <item name="materialButtonStyle">@style/TheoWidget.Button</item>
+        <item name="materialImageButtonStyle">@style/TheoWidget.Button.Image</item>
+
+        <item name="shapeAppearanceSmallComponent">@style/TheoShape.SmallComponent</item>
+    </style>
+
+    <style name="TheoShape.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">@dimen/cornerSize</item>
+    </style>
+
+    <style name="TheoWidget.TextView.Label" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:paddingStart">@dimen/spaceMargin</item>
+        <item name="android:paddingLeft">@dimen/spaceMargin</item>
+        <item name="android:paddingEnd">@dimen/spaceMargin</item>
+        <item name="android:paddingRight">@dimen/spaceMargin</item>
+    </style>
+
+    <style name="TheoWidget.TextView.Header" parent="TheoWidget.TextView.Label">
+        <item name="android:textAppearance">?attr/textAppearanceSubtitle1</item>
+    </style>
+
+    <style name="TheoWidget.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardElevation">0dp</item>
+        <item name="cardMaxElevation">0dp</item>
+        <item name="cardForegroundColor">@null</item>
+        <item name="cardBackgroundColor">?attr/colorSurface</item>
+        <item name="contentPadding">@dimen/spaceMargin</item>
+        <item name="cardCornerRadius">@dimen/cornerSize</item>
+    </style>
+
+    <style name="TheoWidget.Button" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">?attr/colorSecondary</item>
+    </style>
+
+    <style name="TheoWidget.Button.Image" parent="TheoWidget.Button">
+        <item name="android:minWidth">@dimen/minTouchTargetWidth</item>
+        <item name="android:minHeight">@dimen/minTouchTargetHeight</item>
+        <item name="android:insetTop">@null</item>
+        <item name="android:insetBottom">@null</item>
+        <item name="android:paddingLeft">@dimen/spaceMargin</item>
+        <item name="android:paddingRight">@dimen/spaceMargin</item>
+        <item name="iconPadding">@null</item>
+    </style>
+
+    <style name="TheoTheme.SplashScreen" parent="TheoTheme.Base">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+</resources>

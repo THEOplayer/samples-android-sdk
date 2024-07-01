@@ -48,6 +48,12 @@ Thumbs.db
 *.mov
 *.wmv
 
-.gradle
-build
 local.properties
+
+# Gradle files
+.gradle/
+build/
+
+# JetBrains files
+**/.idea/*
+!.idea/codeStyles/

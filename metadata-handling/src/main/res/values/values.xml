@@ -1,0 +1,28 @@
+<resources>
+    <string name="appName">Metadata</string>
+    <string name="appDisplayName">THEO Metadata Handling</string>
+
+    <string name="metadataNameLabel">Metadata name</string>
+    <string name="metadataContentLabel">Metadata content</string>
+    <string name="missingMetadataConfiguration">Metadata configuration not found</string>
+
+    <string name="hlsWithID3MetadataName">HLS with ID3 metadata</string>
+    <string name="hlsWithID3MetadataHeader">HLS with ID3</string>
+    <string name="hlsWithID3MetadataSourceUrl">https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8</string>
+
+    <string name="hlsWithProgramDateTimeMetadataName">HLS with EXT-X-PROGRAM-DATE-TIME</string>
+    <string name="hlsWithProgramDateTimeMetadataHeader">HLS with PROGRAM-DATE-TIME</string>
+    <string name="hlsWithProgramDateTimeMetadataSourceUrl">https://cdn.theoplayer.com/video/star_wars_episode_vii-the_force_awakens_official_comic-con_2015_reel_(2015)/index-daterange.m3u8</string>
+
+    <string name="hlsWithDateRangeMetadataName">HLS with EXT-X-DATERANGE</string>
+    <string name="hlsWithDateRangeMetadataHeader">HLS with DATERANGE</string>
+    <string name="hlsWithDateRangeMetadataSourceUrl">https://cdn.theoplayer.com/video/star_wars_episode_vii-the_force_awakens_official_comic-con_2015_reel_(2015)/index-daterange.m3u8</string>
+
+    <string name="dashWithEmsgMetadataName">DASH with EMSG</string>
+    <string name="dashWithEmsgMetadataHeader">DASH with EMSG</string>
+    <string name="dashWithEmsgMetadataSourceUrl">https://cdn.theoplayer.com/stream/bbb.mpd</string>
+
+    <string name="dashWithEventStreamMetadataName">DASH with EventStream</string>
+    <string name="dashWithEventStreamMetadataHeader">DASH with EventStream</string>
+    <string name="dashWithEventStreamMetadataSourceUrl">https://cdn.theoplayer.com/stream/bbb.mpd</string>
+</resources>
