@@ -8,6 +8,7 @@
 
     <!-- In order to start cashing task and download content it is needed to add permissions below -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <application
         android:allowBackup="false"
