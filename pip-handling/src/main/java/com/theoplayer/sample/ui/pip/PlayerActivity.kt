@@ -17,6 +17,7 @@ import com.theoplayer.android.api.pip.PiPType
 import com.theoplayer.android.api.player.Player
 import com.theoplayer.android.api.source.SourceDescription
 import com.theoplayer.android.api.source.TypedSource
+import com.theoplayer.sample.common.SourceManager
 import com.theoplayer.sample.ui.pip.databinding.ActivityPlayerBinding
 
 class PlayerActivity : AppCompatActivity() {
@@ -37,11 +38,12 @@ class PlayerActivity : AppCompatActivity() {
         // Configuring action bar.
         setSupportActionBar(viewBinding.toolbarLayout.toolbar)
 
+        theoPlayer.isAutoplay = true
+
         // Configuring THEOplayer playback with default parameters.
         configureTHEOplayer()
 
-        // When using a chromefull player, you can make use of the pip-button in the UI (for devices that support PiP)
-        // Otherwise, in the case of chromeless, you can trigger pip using:
+        // You can trigger pip using:
         // viewBinding.theoPlayerView.getPiPManager().enterPiP(PiPType.ACTIVITY);
         // viewBinding.theoPlayerView.getPiPManager().exitPiP();
     }
@@ -58,16 +60,8 @@ class PlayerActivity : AppCompatActivity() {
         // and will also exit fullscreen when the device is rotated back to portrait.
         viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true
 
-        // Creating a TypedSource builder that defines the location of a single stream source.
-        val typedSource = TypedSource.Builder(getString(R.string.defaultSourceUrl))
-
-        // Creating a SourceDescription builder that contains the settings to be applied as a new
-        // THEOplayer source.
-        val sourceDescription = SourceDescription.Builder(typedSource.build())
-            .poster(getString(R.string.defaultPosterUrl))
-
-        // Configuring THEOplayer with defined SourceDescription object.
-        theoPlayer.source = sourceDescription.build()
+        // Configuring THEOplayer with a source.
+        theoPlayer.source = SourceManager.BIP_BOP_HLS
 
         // Adding listeners to THEOplayer basic playback events.
         theoPlayer.addEventListener(PlayerEventTypes.PLAY) { Log.i(TAG, "Event: PLAY") }
