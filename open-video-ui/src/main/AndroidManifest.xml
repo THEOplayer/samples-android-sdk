@@ -20,6 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="THEOPLAYER_LICENSE"
+            android:value="@string/theoplayer_test_license" />
     </application>
 
 </manifest>
