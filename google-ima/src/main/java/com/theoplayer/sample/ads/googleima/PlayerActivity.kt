@@ -6,9 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.theoplayer.android.api.ads.ima.GoogleImaIntegration
 import com.theoplayer.android.api.ads.ima.GoogleImaIntegrationFactory
-import com.theoplayer.android.api.event.ads.AdBeginEvent
-import com.theoplayer.android.api.event.ads.AdEndEvent
-import com.theoplayer.android.api.event.ads.AdErrorEvent
 import com.theoplayer.android.api.event.ads.AdsEventTypes
 import com.theoplayer.android.api.event.player.ErrorEvent
 import com.theoplayer.android.api.event.player.PlayerEventTypes
@@ -30,9 +27,9 @@ class PlayerActivity : AppCompatActivity() {
         viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true
         theoPlayer.isAutoplay = true
 
-        // Create the Google-IMA integration & add it to the player.
-        val googleImaIntegration: GoogleImaIntegration = GoogleImaIntegrationFactory.createGoogleImaIntegration(viewBinding.theoPlayerView)
-        theoPlayer.addIntegration(googleImaIntegration)
+        // THEOplayer automatically adds all available integrations to the player. Alternatively, you can set autoIntegrations(false) on your player configuration and add them manually.
+//        val googleImaIntegration: GoogleImaIntegration = GoogleImaIntegrationFactory.createGoogleImaIntegration(viewBinding.theoPlayerView)
+//        theoPlayer.addIntegration(googleImaIntegration)
 
         // Set a source with ads on the player.
         theoPlayer.source = SourceManager.HLS_WITH_VMAP
@@ -59,14 +56,14 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         // Adding listeners to THEOplayer basic ad events.
-        theoPlayer.ads.addEventListener(AdsEventTypes.AD_BEGIN) { event: AdBeginEvent ->
-            Log.i(TAG, "Event: AD_BEGIN, ad=" + event.ad)
+        theoPlayer.ads.addEventListener(AdsEventTypes.AD_BEGIN) {
+            Log.i(TAG, "Event: AD_BEGIN")
         }
-        theoPlayer.ads.addEventListener(AdsEventTypes.AD_END) { event: AdEndEvent ->
-            Log.i(TAG,"Event: AD_END, ad=" + event.ad)
+        theoPlayer.ads.addEventListener(AdsEventTypes.AD_END) {
+            Log.i(TAG,"Event: AD_END")
         }
-        theoPlayer.ads.addEventListener(AdsEventTypes.AD_ERROR) { event: AdErrorEvent ->
-            Log.i(TAG, "Event: AD_ERROR, error=" + event.error)
+        theoPlayer.ads.addEventListener(AdsEventTypes.AD_ERROR) {
+            Log.i(TAG, "Event: AD_ERROR")
         }
     }
 
