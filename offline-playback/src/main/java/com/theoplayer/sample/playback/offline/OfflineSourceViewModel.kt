@@ -37,9 +37,9 @@ class OfflineSourceViewModel(application: Application) : AndroidViewModel(applic
             getApplication<Application>().getString(R.string.tearsOfStealSourceUrl)
         ),
         OfflineSource(
-            getApplication<Application>().getString(R.string.elephantsDreamTitle),
-            getApplication<Application>().getString(R.string.elephantsDreamPoster),
-            getApplication<Application>().getString(R.string.elephantsDreamSourceUrl)
+            getApplication<Application>().getString(R.string.bipBopTitle),
+            getApplication<Application>().getString(R.string.bipBopPoster),
+            getApplication<Application>().getString(R.string.bipBopSourceUrl)
         )
     )
 

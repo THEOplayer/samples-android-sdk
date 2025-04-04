@@ -19,7 +19,7 @@ object SourceDescriptionRepository {
                 context
             )
 
-            context.getString(R.string.elephantsDreamSourceUrl) -> getElephantsDreamSourceDescription(
+            context.getString(R.string.bipBopSourceUrl) -> getBipBopSourceDescription(
                 context
             )
 
@@ -57,10 +57,10 @@ object SourceDescriptionRepository {
         ).build()
     }
 
-    private fun getElephantsDreamSourceDescription(context: Context): SourceDescription {
+    private fun getBipBopSourceDescription(context: Context): SourceDescription {
         return SourceDescription.Builder(
             TypedSource.Builder(
-                context.getString(R.string.elephantsDreamSourceUrl)
+                context.getString(R.string.bipBopSourceUrl)
             ).build()
         ).build()
     }
