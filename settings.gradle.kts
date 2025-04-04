@@ -1,5 +1,6 @@
 pluginManagement {
     repositories {
+        mavenLocal()
         gradlePluginPortal()
         google()
         mavenCentral()
@@ -9,10 +10,10 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        mavenLocal()
         google()
         mavenCentral()
         maven { url = uri("https://maven.theoplayer.com/releases") }
-        maven { url = uri("https://jitpack.io") }
     }
 }
 
@@ -21,6 +22,7 @@ rootProject.name = "Samples-THEOplayer-Android-SDK"
 include(":basic-playback")
 include(":background-playback")
 include(":custom-surface-rendering")
+include(":drm-playback")
 include(":full-screen-handling")
 include(":google-cast")
 include(":google-ima")
