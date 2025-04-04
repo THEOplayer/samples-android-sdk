@@ -4,13 +4,13 @@
       "title": "Channel 1",
       "description": "LIVE",
       "image": "@drawable/image_live",
-      "source": "https://contentserver.prudentgiraffe.com/videos/dash/big_buck_bunny/BigBuckBunny_10s_simple_2014_05_09.mpd"
+      "source": "https://cdn.theoplayer.com/video/star_wars_episode_vii-the_force_awakens_official_comic-con_2015_reel_(2015)/index.m3u8"
     },
     {
       "title": "Channel 2",
       "description": "LIVE",
       "image": "@drawable/image_live",
-      "source": "https://cdn.theoplayer.com/video/big_buck_bunny_encrypted/stream-800/index-dvr.m3u8"
+      "source": "https://cdn.theoplayer.com/video/big_buck_bunny/big_buck_bunny_metadata.m3u8"
     }
   ],
   "onDemand": [
@@ -39,10 +39,10 @@
       "source": "https://cdn.theoplayer.com/video/elephants-dream/playlist.m3u8"
     },
     {
-      "title": "Caminandes Llama Drama",
-      "description": "2013 ‧ Short/Comedy ‧ 3 mins",
+      "title": "Cosmos",
+      "description": "2013 ‧ Short ‧ 12 mins",
       "image": "@drawable/image_caminandes_llama_drama",
-      "source": "https://amssamples.streaming.mediaservices.windows.net/634cd01c-6822-4630-8444-8dd6279f94c6/CaminandesLlamaDrama4K.ism/manifest(format=m3u8-aapl-v3)"
+      "source": "https://cdn.theoplayer.com/video/cosmos/cmaf.mpd"
     }
   ],
   "offline": [
@@ -59,10 +59,10 @@
       "source": "https://cdn.theoplayer.com/video/sintel/nosubs.m3u8"
     },
     {
-      "title": "Caminandes Llama Drama",
-      "description": "2013 ‧ Short/Comedy ‧ 3 mins",
+      "title": "Cosmos",
+      "description": "2013 ‧ Short ‧ 12 mins",
       "image": "@drawable/image_caminandes_llama_drama",
-      "source": "https://amssamples.streaming.mediaservices.windows.net/634cd01c-6822-4630-8444-8dd6279f94c6/CaminandesLlamaDrama4K.ism/manifest(format=m3u8-aapl-v3)"
+      "source": "https://cdn.theoplayer.com/video/cosmos/cmaf.mpd"
     }
   ]
 }

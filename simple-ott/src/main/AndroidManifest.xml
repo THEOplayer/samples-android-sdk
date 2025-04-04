@@ -41,7 +41,7 @@
             android:resizeableActivity="true"
             android:screenOrientation="portrait"
             android:supportsPictureInPicture="true"
-            tools:targetApi="24" />
+            />
 
         <meta-data
             android:name="THEOPLAYER_LICENSE"
