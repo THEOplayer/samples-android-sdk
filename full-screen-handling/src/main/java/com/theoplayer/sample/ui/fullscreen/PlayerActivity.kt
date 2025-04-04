@@ -55,7 +55,7 @@ class PlayerActivity : AppCompatActivity() {
         theoPlayer.isAutoplay = true
 
         // Configuring THEOplayer with defined SourceDescription object.
-        theoPlayer.source = SourceManager.ELEPHANTS_DREAM_HLS
+        theoPlayer.source = SourceManager.BIP_BOP_HLS
 
         // Adding listeners to THEOplayer basic playback events.
         theoPlayer.addEventListener(PlayerEventTypes.PLAY) { Log.i(TAG, "Event: PLAY") }
