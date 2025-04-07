@@ -73,9 +73,7 @@ class OfflineActivity : AppCompatActivity() {
                 val in7Days = Calendar.getInstance()
                 in7Days.add(Calendar.DAY_OF_MONTH, 7)
                 cachingParameters.expirationDate(in7Days.time)
-
-//                cachingParameters.storageType(CacheStorageType.LEGACY)
-
+                
                 // Getting prepared source description for given source.
                 val sourceDescription = SourceDescriptionRepository.getBySourceUrl(
                     this@OfflineActivity,
