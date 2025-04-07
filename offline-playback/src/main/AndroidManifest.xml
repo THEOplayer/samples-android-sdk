@@ -6,8 +6,10 @@
     <!-- In order to play online streams or ads it is needed to add permissions below -->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- In order to start cashing task and download content it is needed to add permissions below -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- The following permission is needed to create notifications on Android's notification center -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+    <!-- In order to start a caching task and download content on Android 14 and later, the following permission is needed -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <application

@@ -1,6 +1,8 @@
 package com.theoplayer.sample.playback.offline
 
 import android.content.DialogInterface
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.text.Layout
 import android.text.SpannableString
@@ -9,6 +11,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +33,9 @@ class OfflineActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(this).get(
             OfflineSourceViewModel::class.java
         )
+
+        // Request the notification permission.
+        requestNotificationPermission()
 
         // Gathering THEO objects references.
         theoCache = THEOplayerGlobal.getSharedInstance(this).cache
@@ -66,6 +73,8 @@ class OfflineActivity : AppCompatActivity() {
                 val in7Days = Calendar.getInstance()
                 in7Days.add(Calendar.DAY_OF_MONTH, 7)
                 cachingParameters.expirationDate(in7Days.time)
+
+//                cachingParameters.storageType(CacheStorageType.LEGACY)
 
                 // Getting prepared source description for given source.
                 val sourceDescription = SourceDescriptionRepository.getBySourceUrl(
@@ -128,6 +137,22 @@ class OfflineActivity : AppCompatActivity() {
         // There's no need to configure THEOplayer source with any caching task.
         // THEOplayer will find automatically caching task for played source if any exists.
         PlayerActivity.play(this, offlineSource?.sourceUrl)
+    }
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                    1
+                )
+            }
+        }
     }
 
     companion object {
