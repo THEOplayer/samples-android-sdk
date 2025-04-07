@@ -36,7 +36,7 @@ class PlayerActivity : AppCompatActivity() {
         viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true
 
         // Configuring THEOplayer with defined SourceDescription object.
-        theoPlayer.source = SourceManager.ELEPHANTS_DREAM_HLS
+        theoPlayer.source = SourceManager.BIP_BOP_HLS
 
         //  Set autoplay to start video whenever player is visible
         theoPlayer.isAutoplay = true

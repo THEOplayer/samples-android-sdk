@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.google.android.gms.cast.framework.CastButtonFactory;
+import com.theoplayer.android.api.THEOplayerConfig;
+import com.theoplayer.android.api.THEOplayerGlobal;
 import com.theoplayer.android.api.cast.CastConfiguration;
 import com.theoplayer.android.api.cast.CastIntegration;
 import com.theoplayer.android.api.cast.CastIntegrationFactory;
@@ -41,14 +43,13 @@ public class PlayerActivity extends AppCompatActivity {
         // Gathering THEO objects references.
         theoPlayer = viewBinding.theoPlayerView.getPlayer();
 
-        // Add Cast integration.
+        // THEOplayer automatically adds all available integrations to the player via the autoIntegrations() configuration. Here, we add the cast integration manually to configure the cast strategy.
         CastConfiguration configuration = new CastConfiguration.Builder().castStrategy(CastStrategy.AUTO).build();
         CastIntegration castIntegration = CastIntegrationFactory.createCastIntegration(viewBinding.theoPlayerView, configuration);
         theoPlayer.addIntegration(castIntegration);
 
-        if (viewBinding.theoPlayerView.getCast() != null) {
-            theoChromecast = viewBinding.theoPlayerView.getCast().getChromecast();
-        }
+        viewBinding.theoPlayerView.getCast();
+        theoChromecast = viewBinding.theoPlayerView.getCast().getChromecast();
 
         // Configuring action bar.
         setSupportActionBar(viewBinding.toolbarLayout.toolbar);
@@ -72,11 +73,13 @@ public class PlayerActivity extends AppCompatActivity {
         // and will also exit fullscreen when the device is rotated back to portrait.
         viewBinding.theoPlayerView.getFullScreenManager().setFullScreenOrientationCoupled(true);
 
+        // Allow background playback on the player to prevent Chromecast receiver from pausing when the app is backgrounded.
+        viewBinding.theoPlayerView.getSettings().setAllowBackgroundPlayback(true);
+
         theoPlayer.setAutoplay(true);
 
         // Configuring THEOplayer with defined SourceDescription object.
-        theoPlayer.setSource(SourceManager.Companion.getELEPHANTS_DREAM_HLS_WITH_CAST_METADATA());
-        theoPlayer.play();
+        theoPlayer.setSource(SourceManager.Companion.getBIG_BUCK_BUNNY_HLS_WITH_CAST_METADATA());
 
         // Adding listeners to THEOplayer basic playback events.
         theoPlayer.addEventListener(PlayerEventTypes.PLAY, event -> Log.i(TAG, "Event: PLAY"));

@@ -24,5 +24,4 @@
             android:name="THEOPLAYER_LICENSE"
             android:value="@string/theoplayer_test_license" />
     </application>
-
 </manifest>

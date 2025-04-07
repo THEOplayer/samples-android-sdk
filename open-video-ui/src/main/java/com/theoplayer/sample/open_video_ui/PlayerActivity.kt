@@ -18,7 +18,7 @@ class PlayerActivity : ComponentActivity() {
                 Surface {
                     DefaultUI(
                         config = THEOplayerConfig.Builder().build(),
-                        source = SourceManager.BIG_BUCK_BUNNY_HLS,
+                        source = SourceManager.BIP_BOP_HLS,
                         title = "Big Buck Bunny"
                     )
                 }

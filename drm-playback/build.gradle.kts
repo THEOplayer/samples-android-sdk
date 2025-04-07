@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.theoplayer.sample.open_video_ui"
+    namespace = "com.theoplayer.sample.drm_playback"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.theoplayer.sample.open_video_ui"
+        applicationId = "com.theoplayer.sample.drm_playback"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1

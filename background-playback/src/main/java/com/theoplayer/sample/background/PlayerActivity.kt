@@ -73,7 +73,7 @@ class PlayerActivity : AppCompatActivity() {
         theoPlayer = viewBinding.theoPlayerView.player
         setSupportActionBar(viewBinding.toolbarLayout.toolbar)
         viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true
-        theoPlayer.source = SourceManager.ELEPHANTS_DREAM_HLS_WITH_CAST_METADATA
+        theoPlayer.source = SourceManager.BIG_BUCK_BUNNY_HLS_WITH_CAST_METADATA
         theoPlayer.isAutoplay = true
 
         initializePlayerView()
