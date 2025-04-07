@@ -1,6 +1,5 @@
 package com.theoplayer.sample.common
 
-import com.theoplayer.android.api.source.PlaybackPipeline
 import com.theoplayer.android.api.source.SourceDescription
 import com.theoplayer.android.api.source.TypedSource
 import com.theoplayer.android.api.source.addescription.GoogleImaAdDescription
