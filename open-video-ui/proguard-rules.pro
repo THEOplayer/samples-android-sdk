@@ -19,11 +19,3 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
-
--dontwarn androidx.mediarouter.**
--dontwarn com.google.ads.interactivemedia.v3.api.**
--dontwarn com.google.android.gms.cast.framework.**
--dontwarn com.google.android.gms.common.GoogleApiAvailability
--dontwarn com.google.android.gms.security.**
--dontwarn com.google.gson.**
--dontwarn kotlin.jvm.internal.SourceDebugExtension
