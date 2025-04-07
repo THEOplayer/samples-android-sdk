@@ -35,6 +35,7 @@ We have provided the following applications showcasing some of the features of T
 These can be tested locally by opening this repository in Android Studio and selecting which app your want to launch.
 
   * [THEO Basic Playback](./basic-playback/README.md)
+  * [THEO DRM Playback](./drm-playback/README.md)
   * [THEO Open Video UI](./open-video-ui/README.md)
   * [THEO Background Playback](./background-playback/README.md)
   * [THEO Google-IMA](./google-ima/README.md)
