@@ -42,10 +42,10 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(libs.material)
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.recyclerview:recyclerview:1.2.1")
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.work:work-runtime:2.8.1")
+    implementation(libs.constraintlayout)
+    implementation(libs.recyclerview)
+    implementation(libs.lifecycle.extensions)
+    implementation(libs.work.runtime)
 
     // THEOplayer required dependencies.
     implementation(libs.theoplayer)
