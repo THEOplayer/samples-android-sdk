@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.theoplayer.sample.playback.offline"
+    namespace = "com.theoplayer.sample.ads.googledai"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.theoplayer.sample.playback.offline"
+        applicationId = "com.theoplayer.sample.ads.googledai"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
@@ -42,12 +42,8 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(libs.material)
-    implementation(libs.constraintlayout)
-    implementation(libs.recyclerview)
-    implementation(libs.lifecycle.extensions)
-    implementation(libs.work.runtime)
 
     // THEOplayer required dependencies.
     implementation(libs.theoplayer)
-    implementation(libs.gson)
+    implementation(libs.theoplayer.connector.dai)
 }

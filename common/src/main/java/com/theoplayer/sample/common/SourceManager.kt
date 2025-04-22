@@ -1,11 +1,16 @@
 package com.theoplayer.sample.common
 
+import com.theoplayer.android.api.source.GoogleDaiTypedSource
 import com.theoplayer.android.api.source.SourceDescription
+import com.theoplayer.android.api.source.SourceType
 import com.theoplayer.android.api.source.TypedSource
 import com.theoplayer.android.api.source.addescription.GoogleImaAdDescription
 import com.theoplayer.android.api.source.drm.DRMConfiguration
 import com.theoplayer.android.api.source.drm.KeySystemConfiguration
 import com.theoplayer.android.api.source.metadata.ChromecastMetadataDescription
+import com.theoplayer.android.api.source.ssai.dai.GoogleDaiLiveConfiguration
+import com.theoplayer.android.api.source.ssai.dai.GoogleDaiVodConfiguration
+import java.util.Collections
 
 
 class SourceManager private constructor() {
@@ -100,6 +105,42 @@ class SourceManager private constructor() {
                             )
                             .build()
                     )
+                    .build()
+            ).build()
+        }
+        val DAI_DASH_VOD: SourceDescription by lazy {
+            val vodDashConfiguration = GoogleDaiVodConfiguration.Builder("", "2559737", "tos-dash")
+            SourceDescription.Builder(
+                GoogleDaiTypedSource.Builder(vodDashConfiguration.build())
+                    .type(SourceType.DASH)
+                    .build()
+            ).build()
+        }
+        val DAI_DASH_LIVE: SourceDescription by lazy {
+            val liveDashConfiguration = GoogleDaiLiveConfiguration.Builder("", "PSzZMzAkSXCmlJOWDmRj8Q")
+            SourceDescription.Builder(
+                GoogleDaiTypedSource.Builder(liveDashConfiguration.build())
+                    .type(SourceType.DASH)
+                    .build()
+            ).build()
+        }
+        val DAI_HLS_VOD: SourceDescription by lazy {
+            val vodHlsConfiguration = GoogleDaiVodConfiguration.Builder("", "2548831", "tears-of-steel")
+            vodHlsConfiguration.adTagParameters(Collections.singletonMap("npa", "1"))
+
+            SourceDescription.Builder(
+                GoogleDaiTypedSource.Builder(vodHlsConfiguration.build())
+                    .type(SourceType.HLS)
+                    .build()
+            ).build()
+        }
+        val DAI_HLS_LIVE: SourceDescription by lazy {
+            val liveHlsConfiguration = GoogleDaiLiveConfiguration.Builder("", "c-rArva4ShKVIAkNfy6HUQ")
+            liveHlsConfiguration.adTagParameters(Collections.singletonMap("npa", "1"))
+
+            SourceDescription.Builder(
+                GoogleDaiTypedSource.Builder(liveHlsConfiguration.build())
+                    .type(SourceType.HLS)
                     .build()
             ).build()
         }
