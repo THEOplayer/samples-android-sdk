@@ -35,6 +35,10 @@ android {
             jvmTarget = JvmTarget.JVM_1_8
         }
     }
+
+    buildFeatures {
+        compose = true
+    }
 }
 
 dependencies {
