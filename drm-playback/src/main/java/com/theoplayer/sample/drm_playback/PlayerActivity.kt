@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -20,10 +20,6 @@ import com.theoplayer.android.api.contentprotection.KeySystemId
 import com.theoplayer.android.api.event.player.ErrorEvent
 import com.theoplayer.android.api.event.player.PlayerEventTypes
 import com.theoplayer.android.api.player.Player
-import com.theoplayer.android.api.source.SourceDescription
-import com.theoplayer.android.api.source.TypedSource
-import com.theoplayer.android.api.source.drm.DRMConfiguration
-import com.theoplayer.android.api.source.drm.KeySystemConfiguration
 import com.theoplayer.android.ui.DefaultUI
 import com.theoplayer.android.ui.rememberPlayer
 import com.theoplayer.android.ui.theme.THEOplayerTheme
@@ -74,9 +70,10 @@ class PlayerActivity : ComponentActivity() {
 
         setContent {
             THEOplayerTheme(useDarkTheme = true) {
-                Surface(modifier = Modifier.fillMaxSize()) {
+                Scaffold { padding ->
                     tpv?.let { tpv ->
                         DefaultUI(
+                            modifier = Modifier.padding(padding),
                             player = rememberPlayer(theoplayerView = tpv),
                         )
                     }
