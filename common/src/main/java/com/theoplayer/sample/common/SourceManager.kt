@@ -108,6 +108,33 @@ class SourceManager private constructor() {
                     .build()
             ).build()
         }
+        val DRMTODAY_HEADERS: SourceDescription by lazy {
+            val drmToken = "ewogICAgInVzZXJJZCI6ICJhd3MtZWxlbWVudGFsOjpzcGVrZS10ZXN0aW5nIiwKICAgICJzZXNzaW9uSWQiOiAiZWxlbWVudGFsLXJlZnN0cmVhbSIsCiAgICAibWVyY2hhbnQiOiAiYXdzLWVsZW1lbnRhbCIKfQo="
+            val headers: Map<String, String> = mapOf("x-dt-custom-data" to drmToken)
+
+            SourceDescription.Builder(
+            TypedSource.Builder("https://d24rwxnt7vw9qb.cloudfront.net/v1/dash/e6d234965645b411ad572802b6c9d5a10799c9c1/All_Reference_Streams//6e16c26536564c2f9dbc5f725a820cff/index.mpd")
+                .drm(
+                    DRMConfiguration.Builder().widevine(
+                        KeySystemConfiguration.Builder("https://lic.staging.drmtoday.com/license-proxy-widevine/cenc/?specConform=true")
+                            .headers(headers)
+                            .build()
+                    ).build()
+                ).build()
+            ).build()
+        }
+        val WIDEVINE: SourceDescription by lazy {
+            SourceDescription.Builder(
+                TypedSource.Builder("https://storage.googleapis.com/wvmedia/cenc/h264/tears/tears.mpd")
+                    .drm(
+                        DRMConfiguration.Builder().widevine(
+                            KeySystemConfiguration.Builder("https://proxy.uat.widevine.com/proxy?video_id=GTS_SW_SECURE_CRYPTO&provider=widevine_test")
+                                .build()
+                        ).build()
+                    ).build()
+            ).build()
+        }
+
         val DAI_DASH_VOD: SourceDescription by lazy {
             val vodDashConfiguration = GoogleDaiVodConfiguration.Builder("", "2559737", "tos-dash")
             SourceDescription.Builder(
