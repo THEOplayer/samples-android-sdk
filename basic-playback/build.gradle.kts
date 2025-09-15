@@ -1,6 +1,10 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -29,18 +33,17 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
+    kotlin {
+        compilerOptions {
+            apiVersion = KotlinVersion.KOTLIN_2_0
+            jvmTarget = JvmTarget.JVM_1_8
+        }
     }
 }
 
 dependencies {
     implementation(libs.material)
+    implementation(libs.compose.runtime)
     implementation(libs.theoplayer)
     implementation(project(":common"))
 }

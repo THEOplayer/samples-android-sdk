@@ -1,30 +1,31 @@
 [versions]
-appcompat = "1.7.0"
+appcompat = "1.7.1"
 constraintlayout = "2.2.1"
-gson = "2.12.1"
+gson = "2.13.2"
 lifecycleExtensions = "2.2.0"
-media = "1.7.0"
+media = "1.7.1"
 recyclerview = "1.4.0"
-theoplayer = "9.1.0"
-theoplayer-open-video-ui = "1.10.0"
-gradle = "8.6.1"
-kotlin-gradle-plugin = "1.9.25"
+theoplayer = "10.0.1"
+theoplayer-open-video-ui = "1.13.0"
+gradle = "8.13.0"
+kotlin = "2.2.20"
 minSdk = "24"
-compileSdk = "35"
-targetSdk = "35"
-material = "1.12.0"
-coreKtx = "1.15.0"
-lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.10.1"
-composeBom = "2025.03.01"
-workRuntime = "2.10.0"
+compileSdk = "36"
+targetSdk = "36"
+material = "1.13.0"
+coreKtx = "1.17.0"
+lifecycleRuntimeKtx = "2.9.3"
+activityCompose = "1.11.0"
+compose = "1.9.1"
+composeBom = "2025.09.00"
+workRuntime = "2.10.4"
 
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
-kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-gradle-plugin" }
+kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 lifecycle-extensions = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "lifecycleExtensions" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 media = { module = "androidx.media:media", version.ref = "media" }
@@ -40,6 +41,7 @@ core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx"
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
 ui = { group = "androidx.compose.ui", name = "ui" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
@@ -50,4 +52,6 @@ work-runtime = { module = "androidx.work:work-runtime", version.ref = "workRunti
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradle" }
 android-library = { id = "com.android.library", version.ref = "gradle" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-gradle-plugin" }
+compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
