@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.theoplayer.android.api.THEOplayerGlobal
 import com.theoplayer.android.api.event.player.ErrorEvent
 import com.theoplayer.android.api.event.player.PlayerEventTypes
 import com.theoplayer.android.api.pip.PiPType
@@ -34,6 +35,10 @@ class PlayerActivity : AppCompatActivity() {
 
         // Gathering THEO objects references.
         theoPlayer = viewBinding.theoPlayerView.player
+
+        // Enable all debug logs from THEOplayer.
+        val theoDebugLogger = THEOplayerGlobal.getSharedInstance(this).logger
+        theoDebugLogger.enableAllTags()
 
         // Configuring action bar.
         setSupportActionBar(viewBinding.toolbarLayout.toolbar)

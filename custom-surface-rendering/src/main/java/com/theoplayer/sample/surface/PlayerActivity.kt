@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.theoplayer.android.api.THEOplayerGlobal
 import com.theoplayer.android.api.player.AspectRatio
 import com.theoplayer.android.api.player.Player
 import com.theoplayer.android.api.player.RenderingTarget
@@ -23,6 +24,11 @@ class PlayerActivity : AppCompatActivity() {
 
         // See basic-playback's PlayerActivity for more information about basic setup.
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_player)
+
+        // Enable all debug logs from THEOplayer.
+        val theoDebugLogger = THEOplayerGlobal.getSharedInstance(this).logger
+        theoDebugLogger.enableAllTags()
+
         theoPlayer = viewBinding.theoPlayerView.player
         setSupportActionBar(viewBinding.toolbar)
         viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true

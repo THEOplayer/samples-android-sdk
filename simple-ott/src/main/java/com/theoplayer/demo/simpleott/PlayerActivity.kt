@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.theoplayer.android.api.THEOplayerGlobal
 import com.theoplayer.android.api.event.player.ErrorEvent
 import com.theoplayer.android.api.event.player.PlayerEventTypes
 import com.theoplayer.android.api.player.Player
@@ -30,6 +31,10 @@ class PlayerActivity : AppCompatActivity() {
 
         // Gathering THEO objects references.
         theoPlayer = viewBinding.theoPlayerView.player
+
+        // Enable all debug logs from THEOplayer.
+        val theoDebugLogger = THEOplayerGlobal.getSharedInstance(this).logger
+        theoDebugLogger.enableAllTags()
 
         // Configuring THEOplayer playback with parameters from intent.
         configureTHEOplayer(

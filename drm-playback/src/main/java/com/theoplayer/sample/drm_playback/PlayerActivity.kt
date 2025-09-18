@@ -47,6 +47,10 @@ class PlayerActivity : ComponentActivity() {
             AxinomWidevineContentProtectionIntegrationFactory()
         )
 
+        // Enable all debug logs from THEOplayer.
+        val theoDebugLogger = THEOplayerGlobal.getSharedInstance(this).logger
+        theoDebugLogger.enableAllTags()
+
         tpv = createTHEOplayerView(theoplayerConfigBuilder.build())
 
         // Gathering THEOplayer reference.

@@ -21,6 +21,7 @@ import com.theoplayer.android.api.event.chromecast.ChromecastEventTypes;
 import com.theoplayer.android.api.event.player.PlayerEventTypes;
 import com.theoplayer.android.api.player.Player;
 import com.theoplayer.android.api.source.SourceDescription;
+import com.theoplayer.android.api.util.Logger;
 import com.theoplayer.sample.common.SourceManager;
 import com.theoplayer.sample.playback.cast.databinding.ActivityPlayerBinding;
 
@@ -42,6 +43,10 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Gathering THEO objects references.
         theoPlayer = viewBinding.theoPlayerView.getPlayer();
+
+        // Enable all debug logs from THEOplayer.
+        Logger theoDebugLogger = THEOplayerGlobal.getSharedInstance(this).getLogger();
+        theoDebugLogger.enableAllTags();
 
         // THEOplayer automatically adds all available integrations to the player via the autoIntegrations() configuration. Here, we add the cast integration manually to configure the cast strategy.
         CastConfiguration configuration = new CastConfiguration.Builder().castStrategy(CastStrategy.AUTO).build();

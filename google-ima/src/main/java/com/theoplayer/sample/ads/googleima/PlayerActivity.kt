@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.theoplayer.android.api.THEOplayerGlobal
 import com.theoplayer.android.api.ads.ima.GoogleImaIntegration
 import com.theoplayer.android.api.ads.ima.GoogleImaIntegrationFactory
 import com.theoplayer.android.api.event.ads.AdsEventTypes
@@ -23,6 +24,11 @@ class PlayerActivity : AppCompatActivity() {
         // See basic-playback's PlayerActivity for more information about basic setup.
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_player)
         theoPlayer = viewBinding.theoPlayerView.player
+
+        // Enable all debug logs from THEOplayer.
+        val theoDebugLogger = THEOplayerGlobal.getSharedInstance(this).logger
+        theoDebugLogger.enableAllTags()
+
         setSupportActionBar(viewBinding.toolbarLayout.toolbar)
         viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true
         theoPlayer.isAutoplay = true

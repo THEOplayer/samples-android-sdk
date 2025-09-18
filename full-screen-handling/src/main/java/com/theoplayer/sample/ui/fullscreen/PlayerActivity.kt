@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.theoplayer.android.api.THEOplayerGlobal
 import com.theoplayer.android.api.event.player.ErrorEvent
 import com.theoplayer.android.api.event.player.PlayerEventTypes
 import com.theoplayer.android.api.fullscreen.FullScreenChangeListener
@@ -27,6 +28,10 @@ class PlayerActivity : AppCompatActivity() {
         // Gathering THEO objects references.
         theoPlayer = viewBinding.theoPlayerView.player
         theoFullScreenManager = viewBinding.theoPlayerView.fullScreenManager
+
+        // Enable all debug logs from THEOplayer.
+        val theoDebugLogger = THEOplayerGlobal.getSharedInstance(this).logger
+        theoDebugLogger.enableAllTags()
 
         // Configuring action bar.
         setSupportActionBar(viewBinding.toolbarLayout.toolbar)
