@@ -89,32 +89,41 @@ class PlayerActivity : ComponentActivity() {
     }
 
     private fun attachEventListeners() {
-        theoPlayer.addEventListener(PlayerEventTypes.PLAYING) {
+        theoPlayer.addEventListener(PlayerEventTypes.PLAY) {
             Log.i(TAG, "Event: PLAY")
         }
         theoPlayer.addEventListener(PlayerEventTypes.PLAYING) {
             Log.i(TAG, "Event: PLAYING")
+        }
+        theoPlayer.addEventListener(PlayerEventTypes.PAUSE) {
+            Log.i(TAG, "Event: PAUSE")
+        }
+        theoPlayer.addEventListener(PlayerEventTypes.SEEKING) {
+            Log.i(TAG, "Event: SEEKING")
+        }
+        theoPlayer.addEventListener(PlayerEventTypes.SEEKED) {
+            Log.i(TAG, "Event: SEEKED")
+        }
+        theoPlayer.addEventListener(PlayerEventTypes.LOADEDDATA) {
+            Log.i(TAG, "Event: LOADEDDATA")
+        }
+        theoPlayer.addEventListener(PlayerEventTypes.LOADEDMETADATA) {
+            Log.i(TAG, "Event: LOADEDMETADATA")
+        }
+        theoPlayer.addEventListener(PlayerEventTypes.WAITING) {
+            Log.i(TAG, "Event: WAITING")
+        }
+        theoPlayer.addEventListener(PlayerEventTypes.ENDED) {
+            Log.i(TAG, "Event: ENDED")
+        }
+        theoPlayer.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
+            Log.i(TAG, "Event: ERROR, error=" + event.errorObject)
         }
         theoPlayer.addEventListener(PlayerEventTypes.CONTENTPROTECTIONSUCCESS) {
             Log.i(TAG, "Event: CONTENTPROTECTIONSUCCESS")
         }
         theoPlayer.addEventListener(PlayerEventTypes.CONTENTPROTECTIONERROR) {
             Log.i(TAG, "Event: CONTENTPROTECTIONERROR")
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.SEEKING) {
-            Log.i(TAG, "Event: SEEKING")
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.WAITING) {
-            Log.i(TAG, "Event: WAITING")
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
-            Log.e(TAG, "Event: ERROR, " + event.errorObject)
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.SEEKED) {
-            Log.i(TAG, "Event: SEEKED")
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.ENDED) {
-            Log.i(TAG, "Event: ENDED")
         }
     }
 }
