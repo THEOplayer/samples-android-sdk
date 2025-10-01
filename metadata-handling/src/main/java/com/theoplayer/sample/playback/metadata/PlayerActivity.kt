@@ -48,6 +48,9 @@ class PlayerActivity : AppCompatActivity() {
         val theoDebugLogger = THEOplayerGlobal.getSharedInstance(this).logger
         theoDebugLogger.enableAllTags()
 
+        // Keep the device screen on.
+        viewBinding.theoPlayerView.keepScreenOn = true
+
         // Configuring action bar.
         setSupportActionBar(viewBinding.toolbarLayout.toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)

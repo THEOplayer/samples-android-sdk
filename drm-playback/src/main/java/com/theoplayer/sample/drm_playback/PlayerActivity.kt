@@ -53,6 +53,9 @@ class PlayerActivity : ComponentActivity() {
 
         tpv = createTHEOplayerView(theoplayerConfigBuilder.build())
 
+        // Keep device screen on.
+        tpv?.keepScreenOn = true
+
         // Gathering THEOplayer reference.
         theoPlayer = tpv?.player!!
 

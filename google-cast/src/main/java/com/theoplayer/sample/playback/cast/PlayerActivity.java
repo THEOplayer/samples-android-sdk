@@ -44,6 +44,9 @@ public class PlayerActivity extends AppCompatActivity {
         // Gathering THEO objects references.
         theoPlayer = viewBinding.theoPlayerView.getPlayer();
 
+        // Keep device screen on.
+        viewBinding.theoPlayerView.setKeepScreenOn(true);
+
         // Enable all debug logs from THEOplayer.
         Logger theoDebugLogger = THEOplayerGlobal.getSharedInstance(this).getLogger();
         theoDebugLogger.enableAllTags();

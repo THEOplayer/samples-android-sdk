@@ -29,6 +29,11 @@ class PlayerActivity : AppCompatActivity() {
 
         setSupportActionBar(viewBinding.toolbarLayout.toolbar)
         viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true
+
+        // Keep the device screen on.
+        viewBinding.theoPlayerView.keepScreenOn = true
+
+        //  Set autoplay to start video whenever player is visible.
         theoPlayer.isAutoplay = true
 
         // THEOplayer automatically adds all available integrations to the player. Alternatively, you can set autoIntegrations(false) on your player configuration and add them manually.

@@ -43,6 +43,10 @@ class PlayerActivity : AppCompatActivity() {
         // Configuring action bar.
         setSupportActionBar(viewBinding.toolbarLayout.toolbar)
 
+        // Keep the device screen on.
+        viewBinding.theoPlayerView.keepScreenOn = true
+
+        //  Set autoplay to start video whenever player is visible.
         theoPlayer.isAutoplay = true
 
         // Configuring THEOplayer playback with default parameters.

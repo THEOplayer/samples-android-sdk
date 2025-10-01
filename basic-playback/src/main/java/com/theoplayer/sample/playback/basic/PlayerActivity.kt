@@ -43,7 +43,10 @@ class PlayerActivity : AppCompatActivity() {
         // Configuring THEOplayer with defined SourceDescription object.
         theoPlayer.source = SourceManager.BIP_BOP_HLS
 
-        //  Set autoplay to start video whenever player is visible
+        // Keep the device screen on.
+        viewBinding.theoPlayerView.keepScreenOn = true
+
+        //  Set autoplay to start video whenever player is visible.
         theoPlayer.isAutoplay = true
 
         // Adding listeners to THEOplayer basic playback events.
