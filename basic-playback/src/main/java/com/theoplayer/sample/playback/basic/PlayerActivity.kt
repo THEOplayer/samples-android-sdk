@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.theoplayer.android.api.THEOplayerGlobal
 import com.theoplayer.android.api.event.player.ErrorEvent
 import com.theoplayer.android.api.event.player.PlayerEventTypes
 import com.theoplayer.android.api.player.Player
@@ -22,6 +23,10 @@ class PlayerActivity : AppCompatActivity() {
         // Gathering THEO objects references.
         theoPlayer = viewBinding.theoPlayerView.player
 
+        // Enable all debug logs from THEOplayer.
+        val theoDebugLogger = THEOplayerGlobal.getSharedInstance(this).logger
+        theoDebugLogger.enableAllTags()
+
         // Configuring action bar.
         setSupportActionBar(viewBinding.toolbarLayout.toolbar)
 
@@ -38,7 +43,10 @@ class PlayerActivity : AppCompatActivity() {
         // Configuring THEOplayer with defined SourceDescription object.
         theoPlayer.source = SourceManager.BIP_BOP_HLS
 
-        //  Set autoplay to start video whenever player is visible
+        // Keep the device screen on.
+        viewBinding.theoPlayerView.keepScreenOn = true
+
+        //  Set autoplay to start video whenever player is visible.
         theoPlayer.isAutoplay = true
 
         // Adding listeners to THEOplayer basic playback events.
@@ -50,6 +58,21 @@ class PlayerActivity : AppCompatActivity() {
         }
         theoPlayer.addEventListener(PlayerEventTypes.PAUSE) {
             Log.i(TAG, "Event: PAUSE")
+        }
+        theoPlayer.addEventListener(PlayerEventTypes.SEEKING) {
+            Log.i(TAG, "Event: SEEKING")
+        }
+        theoPlayer.addEventListener(PlayerEventTypes.SEEKED) {
+            Log.i(TAG, "Event: SEEKED")
+        }
+        theoPlayer.addEventListener(PlayerEventTypes.LOADEDDATA) {
+            Log.i(TAG, "Event: LOADEDDATA")
+        }
+        theoPlayer.addEventListener(PlayerEventTypes.LOADEDMETADATA) {
+            Log.i(TAG, "Event: LOADEDMETADATA")
+        }
+        theoPlayer.addEventListener(PlayerEventTypes.WAITING) {
+            Log.i(TAG, "Event: WAITING")
         }
         theoPlayer.addEventListener(PlayerEventTypes.ENDED) {
             Log.i(TAG, "Event: ENDED")

@@ -10,6 +10,7 @@ import android.os.IBinder
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.theoplayer.android.api.THEOplayerGlobal
 import com.theoplayer.android.api.THEOplayerView
 import com.theoplayer.android.api.event.player.EndedEvent
 import com.theoplayer.android.api.event.player.LoadedMetadataEvent
@@ -71,6 +72,11 @@ class PlayerActivity : AppCompatActivity() {
         // Do the initial set-up.
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_player)
         theoPlayer = viewBinding.theoPlayerView.player
+
+        // Enable all debug logs from THEOplayer.
+        val theoDebugLogger = THEOplayerGlobal.getSharedInstance(this).logger
+        theoDebugLogger.enableAllTags()
+
         setSupportActionBar(viewBinding.toolbarLayout.toolbar)
         viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true
         theoPlayer.source = SourceManager.BIG_BUCK_BUNNY_HLS_WITH_CAST_METADATA

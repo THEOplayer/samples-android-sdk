@@ -40,19 +40,37 @@
 
             <Button
                 android:id="@+id/btn_set_surface_view"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="SurfaceView"
+                android:padding="2dp"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/theoPlayerView"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="SurfaceView" />
+                app:layout_constraintEnd_toStartOf="@id/btn_set_texture_view"
+                app:layout_constraintHorizontal_chainStyle="spread"/>
 
             <Button
                 android:id="@+id/btn_set_texture_view"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="TextureView"
+                android:padding="2dp"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/theoPlayerView"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="TextureView" />
+                app:layout_constraintStart_toEndOf="@id/btn_set_surface_view"
+                app:layout_constraintEnd_toStartOf="@id/btn_set_surface_control"/>
+
+            <Button
+                android:id="@+id/btn_set_surface_control"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="SurfaceControl"
+                android:padding="2dp"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/theoPlayerView"
+                app:layout_constraintStart_toEndOf="@id/btn_set_texture_view"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <FrameLayout
                 android:id="@+id/customSurfaceViewContainer"
