@@ -15,6 +15,7 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityPlayerBinding
     private lateinit var theoPlayer: Player
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(com.theoplayer.sample.common.R.style.TheoTheme_Base)
         super.onCreate(savedInstanceState)
 
         // Inflating view and obtaining an instance of the binding class.
