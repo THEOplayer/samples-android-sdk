@@ -9,7 +9,7 @@ Please read through the quick start section of the [Basic Playback] application 
 The purpose of this app is to demonstrate how to enable and configure [Google Cast] functionality
 in [THEOplayer] and the ability to cast to a neighbouring Cast device.
 
-All information on how to use these APIs can be found in the [PlayerActivity](src/main/java/com/theoplayer/sample/playback/cast/PlayerActivity.java).
+All information on how to use these APIs can be found in the [PlayerActivity](src/main/java/com/theoplayer/sample/playback/cast/PlayerActivity.kt).
 
 ## License
 
