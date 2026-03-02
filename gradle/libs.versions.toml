@@ -15,7 +15,7 @@ material = "1.13.0"
 coreKtx = "1.17.0"
 lifecycleRuntimeKtx = "2.10.0"
 activityCompose = "1.12.4"
-compose = "1.10.1"
+compose = "1.10.4"
 composeBom = "2026.02.01"
 workRuntime = "2.11.1"
 

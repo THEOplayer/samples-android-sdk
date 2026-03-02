@@ -1,31 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--
-      In order to play online streams or ads it is needed to add permissions below.
-      Protection level: normal.
-    -->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--
-      Allows a regular application to use Service.startForeground.
-      Protection level: normal
-      -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-    <!--
-      Allows an app to post notifications.
-      Protection level: dangerous
-      -->
+    <!-- Needed for the notification -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-    <!--
-      Allows a regular application to use Service.startForeground with the type "mediaPlayback".
-      Protection level: normal|instant
-
-      Apps that target Android 14 and use a foreground service must declare a specific
-      permission, based on the foreground service type that Android 14 introduces.
-     -->
+    <!-- Needed to start the foreground service -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
 
     <application
@@ -34,12 +15,10 @@
         android:theme="@style/TheoTheme.Base">
         <activity
             android:name=".PlayerActivity"
-            android:configChanges="orientation|screenSize"
-            android:exported="true"
-            android:screenOrientation="userPortrait">
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="LockedOrientationActivity">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- In order to play online streams or ads it is needed to add permissions below -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -14,9 +11,8 @@
 
         <activity
             android:name=".PlayerActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:theme="@style/TheoTheme.SplashScreen">
 
             <intent-filter>
@@ -28,7 +24,7 @@
 
         <activity
             android:name=".CustomFullScreenActivity"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout" />
 
         <meta-data
             android:name="THEOPLAYER_LICENSE"
