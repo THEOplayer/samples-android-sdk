@@ -5,20 +5,20 @@ gson = "2.13.2"
 lifecycleExtensions = "2.2.0"
 media = "1.7.1"
 recyclerview = "1.4.0"
-theoplayer = "10.1.1"
-theoplayer-open-video-ui = "1.13.0"
-gradle = "8.13.0"
-kotlin = "2.2.20"
+theoplayer = "10.11.0"
+theoplayer-open-video-ui = "1.13.1"
+gradle = "9.0.1"
+kotlin = "2.3.10"
 minSdk = "24"
 compileSdk = "36"
 targetSdk = "36"
 material = "1.13.0"
 coreKtx = "1.17.0"
-lifecycleRuntimeKtx = "2.9.3"
-activityCompose = "1.11.0"
-compose = "1.9.1"
-composeBom = "2025.09.00"
-workRuntime = "2.10.4"
+lifecycleRuntimeKtx = "2.10.0"
+activityCompose = "1.12.4"
+compose = "1.10.1"
+composeBom = "2026.02.01"
+workRuntime = "2.11.1"
 
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
@@ -54,4 +54,3 @@ android-application = { id = "com.android.application", version.ref = "gradle" }
 android-library = { id = "com.android.library", version.ref = "gradle" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
