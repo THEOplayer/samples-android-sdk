@@ -49,7 +49,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.constraintlayout)
     implementation(libs.recyclerview)
-    implementation(libs.lifecycle.extensions)
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.viewmodel)
     implementation(libs.work.runtime)
     implementation(libs.theoplayer)
 }

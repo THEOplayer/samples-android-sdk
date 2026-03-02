@@ -2,6 +2,7 @@ package com.theoplayer.sample.playback.offline
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -160,7 +161,7 @@ internal class OfflineSourceAdapter(
                     viewBinding.progressTextView.visibility = View.VISIBLE
                     viewBinding.renewLicenseButton.visibility = View.VISIBLE
                     viewBinding.container.strokeColor =
-                        context.resources.getColor(R.color.theoError)
+                        ContextCompat.getColor(context, R.color.theoError)
                 }
                 CachingTaskStatus.EVICTED -> {
                     viewBinding.startButton.visibility = View.VISIBLE

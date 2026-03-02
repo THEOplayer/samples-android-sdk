@@ -140,7 +140,7 @@ class OfflineHandler(
     private fun startOfflineSourceUnderConditions(offlineSource: OfflineSource) {
         // If "only on wifi" setting is set to true, then check if WiFi connection is available
         // If it isn't then inform the user that download will not start
-        if (onlyOnWifiSetting.value === java.lang.Boolean.TRUE && wifiConnected.value === java.lang.Boolean.FALSE) {
+        if (onlyOnWifiSetting.value == true && wifiConnected.value == false) {
             val toastMessage = SpannableString.valueOf(context.getString(R.string.notOnWifi))
             toastMessage.setSpan(
                 AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER),
@@ -156,7 +156,7 @@ class OfflineHandler(
 
     private fun pauseWhenOnWifiSettingChanged(onlyOnWifiSetting: Boolean) {
         // When downloading on mobile data (not on wifi) and the user changes the "Only on WiFi" setting, pause the download
-        if (onlyOnWifiSetting && wifiConnected.value === java.lang.Boolean.FALSE) {
+        if (onlyOnWifiSetting && wifiConnected.value == false) {
             for (offlineSource in filterOfflineSourcesByState(CachingTaskStatus.LOADING)) {
                 offlineSource.pauseCachingTask()
             }
@@ -166,7 +166,7 @@ class OfflineHandler(
     private fun pauseOrResumeWhenOnWifiStatusChanged(isWifiConnected: Boolean) {
         // Resume the download when the WiFi connection is restored
         // Mind that some tasks may end up with "ERROR" status after turning off WiFi connection. Those need to be handled as well
-        if (onlyOnWifiSetting.value === java.lang.Boolean.TRUE) {
+        if (onlyOnWifiSetting.value == true) {
             if (!isWifiConnected) {
                 for (offlineSource in filterOfflineSourcesByState(CachingTaskStatus.LOADING)) {
                     offlineSource.pauseCachingTask()

@@ -47,22 +47,22 @@ class OfflineSourceAdapter(
 
             // Clicking on progress bar should either start or resume the task
             binding.startButton.setOnClickListener { v: View? ->
-                offlineSourceDownloader!!.startCachingTask(
+                offlineSourceDownloader.startCachingTask(
                     offlineSource
                 )
             }
             binding.resumeButton.setOnClickListener { v: View? ->
-                offlineSourceDownloader!!.startCachingTask(
+                offlineSourceDownloader.startCachingTask(
                     offlineSource
                 )
             }
             binding.progressPercent.setOnClickListener { v: View? ->
-                offlineSourceDownloader!!.pauseCachingTask(
+                offlineSourceDownloader.pauseCachingTask(
                     offlineSource
                 )
             }
             binding.removeButton.setOnClickListener { v: View? ->
-                offlineSourceDownloader!!.removeCachingTask(
+                offlineSourceDownloader.removeCachingTask(
                     offlineSource
                 )
             }

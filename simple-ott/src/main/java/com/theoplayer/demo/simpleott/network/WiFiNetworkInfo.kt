@@ -1,16 +1,11 @@
 package com.theoplayer.demo.simpleott.network
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.net.ConnectivityManager.NetworkCallback
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
-import android.net.wifi.WifiManager
-import android.os.Build
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -40,12 +35,7 @@ class WiFiNetworkInfo(context: Context) {
     private val downloadOnlyOnWiFi = MutableLiveData<Boolean>()
 
     init {
-        // Choosing a Wifi monitor depending on the Android API version.
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
-            registerModernWifiMonitor(context)
-        } else {
-            registerLegacyWifiMonitor(context)
-        }
+        registerWifiMonitor(context)
         loadDownloadOnlyOnWiFiValue(context)
     }
 
@@ -118,11 +108,10 @@ class WiFiNetworkInfo(context: Context) {
 
     /**
      * Registers WiFi connectivity state monitor using `NetworkCallback`.
-     * Solution for API Level >= 21.
      *
      * @param context - The current context.
      */
-    private fun registerModernWifiMonitor(context: Context) {
+    private fun registerWifiMonitor(context: Context) {
         val wifiRequest = NetworkRequest.Builder()
             .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
             .build()
@@ -138,29 +127,6 @@ class WiFiNetworkInfo(context: Context) {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         connectivityManager.registerNetworkCallback(wifiRequest, wifiSateCallback)
-    }
-
-    /**
-     * Registers WiFi connectivity state monitor using `BroadcastReceiver`.
-     * Solution for API Level < 21.
-     *
-     * @param context - The current context.
-     */
-    private fun registerLegacyWifiMonitor(context: Context) {
-        val wifiStateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                val wifiManager =
-                    context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-                val wifiConnected =
-                    wifiManager != null && wifiManager.isWifiEnabled && wifiManager.connectionInfo.networkId != -1 // Connected to an access point
-                if (isConnectedToWiFi != wifiConnected) {
-                    connectedToWiFi.setValue(wifiConnected)
-                }
-            }
-        }
-        val intentFilter = IntentFilter()
-        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE")
-        context.registerReceiver(wifiStateReceiver, intentFilter)
     }
 
     companion object {
