@@ -1,53 +1,26 @@
-<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <color name="theoWhite">#FFFFFF</color>
-    <color name="theoCello">#344A5E</color>
-    <color name="theoLightningYellow">#FFC713</color>
-    <color name="theoError">#BB0000</color>
+    <color name="dolbyError">#BB0000</color>
 
-    <dimen name="spaceMarginSmall">6dp</dimen>
-    <dimen name="spaceMargin">12dp</dimen>
     <dimen name="strokeSize">3dp</dimen>
-    <dimen name="cornerSize">10dp</dimen>
-    <dimen name="minTouchTargetSize">36dp</dimen>
     <dimen name="loadingSpinnerSize">48dp</dimen>
 
-    <attr name="materialImageButtonStyle" format="reference" />
     <attr name="materialProgressBarStyle" format="reference" />
     <attr name="materialProgressSpinnerStyle" format="reference" />
 
-    <style name="TheoTheme.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:navigationBarColor" tools:targetApi="21">@color/theoCello</item>
-        <item name="android:statusBarColor" tools:targetApi="21">@color/theoCello</item>
-        <item name="android:windowBackground">@color/theoCello</item>
-
-        <item name="colorPrimary">@color/theoCello</item>
-        <item name="colorPrimaryDark">@color/theoCello</item>
-        <item name="colorPrimaryVariant">@color/theoCello</item>
-        <item name="colorOnPrimary">@color/theoWhite</item>
-        <item name="colorSecondary">@color/theoLightningYellow</item>
-        <item name="colorSecondaryVariant">@color/theoLightningYellow</item>
-        <item name="colorOnSecondary">@color/theoCello</item>
-        <item name="colorSurface">@color/theoWhite</item>
-        <item name="colorOnSurface">@color/theoCello</item>
-
-        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
-        <item name="materialCardViewStyle">@style/TheoWidget.CardView</item>
-        <item name="materialButtonStyle">@style/TheoWidget.Button</item>
-        <item name="materialImageButtonStyle">@style/TheoWidget.Button.Image</item>
-        <item name="materialProgressBarStyle">@style/TheoWidget.ProgressBar</item>
-        <item name="materialProgressSpinnerStyle">@style/TheoWidget.ProgressSpinner</item>
-
-        <item name="shapeAppearanceSmallComponent">@style/TheoShape.SmallComponent</item>
+    <!-- Extends the common DolbyTheme.Base with offline-specific widget styles -->
+    <style name="DolbyTheme.Offline" parent="DolbyTheme.Base">
+        <item name="materialCardViewStyle">@style/DolbyWidget.CardView.Offline</item>
+        <item name="materialImageButtonStyle">@style/DolbyWidget.Button.Image.Offline</item>
+        <item name="materialProgressBarStyle">@style/DolbyWidget.ProgressBar.Offline</item>
+        <item name="materialProgressSpinnerStyle">@style/DolbyWidget.ProgressSpinner.Offline</item>
     </style>
 
-
-    <style name="TheoShape.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
-        <item name="cornerSize">@dimen/cornerSize</item>
+    <style name="DolbyTheme.Offline.SplashScreen">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
-
-    <style name="TheoWidget.CardView" parent="Widget.MaterialComponents.CardView">
+    <style name="DolbyWidget.CardView.Offline" parent="Widget.MaterialComponents.CardView">
         <item name="cardElevation">0dp</item>
         <item name="cardMaxElevation">0dp</item>
         <item name="cardForegroundColor">@null</item>
@@ -57,31 +30,28 @@
         <item name="strokeWidth">@dimen/strokeSize</item>
     </style>
 
-
-    <style name="TheoWidget.Button" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="backgroundTint">?attr/colorSecondary</item>
-    </style>
-
-    <style name="TheoWidget.Button.Image" parent="TheoWidget.Button">
-        <item name="android:minWidth">@dimen/minTouchTargetSize</item>
-        <item name="android:minHeight">@dimen/minTouchTargetSize</item>
+    <style name="DolbyWidget.Button.Image.Offline" parent="Widget.MaterialComponents.Button">
+        <item name="android:minWidth">@dimen/minTouchTargetWidth</item>
+        <item name="android:minHeight">@dimen/minTouchTargetHeight</item>
         <item name="android:insetTop">@null</item>
         <item name="android:insetBottom">@null</item>
-        <item name="android:padding">@dimen/spaceMarginSmall</item>
+        <item name="android:paddingLeft">@dimen/spaceMargin</item>
+        <item name="android:paddingRight">@dimen/spaceMargin</item>
         <item name="iconPadding">@null</item>
+        <item name="backgroundTint">@color/dolbyPurpleOpaque</item>
     </style>
 
-
-    <style name="TheoWidget.ProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
-        <item name="android:theme">@style/TheoWidget.ProgressBar</item>
-    </style>
-    <style name="TheoWidget.ProgressSpinner" parent="Widget.AppCompat.ProgressBar">
-        <item name="android:theme">@style/TheoWidget.ProgressSpinner</item>
+    <!-- Theme overlay to set progress color to opaque purple -->
+    <style name="DolbyThemeOverlay.ProgressBar" parent="">
+        <item name="colorAccent">@color/dolbyPurpleOpaque</item>
     </style>
 
+    <style name="DolbyWidget.ProgressBar.Offline" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:theme">@style/DolbyThemeOverlay.ProgressBar</item>
+    </style>
 
-    <style name="TheoTheme.SplashScreen" parent="TheoTheme.Base">
-        <item name="android:windowBackground">@drawable/splash_screen</item>
+    <style name="DolbyWidget.ProgressSpinner.Offline" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:theme">@style/DolbyThemeOverlay.ProgressBar</item>
     </style>
 
 </resources>

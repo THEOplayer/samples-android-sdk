@@ -101,6 +101,10 @@ internal class OfflineSourceAdapter(
                 )
             }
             handleStatusChange(offlineSource.cachingTaskStatus.value)
+            offlineSource.cachingTaskSizeText.observe((context as LifecycleOwner)) { sizeText: String? ->
+                handleSizeTextChange(sizeText)
+            }
+            handleSizeTextChange(offlineSource.cachingTaskSizeText.value)
         }
 
         private fun handleStateUpToDateChange(isUpToDate: Boolean?) {
@@ -120,6 +124,15 @@ internal class OfflineSourceAdapter(
                 R.string.progressLabel,
                 progressInt
             )
+        }
+
+        private fun handleSizeTextChange(sizeText: String?) {
+            if (sizeText != null) {
+                viewBinding.sizeOverlayTextView.text = sizeText
+                viewBinding.sizeOverlayTextView.visibility = View.VISIBLE
+            } else {
+                viewBinding.sizeOverlayTextView.visibility = View.GONE
+            }
         }
 
         private fun handleStatusChange(status: CachingTaskStatus?) {
@@ -161,7 +174,7 @@ internal class OfflineSourceAdapter(
                     viewBinding.progressTextView.visibility = View.VISIBLE
                     viewBinding.renewLicenseButton.visibility = View.VISIBLE
                     viewBinding.container.strokeColor =
-                        ContextCompat.getColor(context, R.color.theoError)
+                        ContextCompat.getColor(context, R.color.dolbyError)
                 }
                 CachingTaskStatus.EVICTED -> {
                     viewBinding.startButton.visibility = View.VISIBLE
@@ -170,6 +183,7 @@ internal class OfflineSourceAdapter(
                     viewBinding.progressBar.visibility = View.GONE
                     viewBinding.progressTextView.visibility = View.GONE
                     viewBinding.renewLicenseButton.visibility = View.GONE
+                    viewBinding.sizeOverlayTextView.visibility = View.GONE
                     viewBinding.container.strokeColor = 0
                 }
             }

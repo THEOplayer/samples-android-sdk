@@ -11,13 +11,13 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/appName"
+        android:label="@string/appDisplayName"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/TheoTheme.Base">
+        android:theme="@style/DolbyTheme.Offline">
 
         <activity
             android:name=".OfflineActivity"
-            android:theme="@style/TheoTheme.SplashScreen"
+            android:theme="@style/DolbyTheme.Offline.SplashScreen"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:exported="true">
 

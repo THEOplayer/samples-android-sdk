@@ -26,6 +26,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.33" />
 
+            <TextView
+                android:id="@+id/sizeOverlayTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#99000000"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="2dp"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/posterImageView"
+                app:layout_constraintStart_toStartOf="@id/posterImageView" />
+
             <ProgressBar
                 android:id="@+id/loadingSpinner"
                 style="?attr/materialProgressSpinnerStyle"
@@ -41,6 +54,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spaceMarginSmall"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/titleLabel"
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 app:layout_constraintBottom_toTopOf="@id/progressBar"
