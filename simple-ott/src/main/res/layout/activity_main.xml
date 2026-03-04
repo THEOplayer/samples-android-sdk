@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:background="@drawable/background_gradient"
+        android:background="@color/dolbyBlack"
         android:orientation="vertical">
+
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/composeToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/dolbyDarkNavy"
+            app:tabIndicatorColor="@color/dolbyPurpleOpaque"
+            app:tabIndicatorHeight="3dp"
+            app:tabSelectedTextColor="@color/dolbyWhite"
+            app:tabTextColor="#80FFFFFF" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.tabs.TabLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/theoSkyBlue"
-                app:tabIndicatorColor="@color/theoYellow"
-                app:tabSelectedTextColor="@color/theoWhite"
-                app:tabTextColor="@color/theoWhiteTransparent" />
-
-        </androidx.viewpager.widget.ViewPager>
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
     </LinearLayout>
 

@@ -2,153 +2,122 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="com.theoplayer.demo.simpleott.model.OfflineSource" />
-
-    </data>
-
-    <TableLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="0dp"
-        android:background="@color/theoWhite">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spaceMarginSmall">
 
-        <TableRow
-            android:layout_height="@dimen/itemHeight"
-            android:layout_margin="0dp"
-            android:background="?selectableItemBackground">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="@dimen/listImageSize"
-                android:layout_height="@dimen/listImageSize"
-                android:layout_marginStart="@dimen/smallPadding"
-                android:layout_marginLeft="@dimen/smallPadding"
-                android:layout_marginTop="@dimen/smallerPadding"
-                android:layout_marginBottom="@dimen/smallerPadding"
-                android:contentDescription="@string/sourceImage"
-                android:scaleType="centerInside"
-                app:imageResource="@{viewModel.imageResId}" />
+                android:id="@+id/posterImageView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/posterLabel"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="H,16:9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.33" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/sizeOverlayTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/smallPadding"
-                android:layout_marginLeft="@dimen/smallPadding"
-                android:layout_marginRight="@dimen/smallPadding"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/smallPadding"
-                android:paddingBottom="@dimen/smallPadding">
+                android:background="#99000000"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="2dp"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/posterImageView"
+                app:layout_constraintStart_toStartOf="@id/posterImageView" />
 
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Body2"
+            <ProgressBar
+                android:id="@+id/loadingSpinner"
+                style="?attr/materialProgressSpinnerStyle"
+                android:layout_width="@dimen/loadingSpinnerSize"
+                android:layout_height="@dimen/loadingSpinnerSize"
+                app:layout_constraintBottom_toBottomOf="@id/posterImageView"
+                app:layout_constraintEnd_toEndOf="@id/posterImageView"
+                app:layout_constraintStart_toStartOf="@id/posterImageView"
+                app:layout_constraintTop_toTopOf="@id/posterImageView" />
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spaceMarginSmall"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                app:layout_constraintBottom_toTopOf="@id/progressBar"
+                app:layout_constraintEnd_toStartOf="@id/buttons"
+                app:layout_constraintStart_toEndOf="@id/posterImageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/buttons"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/startButton"
+                    style="?attr/materialImageButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="@{viewModel.title}" />
+                    android:layout_marginStart="@dimen/spaceMarginSmall"
+                    app:icon="@drawable/ic_file_download" />
 
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Body1"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/pauseButton"
+                    style="?attr/materialImageButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="@{viewModel.description}"
-                    android:textColor="@color/theoGray" />
+                    android:layout_marginStart="@dimen/spaceMarginSmall"
+                    app:icon="@drawable/ic_pause" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/removeButton"
+                    style="?attr/materialImageButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spaceMarginSmall"
+                    app:icon="@drawable/ic_delete_forever" />
 
             </LinearLayout>
 
-            <FrameLayout
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?attr/materialProgressBarStyle"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spaceMarginSmall"
+                android:layout_marginEnd="@dimen/spaceMarginSmall"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/progressTextView"
+                app:layout_constraintStart_toEndOf="@id/posterImageView" />
 
-                <FrameLayout
-                    android:layout_width="76dp"
-                    android:layout_height="76dp"
-                    android:layout_gravity="end|center"
-                    android:layout_marginEnd="13dp"
-                    android:layout_marginRight="12dp"
-                    android:visibility="visible">
+            <TextView
+                android:id="@+id/progressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/progressLabel"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/progressBar" />
 
-                    <ProgressBar
-                        android:id="@+id/progressBar"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:indeterminate="false"
-                        android:max="100"
-                        android:progress="0"
-                        android:progressDrawable="@drawable/circular_progress_indicator"
-                        android:secondaryProgress="100"
-                        android:visibility="visible" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <TextView
-                        android:id="@+id/progressPercent"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:gravity="center"
-                        android:text="0%"
-                        android:textSize="10sp"
-                        android:visibility="gone" />
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/startButton"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="end|center"
-                        android:layout_marginEnd="@dimen/standardPadding"
-                        android:layout_marginRight="@dimen/standardPadding"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:text="@string/startIcon"
-                        android:textColor="@color/theoBlueGray"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/font_awesome"
-                        android:visibility="visible" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/removeButton"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="end|center"
-                        android:layout_marginEnd="@dimen/standardPadding"
-                        android:layout_marginRight="@dimen/standardPadding"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:text="@string/clearIcon"
-                        android:textColor="@color/theoBlueGray"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/font_awesome"
-                        android:visibility="gone" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/resumeButton"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="end|center"
-                        android:layout_marginEnd="@dimen/standardPadding"
-                        android:layout_marginRight="@dimen/standardPadding"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:text="@string/pauseIcon"
-                        android:textColor="@color/theoBlueGray"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/font_awesome"
-                        android:visibility="gone" />
-
-                </FrameLayout>
-
-            </FrameLayout>
-
-        </TableRow>
-
-    </TableLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </layout>
-

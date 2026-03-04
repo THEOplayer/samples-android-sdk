@@ -1,45 +1,44 @@
 package com.theoplayer.demo.simpleott.view
 
-import android.content.*
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.theoplayer.demo.simpleott.PlayerActivity
 import com.theoplayer.demo.simpleott.databinding.LayoutStreamSourceBinding
 import com.theoplayer.demo.simpleott.model.StreamSource
 
-class StreamSourceAdapter(context: Context?, streamSources: List<StreamSource?>?) :
-    ArrayAdapter<StreamSource?>(
-        context!!, 0
-    ) {
-    init {
-        addAll(streamSources!!)
+class StreamSourceAdapter(
+    private val streamSources: List<StreamSource>
+) : RecyclerView.Adapter<StreamSourceAdapter.ViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val viewBinding = LayoutStreamSourceBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return ViewHolder(viewBinding)
     }
 
-    override fun getView(position: Int, rowView: View?, parent: ViewGroup): View {
-        var rowView = rowView
-        val binding: LayoutStreamSourceBinding
-        if (rowView == null) {
-            binding = LayoutStreamSourceBinding.inflate(
-                LayoutInflater.from(
-                    context
-                ), parent, false
-            )
-            rowView = binding.root
-            rowView.tag = binding
-        } else {
-            binding = rowView.tag as LayoutStreamSourceBinding
-        }
-        val streamSource = getItem(position)
-        if (streamSource != null) {
-            rowView.setOnClickListener(View.OnClickListener { v: View? ->
-                PlayerActivity.Companion.play(
-                    context, streamSource
+    override fun getItemCount(): Int = streamSources.size
+
+    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        viewHolder.bind(streamSources[position])
+    }
+
+    inner class ViewHolder(private val viewBinding: LayoutStreamSourceBinding) :
+        RecyclerView.ViewHolder(viewBinding.root) {
+
+        fun bind(streamSource: StreamSource) {
+            viewBinding.sourceImageView.setImageResource(streamSource.imageResId)
+            viewBinding.titleTextView.text = streamSource.title
+            viewBinding.descriptionTextView.text = streamSource.description
+            viewBinding.container.setOnClickListener {
+                PlayerActivity.play(
+                    viewBinding.root.context,
+                    streamSource.source,
+                    streamSource.title,
+                    streamSource.description
                 )
-            })
-            binding.viewModel = streamSource
+            }
         }
-        return rowView
     }
 }

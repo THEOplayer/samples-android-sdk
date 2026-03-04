@@ -2,65 +2,57 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="com.theoplayer.demo.simpleott.model.StreamSource" />
-
-    </data>
-
-    <TableLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="0dp"
-        android:background="@color/theoWhite">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spaceMarginSmall">
 
-        <TableRow
-            android:layout_height="@dimen/itemHeight"
-            android:layout_margin="0dp"
-            android:background="?selectableItemBackground">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spaceMarginSmall">
 
             <ImageView
-                android:layout_width="@dimen/listImageSize"
-                android:layout_height="@dimen/listImageSize"
-                android:layout_marginStart="@dimen/smallPadding"
-                android:layout_marginLeft="@dimen/smallPadding"
-                android:layout_marginTop="@dimen/smallerPadding"
-                android:layout_marginBottom="@dimen/smallerPadding"
+                android:id="@+id/sourceImageView"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:contentDescription="@string/sourceImage"
-                app:imageResource="@{viewModel.imageResId}" />
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/smallPadding"
-                android:layout_marginLeft="@dimen/smallPadding"
-                android:layout_marginRight="@dimen/smallPadding"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/smallPadding"
-                android:paddingBottom="@dimen/smallPadding">
+                android:layout_marginStart="@dimen/spaceMargin"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                app:layout_constraintBottom_toTopOf="@id/descriptionTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/sourceImageView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
 
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Body2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="@{viewModel.title}" />
+            <TextView
+                android:id="@+id/descriptionTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spaceMargin"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:textColor="#999999"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/sourceImageView"
+                app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="@{viewModel.description}"
-                    android:textColor="@color/theoGray" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </LinearLayout>
-
-        </TableRow>
-
-    </TableLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </layout>
-

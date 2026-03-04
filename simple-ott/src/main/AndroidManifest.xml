@@ -8,9 +8,9 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/appName"
+        android:label="@string/appDisplayName"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/TheoTheme.Base">
+        android:theme="@style/DolbyTheme.SimpleOTT">
 
         <meta-data
             android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
@@ -18,7 +18,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:theme="@style/TheoTheme.SplashScreen"
+            android:theme="@style/DolbyTheme.SimpleOTT.SplashScreen"
             android:exported="true">
 
             <intent-filter>
@@ -31,12 +31,8 @@
         <activity
             android:name=".PlayerActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:excludeFromRecents="true"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"
-            android:resizeableActivity="true"
-            android:supportsPictureInPicture="true"
-            />
+            android:parentActivityName=".MainActivity" />
 
         <meta-data
             android:name="THEOPLAYER_LICENSE"

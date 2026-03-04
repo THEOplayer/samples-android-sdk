@@ -1,46 +1,58 @@
-<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <color name="theoWhite">#FFFFFF</color>
-    <color name="theoGray">#999999</color>
-    <color name="theoCello">#344A5E</color>
-    <color name="theoSkyBlue">#9cb9c9</color>
-    <color name="theoWhiteTransparent">#99ffffff</color>
-    <color name="theoYellow">#ffc713</color>
-    <color name="theoBlueGray">#7293a4</color>
-    <color name="theoDark">#344a5e</color>
+    <color name="dolbyError">#BB0000</color>
+    <color name="dolbyDarkSurface">#1E1E1E</color>
+    <color name="dolbyDarkNavy">#1A1A2E</color>
 
-    <dimen name="tabHeight">16dp</dimen>
-    <dimen name="standardPadding">20dp</dimen>
-    <dimen name="smallPadding">16dp</dimen>
-    <dimen name="smallerPadding">12dp</dimen>
-    <dimen name="itemHeight">72dp</dimen>
-    <dimen name="bigButtonHeight">64dp</dimen>
-    <dimen name="listImageSize">48dp</dimen>
+    <dimen name="strokeSize">3dp</dimen>
+    <dimen name="loadingSpinnerSize">48dp</dimen>
 
-    <style name="TheoTheme.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:navigationBarColor" tools:targetApi="21">@color/theoCello</item>
-        <item name="android:statusBarColor" tools:targetApi="21">@color/theoCello</item>
-        <item name="android:windowBackground">@color/theoCello</item>
+    <attr name="materialProgressBarStyle" format="reference" />
+    <attr name="materialProgressSpinnerStyle" format="reference" />
 
-        <item name="colorPrimary">@color/theoYellow</item>
-        <item name="colorPrimaryDark">@color/theoCello</item>
-        <item name="colorPrimaryVariant">@color/theoCello</item>
-        <item name="colorOnPrimary">@color/theoWhite</item>
-        <item name="colorOnSecondary">@color/theoGray</item>
-        <item name="colorAccent">@color/theoYellow</item>
-
-        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
+    <!-- Extends the common DolbyTheme.Base with simple-ott specific styles -->
+    <style name="DolbyTheme.SimpleOTT" parent="DolbyTheme.Base">
+        <item name="materialCardViewStyle">@style/DolbyWidget.CardView.SimpleOTT</item>
+        <item name="materialImageButtonStyle">@style/DolbyWidget.Button.Image.SimpleOTT</item>
+        <item name="materialProgressBarStyle">@style/DolbyWidget.ProgressBar.SimpleOTT</item>
+        <item name="materialProgressSpinnerStyle">@style/DolbyWidget.ProgressSpinner.SimpleOTT</item>
     </style>
 
-    <style name="TheoTheme.SplashScreen" parent="TheoTheme.Base">
+    <style name="DolbyTheme.SimpleOTT.SplashScreen">
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
-    <style name="TheoTheme.ListView" parent="TheoTheme.Base">
-        <item name="android:dividerHeight">1px</item>
-        <item name="android:divider">@color/theoGray</item>
+    <style name="DolbyWidget.CardView.SimpleOTT" parent="Widget.MaterialComponents.CardView">
+        <item name="cardElevation">0dp</item>
+        <item name="cardMaxElevation">0dp</item>
+        <item name="cardForegroundColor">@null</item>
+        <item name="cardBackgroundColor">?attr/colorSurface</item>
+        <item name="contentPadding">@dimen/spaceMargin</item>
+        <item name="cardCornerRadius">@dimen/cornerSize</item>
+        <item name="strokeWidth">@dimen/strokeSize</item>
     </style>
 
-    <attr name="materialProgressSpinnerStyle" format="reference" />
+    <style name="DolbyWidget.Button.Image.SimpleOTT" parent="Widget.MaterialComponents.Button">
+        <item name="android:minWidth">@dimen/minTouchTargetWidth</item>
+        <item name="android:minHeight">@dimen/minTouchTargetHeight</item>
+        <item name="android:insetTop">@null</item>
+        <item name="android:insetBottom">@null</item>
+        <item name="android:paddingLeft">@dimen/spaceMargin</item>
+        <item name="android:paddingRight">@dimen/spaceMargin</item>
+        <item name="iconPadding">@null</item>
+        <item name="backgroundTint">@color/dolbyPurpleOpaque</item>
+    </style>
+
+    <style name="DolbyThemeOverlay.ProgressBar" parent="">
+        <item name="colorAccent">@color/dolbyPurpleOpaque</item>
+    </style>
+
+    <style name="DolbyWidget.ProgressBar.SimpleOTT" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:theme">@style/DolbyThemeOverlay.ProgressBar</item>
+    </style>
+
+    <style name="DolbyWidget.ProgressSpinner.SimpleOTT" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:theme">@style/DolbyThemeOverlay.ProgressBar</item>
+    </style>
 
 </resources>

@@ -8,18 +8,8 @@ import androidx.core.util.Supplier
 import androidx.viewpager.widget.PagerAdapter
 
 class TabbedPagerAdapter(private val context: Context) : PagerAdapter() {
-    private val tabs: MutableList<Tab>
+    private val tabs = mutableListOf<Tab>()
 
-    init {
-        tabs = ArrayList()
-    }
-
-    /**
-     * Allows to add new tab to the tabbed view pager.
-     *
-     * @param titleResId - string resource ID of tab title
-     * @param viewBinder - supplier that binds and inflates tab view.
-     */
     fun addTab(@StringRes titleResId: Int, viewBinder: Supplier<View>) {
         tabs.add(Tab(titleResId, viewBinder))
     }
@@ -34,20 +24,11 @@ class TabbedPagerAdapter(private val context: Context) : PagerAdapter() {
         container.removeView(view as View)
     }
 
-    override fun getCount(): Int {
-        return tabs.size
-    }
+    override fun getCount(): Int = tabs.size
 
-    override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return view === `object`
-    }
+    override fun isViewFromObject(view: View, `object`: Any): Boolean = view === `object`
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        return context.getString(tabs[position].titleResId)
-    }
+    override fun getPageTitle(position: Int): CharSequence = context.getString(tabs[position].titleResId)
 
-    private class Tab internal constructor(
-        @field:StringRes @param:StringRes val titleResId: Int,
-        val viewBinder: Supplier<View>
-    )
+    private class Tab(@StringRes val titleResId: Int, val viewBinder: Supplier<View>)
 }

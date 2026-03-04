@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/streamSourceList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ListView
-            android:id="@+id/streamSourceList"
-            style="@style/TheoTheme.ListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
+        android:clipToPadding="false"
+        android:padding="@dimen/spaceMarginSmall" />
 
 </layout>
