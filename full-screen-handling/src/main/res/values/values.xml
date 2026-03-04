@@ -1,8 +1,7 @@
 <resources>
-    <string name="appName">FullScreen</string>
-    <string name="appDisplayName">THEO Full Screen Handling</string>
+    <string name="appDisplayName">Fullscreen Handling</string>
 
-    <string name="fullScreenLabel">Full Screen</string>
+    <string name="fullScreenLabel">Fullscreen</string>
 
     <string name="defaultHeader">Now watching Bip Bop</string>
     <string name="defaultDescription">This HTTP Live Streaming (HLS) stream is provided by Apple for testing and validating HLS playback, featuring multiple bitrate variants and segmentations to simulate real-world streaming conditions.</string>

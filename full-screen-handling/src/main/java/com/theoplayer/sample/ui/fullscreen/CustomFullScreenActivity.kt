@@ -3,16 +3,17 @@ package com.theoplayer.sample.ui.fullscreen
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.google.android.material.button.MaterialButton
 import com.theoplayer.android.api.event.player.PlayerEventTypes
 import com.theoplayer.android.api.fullscreen.FullScreenActivity
 import com.theoplayer.android.api.fullscreen.FullScreenManager
 import com.theoplayer.android.api.player.Player
-import com.theoplayer.sample.ui.fullscreen.databinding.ActivityFullscreenBinding
 
 class CustomFullScreenActivity : FullScreenActivity() {
-    private lateinit var viewBinding: ActivityFullscreenBinding
+    private lateinit var playPauseButton: MaterialButton
     private lateinit var theoPlayer: Player
     private lateinit var theoFullScreenManager: FullScreenManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // Adding support for extended AppCompat features.
         // It allows to use styles and themes defined for material components.
@@ -20,10 +21,10 @@ class CustomFullScreenActivity : FullScreenActivity() {
         delegate.onCreate(savedInstanceState)
         super.onCreate(savedInstanceState)
 
-        // Inflating custom view and obtaining an instance of the binding class.
-        viewBinding = ActivityFullscreenBinding.inflate(LayoutInflater.from(this), null, false)
+        // Inflating custom view.
+        val view = LayoutInflater.from(this).inflate(R.layout.activity_fullscreen, null, false)
         delegate.addContentView(
-            viewBinding.root,
+            view,
             ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
@@ -35,9 +36,12 @@ class CustomFullScreenActivity : FullScreenActivity() {
         theoFullScreenManager = theOplayerView!!.fullScreenManager
 
         // Configuring UI behavior.
+        playPauseButton = view.findViewById(R.id.playPauseButton)
+        val exitFullScreenButton = view.findViewById<MaterialButton>(R.id.exitFullScreenButton)
+
         adjustPlayPauseButtonIcon()
-        viewBinding.playPauseButton.setOnClickListener { onPlayPauseClick() }
-        viewBinding.exitFullScreenButton.setOnClickListener { onFullScreenExit() }
+        playPauseButton.setOnClickListener { onPlayPauseClick() }
+        exitFullScreenButton.setOnClickListener { onFullScreenExit() }
 
         // Configuring THEOplayer.
         theoPlayer.addEventListener(PlayerEventTypes.PLAY) { adjustPlayPauseButtonIcon() }
@@ -58,9 +62,9 @@ class CustomFullScreenActivity : FullScreenActivity() {
 
     private fun adjustPlayPauseButtonIcon() {
         if (theoPlayer.isPaused) {
-            viewBinding.playPauseButton.setIconResource(com.theoplayer.sample.common.R.drawable.ic_play)
+            playPauseButton.setIconResource(com.theoplayer.sample.common.R.drawable.ic_play)
         } else {
-            viewBinding.playPauseButton.setIconResource(com.theoplayer.sample.common.R.drawable.ic_pause)
+            playPauseButton.setIconResource(com.theoplayer.sample.common.R.drawable.ic_pause)
         }
     }
 }

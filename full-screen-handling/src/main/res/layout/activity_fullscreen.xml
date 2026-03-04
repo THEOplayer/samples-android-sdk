@@ -1,30 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".CustomFullScreenActivity">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spaceMargin">
 
-    <LinearLayout
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/playPauseButton"
+        style="?attr/materialImageButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spaceMargin">
+        android:layout_margin="@dimen/spaceMargin"
+        app:icon="@drawable/ic_play" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/playPauseButton"
-            style="?attr/materialImageButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spaceMargin"
-            app:icon="@drawable/ic_play" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/exitFullScreenButton"
+        style="?attr/materialImageButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spaceMargin"
+        app:icon="@drawable/ic_fullscreen_exit" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/exitFullScreenButton"
-            style="?attr/materialImageButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spaceMargin"
-            app:icon="@drawable/ic_fullscreen_exit" />
-
-    </LinearLayout>
-
-</layout>
+</LinearLayout>

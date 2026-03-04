@@ -5,15 +5,13 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/appName"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/TheoTheme.Base">
+        android:label="@string/appDisplayName"
+        android:theme="@style/DolbyTheme.Base">
 
         <activity
             android:name=".PlayerActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:exported="true"
-            android:theme="@style/TheoTheme.SplashScreen">
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
