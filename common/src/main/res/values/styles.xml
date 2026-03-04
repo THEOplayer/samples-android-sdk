@@ -1,9 +1,10 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <color name="theoWhite">#FFFFFF</color>
-    <color name="theoBlack">#000000</color>
-    <color name="theoCello">#344A5E</color>
-    <color name="theoLightningYellow">#FFC713</color>
+    <color name="dolbyWhite">#FFFFFF</color>
+    <color name="dolbyBlack">#000000</color>
+    <color name="dolbyBlue">#3E44FE</color>
+    <color name="dolbyPurple">#B38339FC</color>
+    <color name="dolbyPurpleOpaque">#8339FC</color>
 
     <dimen name="spaceMarginSmall">6dp</dimen>
     <dimen name="spaceMargin">12dp</dimen>
@@ -15,38 +16,38 @@
     <attr name="materialTextViewHeaderStyle" format="reference" />
     <attr name="materialImageButtonStyle" format="reference" />
 
-    <style name="TheoTheme.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:navigationBarColor">@color/theoCello</item>
-        <item name="android:statusBarColor">@color/theoCello</item>
-        <item name="android:windowBackground">@color/theoCello</item>
+    <style name="DolbyTheme.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:navigationBarColor">@color/dolbyPurple</item>
+        <item name="android:statusBarColor">@color/dolbyPurple</item>
+        <item name="android:windowBackground">@color/dolbyBlack</item>
 
-        <item name="colorPrimary">@color/theoCello</item>
-        <item name="colorPrimaryDark">@color/theoCello</item>
-        <item name="colorPrimaryVariant">@color/theoCello</item>
-        <item name="colorOnPrimary">@color/theoWhite</item>
-        <item name="colorSecondary">@color/theoLightningYellow</item>
-        <item name="colorSecondaryVariant">@color/theoLightningYellow</item>
-        <item name="colorOnSecondary">@color/theoCello</item>
-        <item name="colorSurface">@color/theoWhite</item>
-        <item name="colorOnSurface">@color/theoCello</item>
+        <item name="colorPrimary">@color/dolbyPurple</item>
+        <item name="colorPrimaryDark">@color/dolbyPurple</item>
+        <item name="colorPrimaryVariant">@color/dolbyBlack</item>
+        <item name="colorOnPrimary">@color/dolbyWhite</item>
+        <item name="colorSecondary">@color/dolbyWhite</item>
+        <item name="colorSecondaryVariant">@color/dolbyWhite</item>
+        <item name="colorOnSecondary">@color/dolbyWhite</item>
+        <item name="colorSurface">@color/dolbyWhite</item>
+        <item name="colorOnSurface">@color/dolbyPurple</item>
 
         <item name="minTouchTargetSize">@null</item>
 
         <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
-        <item name="materialTextViewLabelStyle">@style/TheoWidget.TextView.Label</item>
-        <item name="materialTextViewHeaderStyle">@style/TheoWidget.TextView.Header</item>
-        <item name="materialCardViewStyle">@style/TheoWidget.CardView</item>
-        <item name="materialButtonStyle">@style/TheoWidget.Button</item>
-        <item name="materialImageButtonStyle">@style/TheoWidget.Button.Image</item>
+        <item name="materialTextViewLabelStyle">@style/DolbyWidget.TextView.Label</item>
+        <item name="materialTextViewHeaderStyle">@style/DolbyWidget.TextView.Header</item>
+        <item name="materialCardViewStyle">@style/DolbyWidget.CardView</item>
+        <item name="materialButtonStyle">@style/DolbyWidget.Button</item>
+        <item name="materialImageButtonStyle">@style/DolbyWidget.Button.Image</item>
 
-        <item name="shapeAppearanceSmallComponent">@style/TheoShape.SmallComponent</item>
+        <item name="shapeAppearanceSmallComponent">@style/DolbyShape.SmallComponent</item>
     </style>
 
-    <style name="TheoShape.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+    <style name="DolbyShape.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerSize">@dimen/cornerSize</item>
     </style>
 
-    <style name="TheoWidget.TextView.Label" parent="Widget.MaterialComponents.TextView">
+    <style name="DolbyWidget.TextView.Label" parent="Widget.MaterialComponents.TextView">
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:paddingStart">@dimen/spaceMargin</item>
         <item name="android:paddingLeft">@dimen/spaceMargin</item>
@@ -54,11 +55,11 @@
         <item name="android:paddingRight">@dimen/spaceMargin</item>
     </style>
 
-    <style name="TheoWidget.TextView.Header" parent="TheoWidget.TextView.Label">
+    <style name="DolbyWidget.TextView.Header" parent="DolbyWidget.TextView.Label">
         <item name="android:textAppearance">?attr/textAppearanceSubtitle1</item>
     </style>
 
-    <style name="TheoWidget.CardView" parent="Widget.MaterialComponents.CardView">
+    <style name="DolbyWidget.CardView" parent="Widget.MaterialComponents.CardView">
         <item name="cardElevation">0dp</item>
         <item name="cardMaxElevation">0dp</item>
         <item name="cardForegroundColor">@null</item>
@@ -67,11 +68,10 @@
         <item name="cardCornerRadius">@dimen/cornerSize</item>
     </style>
 
-    <style name="TheoWidget.Button" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="backgroundTint">?attr/colorSecondary</item>
+    <style name="DolbyWidget.Button" parent="Widget.MaterialComponents.Button">
     </style>
 
-    <style name="TheoWidget.Button.Image" parent="TheoWidget.Button">
+    <style name="DolbyWidget.Button.Image" parent="DolbyWidget.Button">
         <item name="android:minWidth">@dimen/minTouchTargetWidth</item>
         <item name="android:minHeight">@dimen/minTouchTargetHeight</item>
         <item name="android:insetTop">@null</item>
@@ -81,7 +81,7 @@
         <item name="iconPadding">@null</item>
     </style>
 
-    <style name="TheoTheme.SplashScreen" parent="TheoTheme.Base">
+    <style name="DolbyTheme.SplashScreen" parent="DolbyTheme.Base">
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 

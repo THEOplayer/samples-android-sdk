@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Playback</string>
-    <string name="appDisplayName">THEO Basic Playback</string>
+    <string name="appDisplayName">Basic Playback</string>
 
     <!-- Insert THEOplayer license -->
     <string name="theoplayer_test_license"></string>
