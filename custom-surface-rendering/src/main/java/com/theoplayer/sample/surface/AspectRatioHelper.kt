@@ -1,6 +1,5 @@
 package com.theoplayer.sample.surface
 
-import android.util.Pair
 import android.view.View.MeasureSpec
 import com.theoplayer.android.api.player.AspectRatio
 
@@ -8,7 +7,7 @@ object AspectRatioHelper {
 
     fun getSizes(widthMeasureSpec: Int, heightMeasureSpec: Int, contentHeight: Int, contentWidth: Int, aspectRatio: AspectRatio): Pair<Int, Int> {
         if (contentWidth == 0 || contentHeight == 0 || aspectRatio == AspectRatio.FILL) {
-            return Pair.create(widthMeasureSpec, heightMeasureSpec)
+            return widthMeasureSpec to heightMeasureSpec
         }
 
         val viewWidth = MeasureSpec.getSize(widthMeasureSpec)
@@ -27,10 +26,8 @@ object AspectRatioHelper {
                 finalHeight = calculatedHeight
             }
 
-            return Pair.create(
-                MeasureSpec.makeMeasureSpec(finalWidth, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(finalHeight, MeasureSpec.EXACTLY)
-            )
+            return MeasureSpec.makeMeasureSpec(finalWidth, MeasureSpec.EXACTLY) to
+                    MeasureSpec.makeMeasureSpec(finalHeight, MeasureSpec.EXACTLY)
         }
 
         // case: AspectRatio.ASPECT_FILL -> some content outside of the view (keeping ratio)
@@ -42,10 +39,7 @@ object AspectRatioHelper {
             finalWidth = finalHeight * contentWidth / contentHeight
         }
 
-        return Pair.create(
-            MeasureSpec.makeMeasureSpec(finalWidth, MeasureSpec.AT_MOST),
-            MeasureSpec.makeMeasureSpec(finalHeight, MeasureSpec.AT_MOST)
-        )
+        return MeasureSpec.makeMeasureSpec(finalWidth, MeasureSpec.AT_MOST) to
+                MeasureSpec.makeMeasureSpec(finalHeight, MeasureSpec.AT_MOST)
     }
-
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appDisplayName">Custom Surface Rendering</string>
+    <string name="surfaceview">SurfaceView</string>
+    <string name="textureview">TextureView</string>
+    <string name="surfacecontrol">SurfaceControl</string>
+    <string name="custom_surfaceview">Custom SurfaceView</string>
+    <string name="custom_textureview">Custom TextureView</string>
+</resources>
