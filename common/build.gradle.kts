@@ -22,16 +22,23 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
-        }
+    buildFeatures {
+        compose = true
     }
 
-    dependencies {
-        implementation(platform(libs.compose.bom))
-        implementation(libs.compose.runtime)
-        implementation(libs.material)
-        api(libs.theoplayer)
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_17
     }
+}
+
+dependencies {
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.runtime)
+    implementation(libs.material)
+    implementation(libs.material3)
+    implementation(libs.ui)
+    api(libs.theoplayer)
 }
