@@ -14,7 +14,7 @@ import com.theoplayer.sample.playback.metadata.databinding.LayoutMetadataBinding
 
 class SetupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.TheoTheme_Base)
+        setTheme(com.theoplayer.sample.common.R.style.DolbyTheme_Base)
         super.onCreate(savedInstanceState)
 
         // Inflating view and obtaining an instance of the binding class.
@@ -28,11 +28,11 @@ class SetupActivity : AppCompatActivity() {
         viewBinding.metadataRecyclerView.layoutManager = LinearLayoutManager(this)
         viewBinding.metadataRecyclerView.adapter = MetadataAdapter(
             intArrayOf(
-                R.string.hlsWithID3MetadataName,
+                R.string.hlsRadioWithID3MetadataName,
                 R.string.hlsWithProgramDateTimeMetadataName,
                 R.string.hlsWithDateRangeMetadataName,
                 R.string.dashWithEmsgMetadataName,
-                R.string.dashWithEventStreamMetadataName
+                R.string.dashWithScte35MetadataName
             )
         )
     }

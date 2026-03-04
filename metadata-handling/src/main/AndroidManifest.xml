@@ -5,14 +5,14 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/appName"
+        android:label="@string/appDisplayName"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/TheoTheme.Base">
+        android:theme="@style/DolbyTheme.Base">
 
         <activity
             android:name=".SetupActivity"
             android:launchMode="singleTop"
-            android:theme="@style/TheoTheme.SplashScreen"
+            android:theme="@style/DolbyTheme.SplashScreen"
             android:exported="true">
 
             <intent-filter>

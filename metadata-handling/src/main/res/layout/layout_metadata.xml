@@ -18,7 +18,7 @@
             android:layout_gravity="end|center_vertical"
             android:contentDescription="@string/metadataNameLabel"
             android:src="@drawable/ic_arrow_forward"
-            android:tint="@color/theoCello" />
+            android:tint="@color/dolbyPurple" />
 
     </com.google.android.material.card.MaterialCardView>
 
