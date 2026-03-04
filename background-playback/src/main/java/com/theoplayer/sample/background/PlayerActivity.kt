@@ -8,10 +8,19 @@ import android.media.AudioManager
 import android.os.Bundle
 import android.os.IBinder
 import android.support.v4.media.session.PlaybackStateCompat
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import com.theoplayer.android.api.THEOplayerConfig
 import com.theoplayer.android.api.THEOplayerGlobal
 import com.theoplayer.android.api.THEOplayerView
+import com.theoplayer.android.api.event.EventListener
 import com.theoplayer.android.api.event.player.EndedEvent
 import com.theoplayer.android.api.event.player.LoadedMetadataEvent
 import com.theoplayer.android.api.event.player.PauseEvent
@@ -20,45 +29,41 @@ import com.theoplayer.android.api.event.player.PlayerEventTypes
 import com.theoplayer.android.api.event.player.SourceChangeEvent
 import com.theoplayer.android.api.player.Player
 import com.theoplayer.android.connector.mediasession.MediaSessionConnector
+import com.theoplayer.android.ui.DefaultUI
+import com.theoplayer.android.ui.rememberPlayer
+import com.theoplayer.android.ui.theme.THEOplayerTheme
 import com.theoplayer.sample.background.audio.AudioBecomingNoisyManager
 import com.theoplayer.sample.background.audio.AudioFocusManager
-import com.theoplayer.sample.background.databinding.ActivityPlayerBinding
 import com.theoplayer.sample.background.media.MediaPlaybackService
+import com.theoplayer.sample.common.AppTopBar
 import com.theoplayer.sample.common.SourceManager
 import java.util.concurrent.atomic.AtomicBoolean
-import com.theoplayer.android.api.event.EventListener
 
-private val TAG: String = PlayerActivity::class.java.simpleName
+class PlayerActivity : ComponentActivity() {
 
-class PlayerActivity : AppCompatActivity() {
-    private lateinit var viewBinding: ActivityPlayerBinding
-    private lateinit var theoPlayer: Player
-    private val playerView: THEOplayerView
-        get() = viewBinding.theoPlayerView
+    private var theoplayerView: THEOplayerView? = null
+    private var theoPlayer: Player? = null
 
     private var isBound = AtomicBoolean()
     private var binder: MediaPlaybackService.MediaPlaybackBinder? = null
     private var mediaSessionConnector: MediaSessionConnector? = null
-    private var audioBecomingNoisyManager = AudioBecomingNoisyManager(this) {
-        // Audio is about to become 'noisy' due to a change in audio outputs: pause the player
-        theoPlayer.pause()
-    }
+    private var audioBecomingNoisyManager: AudioBecomingNoisyManager? = null
     private var audioFocusManager: AudioFocusManager? = null
-    private var isHostPaused: Boolean = false
+    private var isHostPaused = false
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
             binder = service as MediaPlaybackService.MediaPlaybackBinder
 
-            // Get media session connector from service
+            // Get media session connector from service.
             mediaSessionConnector = binder?.mediaSessionConnector?.also {
                 applyMediaSessionConfig(it)
             }
 
-            // Pass player context
-            binder?.setPlayerContext(this@PlayerActivity.theoPlayer)
+            // Pass player context.
+            theoPlayer?.let { binder?.setPlayerContext(it) }
 
-            // Apply background audio config
+            // Apply background audio config.
             binder?.setEnablePlaybackControls(true)
         }
 
@@ -68,22 +73,121 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // Do the initial set-up.
-        viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_player)
-        theoPlayer = viewBinding.theoPlayerView.player
-
         // Enable all debug logs from THEOplayer.
-        val theoDebugLogger = THEOplayerGlobal.getSharedInstance(this).logger
-        theoDebugLogger.enableAllTags()
+        THEOplayerGlobal.getSharedInstance(this).logger.enableAllTags()
 
-        setSupportActionBar(viewBinding.toolbarLayout.toolbar)
-        viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true
-        theoPlayer.source = SourceManager.BIG_BUCK_BUNNY_HLS_WITH_CAST_METADATA
-        theoPlayer.isAutoplay = true
+        super.onCreate(savedInstanceState)
 
-        initializePlayerView()
+        setContent {
+            val context = LocalContext.current
+            val tpv = remember(context) {
+                THEOplayerView(context, THEOplayerConfig.Builder().build()).apply {
+                    keepScreenOn = true
+                }.also {
+                    this@PlayerActivity.theoplayerView = it
+                    this@PlayerActivity.theoPlayer = it.player
+                }
+            }
+            val player = rememberPlayer(tpv)
+
+            LaunchedEffect(player) {
+                initializePlayer()
+            }
+
+            THEOplayerTheme(useDarkTheme = true) {
+                Scaffold(
+                    topBar = { AppTopBar() }
+                ) { padding ->
+                    DefaultUI(
+                        modifier = Modifier
+                            .padding(padding)
+                            .fillMaxSize(),
+                        player = player
+                    )
+                }
+            }
+        }
     }
+
+    private fun initializePlayer() {
+        val player = theoPlayer ?: return
+
+        // Configuring the player with a SourceDescription object.
+        player.source = SourceManager.BIG_BUCK_BUNNY_HLS_WITH_CAST_METADATA
+
+        // Set autoplay to start video whenever player is visible.
+        player.isAutoplay = true
+
+        // Set up fullscreen orientation coupling.
+        theoplayerView?.fullScreenManager?.isFullScreenOrientationCoupled = true
+
+        // Set up audio managers.
+        audioBecomingNoisyManager = AudioBecomingNoisyManager(this) {
+            // Audio is about to become 'noisy' due to a change in audio outputs: pause the player.
+            player.pause()
+        }
+        audioFocusManager = AudioFocusManager(this, player)
+
+        // Enable background playback.
+        theoplayerView?.settings?.setAllowBackgroundPlayback(true)
+
+        // Attach event listeners.
+        addListeners()
+
+        // Bind to the media playback service.
+        bindMediaPlaybackService()
+    }
+
+    // region Event Listeners
+
+    private val onSourceChange = EventListener<SourceChangeEvent> {
+        // Pass updated metadata to the media session connector.
+        mediaSessionConnector?.setMediaSessionMetadata(theoPlayer?.source)
+        // Update the notification.
+        binder?.updateNotification()
+    }
+
+    private val onLoadedMetadata = EventListener<LoadedMetadataEvent> {
+        // Update the notification.
+        binder?.updateNotification()
+    }
+
+    private val onPlay = EventListener<PlayEvent> {
+        bindMediaPlaybackService()
+        binder?.updateNotification(PlaybackStateCompat.STATE_PLAYING)
+        audioBecomingNoisyManager?.setEnabled(true)
+        audioFocusManager?.retrieveAudioFocus()
+    }
+
+    private val onPause = EventListener<PauseEvent> {
+        binder?.updateNotification(PlaybackStateCompat.STATE_PAUSED)
+        audioBecomingNoisyManager?.setEnabled(false)
+    }
+
+    private val onEnded = EventListener<EndedEvent> {
+        // Playback has ended, we can abandon audio focus.
+        audioFocusManager?.abandonAudioFocus()
+    }
+
+    private fun addListeners() {
+        val player = theoPlayer ?: return
+        player.addEventListener(PlayerEventTypes.SOURCECHANGE, onSourceChange)
+        player.addEventListener(PlayerEventTypes.LOADEDMETADATA, onLoadedMetadata)
+        player.addEventListener(PlayerEventTypes.PLAY, onPlay)
+        player.addEventListener(PlayerEventTypes.PAUSE, onPause)
+        player.addEventListener(PlayerEventTypes.ENDED, onEnded)
+    }
+
+    private fun removeListeners() {
+        val player = theoPlayer ?: return
+        player.removeEventListener(PlayerEventTypes.SOURCECHANGE, onSourceChange)
+        player.removeEventListener(PlayerEventTypes.LOADEDMETADATA, onLoadedMetadata)
+        player.removeEventListener(PlayerEventTypes.PLAY, onPlay)
+        player.removeEventListener(PlayerEventTypes.PAUSE, onPause)
+        player.removeEventListener(PlayerEventTypes.ENDED, onEnded)
+    }
+
+    // Media Playback Service
 
     private fun bindMediaPlaybackService() {
         // Bind to an existing service, if available
@@ -91,7 +195,7 @@ class PlayerActivity : AppCompatActivity() {
         // Multiple components can bind to the service at once, but when all of them unbind, the
         // service is destroyed.
         if (!isBound.get()) {
-            // Clean-up any existing media session connector
+            // Clean up any existing media session connector.
             mediaSessionConnector?.destroy()
 
             isBound.set(
@@ -115,92 +219,25 @@ class PlayerActivity : AppCompatActivity() {
         binder = null
     }
 
-    private fun initializePlayerView() {
-        // By default, the screen should remain on.
-        viewBinding.theoPlayerView.keepScreenOn = true
-
-        addListeners()
-
-        audioFocusManager = AudioFocusManager(this, theoPlayer)
-
-        playerView.settings.setAllowBackgroundPlayback(true)
-
-        // Enable & bind background playback
-        bindMediaPlaybackService()
-    }
-
     private fun applyMediaSessionConfig(connector: MediaSessionConnector?) {
         connector?.apply {
             debug = true
-
             player = theoPlayer
-
             // Set mediaSession active and ready to receive media button events, but not if the player
             // is backgrounded.
             setActive(!isHostPaused)
-
             skipForwardInterval = 5.0
             skipBackwardsInterval = 5.0
-
-            // Pass metadata from source description
             setMediaSessionMetadata(player?.source)
         }
     }
 
-    private val onSourceChange = EventListener<SourceChangeEvent> {
-        // Pass updated metadata to the media session connector
-        mediaSessionConnector?.setMediaSessionMetadata(theoPlayer.source)
-
-        // Update the notification
-        binder?.updateNotification()
-    }
-
-    private val onLoadedMetadata = EventListener<LoadedMetadataEvent> {
-        // Update the notification
-        binder?.updateNotification()
-    }
-
-    private val onPlay = EventListener<PlayEvent> {
-        bindMediaPlaybackService()
-        binder?.updateNotification(PlaybackStateCompat.STATE_PLAYING)
-        audioBecomingNoisyManager.setEnabled(true)
-        audioFocusManager?.retrieveAudioFocus()
-    }
-
-    private val onPause = EventListener<PauseEvent> {
-        binder?.updateNotification(PlaybackStateCompat.STATE_PAUSED)
-        audioBecomingNoisyManager.setEnabled(false)
-    }
-
-    private val onEnded = EventListener<EndedEvent> {
-        // Playback has ended, we can abandon audio focus.
-        audioFocusManager?.abandonAudioFocus()
-    }
-
-    private fun addListeners() {
-        theoPlayer.apply {
-            addEventListener(PlayerEventTypes.SOURCECHANGE, onSourceChange)
-            addEventListener(PlayerEventTypes.LOADEDMETADATA, onLoadedMetadata)
-            addEventListener(PlayerEventTypes.PAUSE, onPause)
-            addEventListener(PlayerEventTypes.PLAY, onPlay)
-            addEventListener(PlayerEventTypes.ENDED, onEnded)
-        }
-    }
-
-    private fun removeListeners() {
-        theoPlayer.apply {
-            removeEventListener(PlayerEventTypes.SOURCECHANGE, onSourceChange)
-            removeEventListener(PlayerEventTypes.LOADEDMETADATA, onLoadedMetadata)
-            removeEventListener(PlayerEventTypes.PAUSE, onPause)
-            removeEventListener(PlayerEventTypes.PLAY, onPlay)
-            removeEventListener(PlayerEventTypes.ENDED, onEnded)
-        }
-    }
+    // Lifecycle
 
     override fun onPause() {
         super.onPause()
         isHostPaused = true
-        viewBinding.theoPlayerView.onPause()
+        theoplayerView?.onPause()
     }
 
     override fun onResume() {
@@ -213,9 +250,9 @@ class PlayerActivity : AppCompatActivity() {
 
         mediaSessionConnector?.setActive(true)
 
-        viewBinding.theoPlayerView.onResume()
+        theoplayerView?.onResume()
 
-        if (!theoPlayer.isPaused) {
+        if (theoPlayer?.isPaused == false) {
             audioFocusManager?.retrieveAudioFocus()
         }
     }
@@ -225,15 +262,19 @@ class PlayerActivity : AppCompatActivity() {
 
         removeListeners()
 
-        // Remove service from foreground
+        // Remove service from foreground.
         binder?.stopForegroundService()
 
-        // Unbind client from background service so it can stop
+        // Unbind client from background service so it can stop.
         unbindMediaPlaybackService()
 
         audioFocusManager?.abandonAudioFocus()
         mediaSessionConnector?.destroy()
 
-        viewBinding.theoPlayerView.onDestroy()
+        theoplayerView?.onDestroy()
+    }
+
+    companion object {
+        private val TAG: String = PlayerActivity::class.java.simpleName
     }
 }

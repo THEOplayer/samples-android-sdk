@@ -121,7 +121,7 @@ class MediaNotificationBuilder(
             // small app icon. But for MediaStyle notifications prior to Android 7.0, the color is
             // used for the entire notification background. Test your background color. Go gentle
             // on the eyes and avoid extremely bright or fluorescent colors.
-            color = ContextCompat.getColor(context, com.theoplayer.sample.common.R.color.theoLightningYellow)
+            color = ContextCompat.getColor(context, com.theoplayer.sample.common.R.color.dolbyPurple)
 
             // Add a play/pause button
             if (enableMediaControls) {

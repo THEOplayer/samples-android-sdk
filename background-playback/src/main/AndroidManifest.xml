@@ -11,8 +11,8 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/TheoTheme.Base">
+        android:label="@string/appDisplayName"
+        android:theme="@style/DolbyTheme.Base">
         <activity
             android:name=".PlayerActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
