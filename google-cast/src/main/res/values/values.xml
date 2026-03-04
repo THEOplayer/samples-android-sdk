@@ -1,5 +1,3 @@
 <resources>
-    <string name="appName">GoogleCast</string>
-    <string name="appDisplayName">THEO Google Cast</string>
-    <string name="castMenuItem">Cast</string>
+    <string name="appDisplayName">Google Cast</string>
 </resources>

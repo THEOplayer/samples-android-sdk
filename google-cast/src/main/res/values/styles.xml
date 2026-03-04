@@ -1,0 +1,16 @@
+<resources>
+
+    <style name="DolbyTheme.Cast" parent="DolbyTheme.Base">
+        <item name="colorPrimary">@color/dolbyPurpleOpaque</item>
+        <item name="mediaRouteTheme">@style/DolbyTheme.Cast.MediaRouter</item>
+    </style>
+
+    <style name="DolbyTheme.Cast.SplashScreen" parent="DolbyTheme.Cast">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+    <style name="DolbyTheme.Cast.MediaRouter" parent="Theme.MediaRouter">
+        <item name="colorPrimary">@color/dolbyPurpleOpaque</item>
+    </style>
+
+</resources>
