@@ -1,105 +1,120 @@
 package com.theoplayer.sample.playback.basic
 
-import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import com.theoplayer.android.api.THEOplayerConfig
 import com.theoplayer.android.api.THEOplayerGlobal
+import com.theoplayer.android.api.THEOplayerView
 import com.theoplayer.android.api.event.player.ErrorEvent
 import com.theoplayer.android.api.event.player.PlayerEventTypes
-import com.theoplayer.android.api.player.Player
+import com.theoplayer.android.ui.DefaultUI
+import com.theoplayer.android.ui.rememberPlayer
+import com.theoplayer.android.ui.theme.THEOplayerTheme
+import com.theoplayer.sample.common.AppTopBar
 import com.theoplayer.sample.common.SourceManager
-import com.theoplayer.sample.playback.basic.databinding.ActivityPlayerBinding
 
-class PlayerActivity : AppCompatActivity() {
-    private lateinit var viewBinding: ActivityPlayerBinding
-    private lateinit var theoPlayer: Player
+class PlayerActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(com.theoplayer.sample.common.R.style.TheoTheme_Base)
+        // Enable all debug logs from THEOplayer.
+        THEOplayerGlobal.getSharedInstance(this).logger.enableAllTags()
+
         super.onCreate(savedInstanceState)
 
-        // Inflating view and obtaining an instance of the binding class.
-        viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_player)
+        setContent {
+            val context = LocalContext.current
+            val theoplayerView = remember(context) {
+                // Creating the player with default parameters.
+                THEOplayerView(context, THEOplayerConfig.Builder().build()).apply {
+                    // Keep the device screen on.
+                    keepScreenOn = true
+                }
+            }
+            val player = rememberPlayer(theoplayerView)
+            val theoPlayer = theoplayerView.player
 
-        // Gathering THEO objects references.
-        theoPlayer = viewBinding.theoPlayerView.player
 
-        // Enable all debug logs from THEOplayer.
-        val theoDebugLogger = THEOplayerGlobal.getSharedInstance(this).logger
-        theoDebugLogger.enableAllTags()
+            LaunchedEffect(player) {
 
-        // Configuring action bar.
-        setSupportActionBar(viewBinding.toolbarLayout.toolbar)
+                // Configuring the player with a SourceDescription object.
+                theoPlayer.source = SourceManager.BIP_BOP_HLS
 
-        // Configuring THEOplayer playback with default parameters.
-        configureTHEOplayer()
-    }
+                //  Set autoplay to start video whenever player is visible.
+                theoPlayer.isAutoplay = true
 
-    private fun configureTHEOplayer() {
-        // Coupling the orientation of the device with the fullscreen state.
-        // The player will go fullscreen when the device is rotated to landscape
-        // and will also exit fullscreen when the device is rotated back to portrait.
-        viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true
+                // Attach event listeners.
+                theoPlayer.addEventListener(PlayerEventTypes.SOURCECHANGE) {
+                    Log.i(TAG, "Event: SOURCECHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.CURRENTSOURCECHANGE) {
+                    Log.i(TAG, "Event: CURRENTSOURCECHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.LOADEDDATA) {
+                    Log.i(TAG, "Event: LOADEDDATA")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.LOADEDMETADATA) {
+                    Log.i(TAG, "Event: LOADEDMETADATA")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.DURATIONCHANGE) {
+                    Log.i(TAG, "Event: DURATIONCHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.TIMEUPDATE) {
+//                    Log.i(TAG, "Event: TIMEUPDATE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.PLAY) {
+                    Log.i(TAG, "Event: PLAY")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.PLAYING) {
+                    Log.i(TAG, "Event: PLAYING")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.PAUSE) {
+                    Log.i(TAG, "Event: PAUSE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.SEEKING) {
+                    Log.i(TAG, "Event: SEEKING")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.SEEKED) {
+                    Log.i(TAG, "Event: SEEKED")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.WAITING) {
+                    Log.i(TAG, "Event: WAITING")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.READYSTATECHANGE) {
+                    Log.i(TAG, "Event: READYSTATECHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.PRESENTATIONMODECHANGE) {
+                    Log.i(TAG, "Event: PRESENTATIONMODECHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.VOLUMECHANGE) {
+                    Log.i(TAG, "Event: VOLUMECHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
+                    Log.i(TAG, "Event: ERROR, error=" + event.errorObject)
+                }
+            }
 
-        // Configuring THEOplayer with defined SourceDescription object.
-        theoPlayer.source = SourceManager.BIP_BOP_HLS
-
-        // Keep the device screen on.
-        viewBinding.theoPlayerView.keepScreenOn = true
-
-        //  Set autoplay to start video whenever player is visible.
-        theoPlayer.isAutoplay = true
-
-        // Adding listeners to THEOplayer basic playback events.
-        theoPlayer.addEventListener(PlayerEventTypes.PLAY) {
-            Log.i(TAG, "Event: PLAY")
+            THEOplayerTheme(useDarkTheme = true) {
+                Scaffold(
+                    topBar = { AppTopBar() }
+                ) { padding ->
+                    DefaultUI(
+                        modifier = Modifier
+                            .padding(padding)
+                            .fillMaxSize(),
+                        player = player
+                    )
+                }
+            }
         }
-        theoPlayer.addEventListener(PlayerEventTypes.PLAYING) {
-            Log.i(TAG, "Event: PLAYING")
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.PAUSE) {
-            Log.i(TAG, "Event: PAUSE")
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.SEEKING) {
-            Log.i(TAG, "Event: SEEKING")
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.SEEKED) {
-            Log.i(TAG, "Event: SEEKED")
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.LOADEDDATA) {
-            Log.i(TAG, "Event: LOADEDDATA")
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.LOADEDMETADATA) {
-            Log.i(TAG, "Event: LOADEDMETADATA")
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.WAITING) {
-            Log.i(TAG, "Event: WAITING")
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.ENDED) {
-            Log.i(TAG, "Event: ENDED")
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
-            Log.i(TAG, "Event: ERROR, error=" + event.errorObject)
-        }
-    }
-
-    // In order to work properly and in sync with the activity lifecycle changes (e.g. device
-    // is rotated, new activity is started or app is moved to background) we need to call
-    // the "onResume", "onPause" and "onDestroy" methods of the THEOplayerView when the matching
-    // activity methods are called.
-    override fun onPause() {
-        super.onPause()
-        viewBinding.theoPlayerView.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewBinding.theoPlayerView.onResume()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewBinding.theoPlayerView.onDestroy()
     }
 
     companion object {
