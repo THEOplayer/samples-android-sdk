@@ -5,7 +5,7 @@ gson = "2.13.2"
 media = "1.7.1"
 recyclerview = "1.4.0"
 theoplayer = "10.11.0"
-theoplayer-open-video-ui = "1.13.1"
+theoplayer-open-video-ui = "1.13.2"
 gradle = "9.0.1"
 kotlin = "2.3.10"
 minSdk = "24"
@@ -17,6 +17,7 @@ lifecycleRuntimeKtx = "2.10.0"
 activityCompose = "1.12.4"
 compose = "1.10.4"
 composeBom = "2026.02.01"
+millicast = "2.5.3"
 workRuntime = "2.11.1"
 
 [libraries]
@@ -34,7 +35,10 @@ theoplayer-ui = { group = "com.theoplayer.android-ui", name = "android-ui", vers
 theoplayer-connector-ima = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-ima", version.ref = "theoplayer" }
 theoplayer-connector-dai = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-dai", version.ref = "theoplayer" }
 theoplayer-connector-mediatailor = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-mediatailor", version.ref = "theoplayer" }
+theoplayer-connector-theoads = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-theoads", version.ref = "theoplayer" }
+theoplayer-connector-millicast = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-millicast", version.ref = "theoplayer" }
 theoplayer-connector-cast = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-cast", version.ref = "theoplayer" }
+millicast-sdk = { group = "com.millicast", name = "millicast-sdk-android", version.ref = "millicast" }
 theoplayer-connector-mediasession = { group = "com.theoplayer.android-connector", name = "mediasession", version.ref = "theoplayer" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
@@ -45,6 +49,7 @@ ui = { group = "androidx.compose.ui", name = "ui" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
 work-runtime = { module = "androidx.work:work-runtime", version.ref = "workRuntime" }
 
