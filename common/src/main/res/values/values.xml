@@ -1,4 +1,7 @@
 <resources>
+    <!-- Default app name which gets overriden in each app's values.xml -->
+    <string name="appDisplayName"></string>
+
     <!-- Insert THEOplayer license -->
     <string name="theoplayer_test_license"></string>
 </resources>
