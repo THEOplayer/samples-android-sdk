@@ -65,6 +65,7 @@ class PlayerActivity : ComponentActivity() {
             val context = LocalContext.current
             val theoplayerView = remember(context) {
                 THEOplayerView(context, THEOplayerConfig.Builder().build()).apply {
+                    // Keep the device screen on.
                     keepScreenOn = true
                 }.also { this@PlayerActivity.theoplayerView = it }
             }

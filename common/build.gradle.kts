@@ -41,4 +41,6 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.ui)
     api(libs.theoplayer)
+    api(libs.theoplayer.connector.theoads)
+    api(libs.theoplayer.connector.millicast)
 }

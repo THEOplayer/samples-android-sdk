@@ -59,8 +59,14 @@ class OfflineActivity : AppCompatActivity() {
         if (cachingTaskStatus == null || cachingTaskStatus == CachingTaskStatus.EVICTED) {
             Log.i(TAG, "Creating caching task, title='" + offlineSource.title + "'")
             val cachingParameters = CachingParameters.Builder()
+
+            // By default whole content is downloaded, but here we are stating that explicitly.
+            // An amount of seconds (e.g. "20") or a percentage (e.g. "50%") can be specified
+            // to download only part of the content.
             cachingParameters.amount("100%")
 
+            // By default cashing task is evicted after 30 minutes since its creation.
+            // Here we want to have it expired after 7 days since creation.
             val in7Days = Calendar.getInstance()
             in7Days.add(Calendar.DAY_OF_MONTH, 7)
             cachingParameters.expirationDate(in7Days.time)

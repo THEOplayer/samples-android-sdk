@@ -1,4 +1,4 @@
-# Full-Screen Handling
+# Fullscreen Handling
 
 A sample demonstrating how to manage fullscreen mode with [OptiView Player] (formerly THEOplayer),
 including orientation-coupled fullscreen and a custom fullscreen activity.

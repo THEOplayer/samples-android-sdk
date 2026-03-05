@@ -17,6 +17,6 @@
         </activity>
         <meta-data
             android:name="THEOPLAYER_LICENSE"
-            android:value="" />
+            android:value="@string/theoplayer_test_license" />
     </application>
 </manifest>
