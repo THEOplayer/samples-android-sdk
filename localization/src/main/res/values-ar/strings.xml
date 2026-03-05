@@ -1,0 +1,38 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Arabic -->
+    <string name="theoplayer_ui_btn_play">تشغيل</string>
+    <string name="theoplayer_ui_btn_pause">إيقاف مؤقت</string>
+    <string name="theoplayer_ui_btn_replay">إعادة التشغيل</string>
+    <string name="theoplayer_ui_btn_chromecast_start">بدء البث</string>
+    <string name="theoplayer_ui_btn_chromecast_stop">إيقاف البث</string>
+    <string name="theoplayer_ui_btn_fullscreen_enter">ملء الشاشة</string>
+    <string name="theoplayer_ui_btn_fullscreen_exit">الخروج من ملء الشاشة</string>
+    <string name="theoplayer_ui_btn_menu_close">إغلاق</string>
+    <string name="theoplayer_ui_btn_back">رجوع</string>
+    <string name="theoplayer_ui_btn_mute">كتم الصوت</string>
+    <string name="theoplayer_ui_btn_unmute">إلغاء كتم الصوت</string>
+    <plurals name="theoplayer_ui_btn_seek_forward">
+        <item quantity="one">تقديم <xliff:g example="5" id="seek_offset">%1$d</xliff:g> ثانية</item>
+        <item quantity="other">تقديم <xliff:g example="5" id="seek_offset">%1$d</xliff:g> ثوانٍ</item>
+    </plurals>
+    <plurals name="theoplayer_ui_btn_seek_backward">
+        <item quantity="one">ترجيع <xliff:g example="5" id="seek_offset">%1$d</xliff:g> ثانية</item>
+        <item quantity="other">ترجيع <xliff:g example="5" id="seek_offset">%1$d</xliff:g> ثوانٍ</item>
+    </plurals>
+    <string name="theoplayer_ui_btn_live">مباشر</string>
+
+    <string name="theoplayer_ui_menu_language">اللغة</string>
+    <string name="theoplayer_ui_menu_settings">الإعدادات</string>
+    <string name="theoplayer_ui_menu_audio">الصوت</string>
+    <string name="theoplayer_ui_menu_subtitles">الترجمة</string>
+    <string name="theoplayer_ui_menu_playback_rate">سرعة التشغيل</string>
+    <string name="theoplayer_ui_menu_quality">الجودة</string>
+
+    <string name="theoplayer_ui_audio_none">لا شيء</string>
+    <string name="theoplayer_ui_subtitles_off">إيقاف</string>
+    <string name="theoplayer_ui_playback_rate_normal">عادي</string>
+    <string name="theoplayer_ui_quality_automatic">تلقائي</string>
+    <string name="theoplayer_ui_error_title">حدث خطأ</string>
+    <string name="theoplayer_ui_pip_enter">صورة داخل صورة</string>
+    <string name="theoplayer_ui_pip_exit">الخروج من صورة داخل صورة</string>
+</resources>

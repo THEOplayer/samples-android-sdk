@@ -1,0 +1,38 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Dutch (Belgium) -->
+    <string name="theoplayer_ui_btn_play">Afspelen</string>
+    <string name="theoplayer_ui_btn_pause">Pauzeren</string>
+    <string name="theoplayer_ui_btn_replay">Opnieuw afspelen</string>
+    <string name="theoplayer_ui_btn_chromecast_start">Casten starten</string>
+    <string name="theoplayer_ui_btn_chromecast_stop">Casten stoppen</string>
+    <string name="theoplayer_ui_btn_fullscreen_enter">Volledig scherm</string>
+    <string name="theoplayer_ui_btn_fullscreen_exit">Volledig scherm sluiten</string>
+    <string name="theoplayer_ui_btn_menu_close">Sluiten</string>
+    <string name="theoplayer_ui_btn_back">Terug</string>
+    <string name="theoplayer_ui_btn_mute">Dempen</string>
+    <string name="theoplayer_ui_btn_unmute">Dempen opheffen</string>
+    <plurals name="theoplayer_ui_btn_seek_forward">
+        <item quantity="one"><xliff:g example="5" id="seek_offset">%1$d</xliff:g> seconde vooruitspoelen</item>
+        <item quantity="other"><xliff:g example="5" id="seek_offset">%1$d</xliff:g> seconden vooruitspoelen</item>
+    </plurals>
+    <plurals name="theoplayer_ui_btn_seek_backward">
+        <item quantity="one"><xliff:g example="5" id="seek_offset">%1$d</xliff:g> seconde terugspoelen</item>
+        <item quantity="other"><xliff:g example="5" id="seek_offset">%1$d</xliff:g> seconden terugspoelen</item>
+    </plurals>
+    <string name="theoplayer_ui_btn_live">LIVE</string>
+
+    <string name="theoplayer_ui_menu_language">Taal</string>
+    <string name="theoplayer_ui_menu_settings">Instellingen</string>
+    <string name="theoplayer_ui_menu_audio">Audio</string>
+    <string name="theoplayer_ui_menu_subtitles">Ondertitels</string>
+    <string name="theoplayer_ui_menu_playback_rate">Afspeelsnelheid</string>
+    <string name="theoplayer_ui_menu_quality">Kwaliteit</string>
+
+    <string name="theoplayer_ui_audio_none">Geen</string>
+    <string name="theoplayer_ui_subtitles_off">Uit</string>
+    <string name="theoplayer_ui_playback_rate_normal">Normaal</string>
+    <string name="theoplayer_ui_quality_automatic">Automatisch</string>
+    <string name="theoplayer_ui_error_title">Er is een fout opgetreden</string>
+    <string name="theoplayer_ui_pip_enter">Beeld-in-beeld</string>
+    <string name="theoplayer_ui_pip_exit">Beeld-in-beeld sluiten</string>
+</resources>

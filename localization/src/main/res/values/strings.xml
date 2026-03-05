@@ -1,0 +1,38 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Player UI strings (English base) -->
+    <string name="theoplayer_ui_btn_play">Play</string>
+    <string name="theoplayer_ui_btn_pause">Pause</string>
+    <string name="theoplayer_ui_btn_replay">Replay</string>
+    <string name="theoplayer_ui_btn_chromecast_start">Start casting</string>
+    <string name="theoplayer_ui_btn_chromecast_stop">Stop casting</string>
+    <string name="theoplayer_ui_btn_fullscreen_enter">Enter fullscreen</string>
+    <string name="theoplayer_ui_btn_fullscreen_exit">Exit fullscreen</string>
+    <string name="theoplayer_ui_btn_menu_close">Close</string>
+    <string name="theoplayer_ui_btn_back">Back</string>
+    <string name="theoplayer_ui_btn_mute">Mute</string>
+    <string name="theoplayer_ui_btn_unmute">Unmute</string>
+    <plurals name="theoplayer_ui_btn_seek_forward">
+        <item quantity="one">Seek forward by <xliff:g example="5" id="seek_offset">%1$d</xliff:g> second</item>
+        <item quantity="other">Seek forward by <xliff:g example="5" id="seek_offset">%1$d</xliff:g> seconds</item>
+    </plurals>
+    <plurals name="theoplayer_ui_btn_seek_backward">
+        <item quantity="one">Seek backward by <xliff:g example="5" id="seek_offset">%1$d</xliff:g> second</item>
+        <item quantity="other">Seek backward by <xliff:g example="5" id="seek_offset">%1$d</xliff:g> seconds</item>
+    </plurals>
+    <string name="theoplayer_ui_btn_live">LIVE</string>
+
+    <string name="theoplayer_ui_menu_language">Language</string>
+    <string name="theoplayer_ui_menu_settings">Settings</string>
+    <string name="theoplayer_ui_menu_audio">Audio</string>
+    <string name="theoplayer_ui_menu_subtitles">Subtitles</string>
+    <string name="theoplayer_ui_menu_playback_rate">Playback speed</string>
+    <string name="theoplayer_ui_menu_quality">Quality</string>
+
+    <string name="theoplayer_ui_audio_none">None</string>
+    <string name="theoplayer_ui_subtitles_off">Off</string>
+    <string name="theoplayer_ui_playback_rate_normal">Normal</string>
+    <string name="theoplayer_ui_quality_automatic">Automatic</string>
+    <string name="theoplayer_ui_error_title">An error occurred</string>
+    <string name="theoplayer_ui_pip_enter">Enter picture-in-picture</string>
+    <string name="theoplayer_ui_pip_exit">Exit picture-in-picture</string>
+</resources>

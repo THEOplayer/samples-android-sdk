@@ -1,0 +1,36 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Japanese -->
+    <string name="theoplayer_ui_btn_play">再生</string>
+    <string name="theoplayer_ui_btn_pause">一時停止</string>
+    <string name="theoplayer_ui_btn_replay">もう一度再生</string>
+    <string name="theoplayer_ui_btn_chromecast_start">キャストを開始</string>
+    <string name="theoplayer_ui_btn_chromecast_stop">キャストを停止</string>
+    <string name="theoplayer_ui_btn_fullscreen_enter">全画面</string>
+    <string name="theoplayer_ui_btn_fullscreen_exit">全画面を終了</string>
+    <string name="theoplayer_ui_btn_menu_close">閉じる</string>
+    <string name="theoplayer_ui_btn_back">戻る</string>
+    <string name="theoplayer_ui_btn_mute">ミュート</string>
+    <string name="theoplayer_ui_btn_unmute">ミュート解除</string>
+    <plurals name="theoplayer_ui_btn_seek_forward">
+        <item quantity="other"><xliff:g example="5" id="seek_offset">%1$d</xliff:g>秒進む</item>
+    </plurals>
+    <plurals name="theoplayer_ui_btn_seek_backward">
+        <item quantity="other"><xliff:g example="5" id="seek_offset">%1$d</xliff:g>秒戻る</item>
+    </plurals>
+    <string name="theoplayer_ui_btn_live">ライブ</string>
+
+    <string name="theoplayer_ui_menu_language">言語</string>
+    <string name="theoplayer_ui_menu_settings">設定</string>
+    <string name="theoplayer_ui_menu_audio">音声</string>
+    <string name="theoplayer_ui_menu_subtitles">字幕</string>
+    <string name="theoplayer_ui_menu_playback_rate">再生速度</string>
+    <string name="theoplayer_ui_menu_quality">画質</string>
+
+    <string name="theoplayer_ui_audio_none">なし</string>
+    <string name="theoplayer_ui_subtitles_off">オフ</string>
+    <string name="theoplayer_ui_playback_rate_normal">標準</string>
+    <string name="theoplayer_ui_quality_automatic">自動</string>
+    <string name="theoplayer_ui_error_title">エラーが発生しました</string>
+    <string name="theoplayer_ui_pip_enter">ピクチャーインピクチャー</string>
+    <string name="theoplayer_ui_pip_exit">ピクチャーインピクチャーを終了</string>
+</resources>
