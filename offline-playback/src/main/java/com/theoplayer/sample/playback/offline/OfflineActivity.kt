@@ -110,7 +110,9 @@ class OfflineActivity : AppCompatActivity() {
 
         // There's no need to configure THEOplayer source with any caching task.
         // THEOplayer will find automatically caching task for played source if any exists.
-        PlayerActivity.play(this, offlineSource?.sourceUrl)
+        if (offlineSource != null) {
+            PlayerActivity.play(this, offlineSource.sourceDescription)
+        }
     }
 
     private fun requestNotificationPermission() {

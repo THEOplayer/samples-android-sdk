@@ -35,6 +35,9 @@ class PlayerActivity : ComponentActivity() {
 
         val sourceUrl = intent.getStringExtra(PLAYER_PARAM__SOURCE_URL)
 
+        val sourceDescription = pendingSourceDescription?.also { pendingSourceDescription = null }
+            ?: SourceDescription.Builder(TypedSource.Builder(sourceUrl ?: "").build()).build()
+
         setContent {
             val context = LocalContext.current
             val theoplayerView = remember(context) {
@@ -50,9 +53,7 @@ class PlayerActivity : ComponentActivity() {
                 theoplayerView.fullScreenManager.isFullScreenOrientationCoupled = true
 
                 // THEOplayer will automatically match the URL to any existing caching task.
-                theoPlayer.source = SourceDescription.Builder(
-                    TypedSource.Builder(sourceUrl ?: "").build()
-                ).build()
+                theoPlayer.source = sourceDescription
                 theoPlayer.isAutoplay = true
 
                 // Attach event listeners.
@@ -128,9 +129,12 @@ class PlayerActivity : ComponentActivity() {
         private val TAG = PlayerActivity::class.java.simpleName
         private const val PLAYER_PARAM__SOURCE_URL = "SOURCE_URL"
 
-        fun play(context: Context, sourceUrl: String?) {
+        private var pendingSourceDescription: SourceDescription? = null
+
+        fun play(context: Context, sourceDescription: SourceDescription) {
+            pendingSourceDescription = sourceDescription
             val playIntent = Intent(context, PlayerActivity::class.java)
-            playIntent.putExtra(PLAYER_PARAM__SOURCE_URL, sourceUrl)
+            playIntent.putExtra(PLAYER_PARAM__SOURCE_URL, sourceDescription.sources[0].src)
             context.startActivity(playIntent)
         }
     }
