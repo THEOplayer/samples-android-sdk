@@ -16,6 +16,7 @@ class OfflineSource internal constructor(
     val sourceDescription: SourceDescription
 ) {
     val sourceUrl: String get() = sourceDescription.sources[0].src
+    val isDrmSource: Boolean get() = sourceDescription.sources.any { it.drm != null }
     private var cachingTask: CachingTask? = null
     val cachingTaskStatus: MutableLiveData<CachingTaskStatus?> = MutableLiveData()
     val isStateUpToDate: MutableLiveData<Boolean?> = MutableLiveData()

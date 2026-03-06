@@ -41,8 +41,10 @@ internal class OfflineSourceAdapter(
             viewBinding.root
         ) {
         private val context: Context = viewBinding.root.context
+        private var isDrmSource: Boolean = false
 
         fun bind(offlineSource: OfflineSource) {
+            isDrmSource = offlineSource.isDrmSource
             // View tag is used to determine if requested poster already loaded and shown.
             // If so, there's no need to reload it.
             if (offlineSource.poster != viewBinding.posterImageView.tag) {
@@ -138,6 +140,8 @@ internal class OfflineSourceAdapter(
         private fun handleStatusChange(status: CachingTaskStatus?) {
             var status = status
             status = status ?: CachingTaskStatus.EVICTED
+            // The renew license button is only relevant for DRM sources.
+            val renewLicenseVisible = if (isDrmSource) View.VISIBLE else View.GONE
             when (status) {
                 CachingTaskStatus.IDLE -> {
                     viewBinding.startButton.visibility = View.VISIBLE
@@ -145,7 +149,7 @@ internal class OfflineSourceAdapter(
                     viewBinding.removeButton.visibility = View.VISIBLE
                     viewBinding.progressBar.visibility = View.VISIBLE
                     viewBinding.progressTextView.visibility = View.VISIBLE
-                    viewBinding.renewLicenseButton.visibility = View.VISIBLE
+                    viewBinding.renewLicenseButton.visibility = renewLicenseVisible
                     viewBinding.container.strokeColor = 0
                 }
                 CachingTaskStatus.LOADING -> {
@@ -163,7 +167,7 @@ internal class OfflineSourceAdapter(
                     viewBinding.removeButton.visibility = View.VISIBLE
                     viewBinding.progressBar.visibility = View.VISIBLE
                     viewBinding.progressTextView.visibility = View.VISIBLE
-                    viewBinding.renewLicenseButton.visibility = View.VISIBLE
+                    viewBinding.renewLicenseButton.visibility = renewLicenseVisible
                     viewBinding.container.strokeColor = 0
                 }
                 CachingTaskStatus.ERROR -> {
@@ -172,7 +176,7 @@ internal class OfflineSourceAdapter(
                     viewBinding.removeButton.visibility = View.VISIBLE
                     viewBinding.progressBar.visibility = View.VISIBLE
                     viewBinding.progressTextView.visibility = View.VISIBLE
-                    viewBinding.renewLicenseButton.visibility = View.VISIBLE
+                    viewBinding.renewLicenseButton.visibility = renewLicenseVisible
                     viewBinding.container.strokeColor =
                         ContextCompat.getColor(context, R.color.dolbyError)
                 }
