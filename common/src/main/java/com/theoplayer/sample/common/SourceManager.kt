@@ -207,7 +207,7 @@ class SourceManager private constructor() {
         }
         val DASH_WITH_EMSG: SourceDescription by lazy {
             SourceDescription.Builder(
-                TypedSource.Builder("https://refapp.hbbtv.org/videos/00_llama_multiperiod_v1/manifest.mpd")
+                TypedSource.Builder("https://livesim.dashif.org/livesim2/scte35_2/testpic_2s/Manifest.mpd")
                     .build()
             ).build()
         }
