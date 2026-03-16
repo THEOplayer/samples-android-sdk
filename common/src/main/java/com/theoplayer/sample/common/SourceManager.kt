@@ -33,7 +33,7 @@ class SourceManager private constructor() {
             SourceDescription
                 .Builder(
                     TypedSource
-                        .Builder("https://cdn.theoplayer.com/video/big_buck_bunny/big_buck_bunny.m3u8")
+                        .Builder("https://cdn.theoplayer.com/video/big_buck_bunny/big_buck_bunny_corrected.m3u8")
                         .build()
                 )
                 .build()
