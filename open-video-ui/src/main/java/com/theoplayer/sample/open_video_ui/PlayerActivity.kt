@@ -43,20 +43,20 @@ fun PlayerScreen(
     val config = THEOplayerConfig.Builder().build()
     when (theme) {
         PlayerTheme.DEFAULT -> {
-                    Box(
-                        modifier = modifier
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        DefaultUI(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(16f / 9f),
-                            config = config,
-                            source = source,
-                            title = title
-                        )
-                    }
+            Box(
+                modifier = modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                DefaultUI(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(16f / 9f),
+                    config = config,
+                    source = source,
+                    title = title
+                )
+            }
         }
 
         PlayerTheme.CUSTOM_COLORS -> {
@@ -69,81 +69,81 @@ fun PlayerScreen(
 
         PlayerTheme.NITFLEX -> {
             NitflexTheme(useDarkTheme = true) {
-                    Box(
-                        modifier = modifier
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        NitflexUI(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(16f / 9f),
-                            config = config,
-                            source = source,
-                            title = title
-                        )
-                    }
+                Box(
+                    modifier = modifier
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    NitflexUI(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(16f / 9f),
+                        config = config,
+                        source = source,
+                        title = title
+                    )
+                }
             }
         }
 
         PlayerTheme.MINIMAL -> {
-                    Box(
-                        modifier = modifier
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        MinimalUI(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(16f / 9f),
-                            config = config,
-                            source = source
-                        )
-                    }
+            Box(
+                modifier = modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                MinimalUI(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(16f / 9f),
+                    config = config,
+                    source = source
+                )
+            }
         }
 
         PlayerTheme.PORTRAIT -> {
-                    PortraitUI(
-                        modifier = modifier
-                            .fillMaxSize(),
-                        config = config,
-                        source = SourceManager.SKATING_PORTRAIT_MP4
-                    )
+            PortraitUI(
+                modifier = modifier
+                    .fillMaxSize(),
+                config = config,
+                source = SourceManager.SKATING_PORTRAIT_MP4
+            )
         }
 
         PlayerTheme.FESTIVE -> {
-                    Box(
-                        modifier = modifier
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        FestiveUI(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(16f / 9f),
-                            config = config,
-                            source = source,
-                            title = title
-                        )
-                    }
+            Box(
+                modifier = modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                FestiveUI(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(16f / 9f),
+                    config = config,
+                    source = source,
+                    title = title
+                )
+            }
         }
 
         PlayerTheme.MODERN -> {
-                    Box(
-                        modifier = modifier
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        ModernUI(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(16f / 9f),
-                            config = config,
-                            source = source,
-                            title = title
-                        )
-                    }
-                }
+            Box(
+                modifier = modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                ModernUI(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(16f / 9f),
+                    config = config,
+                    source = source,
+                    title = title
+                )
+            }
+        }
     }
 }
 
@@ -157,64 +157,64 @@ private fun CustomColorsScreen(
     var selectedPreset by remember { mutableStateOf(ColorPreset.ORANGE) }
 
     CustomColorTheme(preset = selectedPreset) {
-            Column(
-                modifier = modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Center
+        Column(
+            modifier = modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center
+        ) {
+            DefaultUI(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(16f / 9f),
+                config = config,
+                source = source,
+                title = title
+            )
+            Text(
+                text = "Accent color",
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.padding(start = 16.dp, top = 24.dp, bottom = 8.dp)
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                DefaultUI(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(16f / 9f),
-                    config = config,
-                    source = source,
-                    title = title
-                )
-                Text(
-                    text = "Accent color",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.padding(start = 16.dp, top = 24.dp, bottom = 8.dp)
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    ColorPreset.entries.filter { !it.fullTheme }.forEach { preset ->
-                        ColorSwatch(
-                            color = preset.accentColor,
-                            label = preset.label,
-                            selected = preset == selectedPreset,
-                            onClick = { selectedPreset = preset }
-                        )
-                    }
-                }
-                Text(
-                    text = "Full theme",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    ColorPreset.entries.filter { it.fullTheme }.forEach { preset ->
-                        ColorSwatch(
-                            color = preset.accentColor,
-                            label = preset.label,
-                            selected = preset == selectedPreset,
-                            onClick = { selectedPreset = preset }
-                        )
-                    }
+                ColorPreset.entries.filter { !it.fullTheme }.forEach { preset ->
+                    ColorSwatch(
+                        color = preset.accentColor,
+                        label = preset.label,
+                        selected = preset == selectedPreset,
+                        onClick = { selectedPreset = preset }
+                    )
                 }
             }
+            Text(
+                text = "Full theme",
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                ColorPreset.entries.filter { it.fullTheme }.forEach { preset ->
+                    ColorSwatch(
+                        color = preset.accentColor,
+                        label = preset.label,
+                        selected = preset == selectedPreset,
+                        onClick = { selectedPreset = preset }
+                    )
+                }
+            }
+        }
     }
 }
 

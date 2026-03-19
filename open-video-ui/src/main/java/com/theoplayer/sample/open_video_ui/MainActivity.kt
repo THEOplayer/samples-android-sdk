@@ -77,18 +77,18 @@ private fun MainScreen(
         startDestination = Start
     ) {
         composable<Start> {
-                Scaffold(
-                    topBar = { AppTopBar() }
-                ) { padding ->
-                    ThemeSelectionScreen(
-                        modifier = Modifier.padding(padding),
-                        onNavigateToPlayer = { theme ->
-                            navController.navigate(
-                                route = Player(theme = theme)
-                            )
-                        }
-                    )
-                }
+            Scaffold(
+                topBar = { AppTopBar() }
+            ) { padding ->
+                ThemeSelectionScreen(
+                    modifier = Modifier.padding(padding),
+                    onNavigateToPlayer = { theme ->
+                        navController.navigate(
+                            route = Player(theme = theme)
+                        )
+                    }
+                )
+            }
         }
         composable<Player> { backStackEntry ->
             val player: Player = backStackEntry.toRoute()
@@ -97,12 +97,12 @@ private fun MainScreen(
             Scaffold(
                 topBar = { AppTopBar(navigateBack = { navController.popBackStack() }) }
             ) { padding ->
-            PlayerScreen(
-                modifier = Modifier.padding(padding),
-                source = source,
-                title = title,
-                theme = player.theme
-            )
+                PlayerScreen(
+                    modifier = Modifier.padding(padding),
+                    source = source,
+                    title = title,
+                    theme = player.theme
+                )
             }
         }
     }
