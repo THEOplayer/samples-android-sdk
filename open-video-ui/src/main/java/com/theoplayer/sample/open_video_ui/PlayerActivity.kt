@@ -62,12 +62,27 @@ class PlayerActivity : ComponentActivity() {
         val theme = intent.getStringExtra(EXTRA_THEME)
             ?.let { PlayerTheme.valueOf(it) }
             ?: PlayerTheme.DEFAULT
-
-        val config = THEOplayerConfig.Builder().build()
         val source = SourceManager.BIG_BUCK_BUNNY_HLS
         val title = "Big Buck Bunny"
 
         setContent {
+            PlayerScreen(
+                source = source,
+                title = title,
+                theme = theme
+            )
+        }
+    }
+
+}
+
+@Composable
+fun PlayerScreen(
+    source: SourceDescription,
+    title: String,
+    theme: PlayerTheme = PlayerTheme.DEFAULT,
+) {
+            val config = THEOplayerConfig.Builder().build()
             when (theme) {
                 PlayerTheme.DEFAULT -> {
                     THEOplayerTheme(useDarkTheme = true) {
@@ -196,8 +211,6 @@ class PlayerActivity : ComponentActivity() {
                     }
                 }
             }
-        }
-    }
 }
 
 @Composable
