@@ -82,135 +82,135 @@ fun PlayerScreen(
     title: String,
     theme: PlayerTheme = PlayerTheme.DEFAULT,
 ) {
-            val config = THEOplayerConfig.Builder().build()
-            when (theme) {
-                PlayerTheme.DEFAULT -> {
-                    THEOplayerTheme(useDarkTheme = true) {
-                        Scaffold(topBar = { AppTopBar() }) { padding ->
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(padding),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                DefaultUI(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .aspectRatio(16f / 9f),
-                                    config = config,
-                                    source = source,
-                                    title = title
-                                )
-                            }
-                        }
-                    }
-                }
-
-                PlayerTheme.CUSTOM_COLORS -> {
-                    CustomColorsScreen(config = config, source = source, title = title)
-                }
-
-                PlayerTheme.NITFLEX -> {
-                    NitflexTheme(useDarkTheme = true) {
-                        Scaffold(topBar = { AppTopBar() }) { padding ->
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(padding),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                NitflexUI(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .aspectRatio(16f / 9f),
-                                    config = config,
-                                    source = source,
-                                    title = title
-                                )
-                            }
-                        }
-                    }
-                }
-
-                PlayerTheme.MINIMAL -> {
-                    THEOplayerTheme(useDarkTheme = true) {
-                        Scaffold(topBar = { AppTopBar() }) { padding ->
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(padding),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                MinimalUI(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .aspectRatio(16f / 9f),
-                                    config = config,
-                                    source = source
-                                )
-                            }
-                        }
-                    }
-                }
-
-                PlayerTheme.PORTRAIT -> {
-                    THEOplayerTheme(useDarkTheme = true) {
-                        Scaffold(topBar = { AppTopBar() }) { padding ->
-                            PortraitUI(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(padding),
-                                config = config,
-                                source = SourceManager.SKATING_PORTRAIT_MP4
-                            )
-                        }
-                    }
-                }
-
-                PlayerTheme.FESTIVE -> {
-                    THEOplayerTheme(useDarkTheme = true) {
-                        Scaffold(topBar = { AppTopBar() }) { padding ->
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(padding),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                FestiveUI(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .aspectRatio(16f / 9f),
-                                    config = config,
-                                    source = source,
-                                    title = title
-                                )
-                            }
-                        }
-                    }
-                }
-
-                PlayerTheme.MODERN -> {
-                    THEOplayerTheme(useDarkTheme = true) {
-                        Scaffold(topBar = { AppTopBar() }) { padding ->
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(padding),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                ModernUI(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .aspectRatio(16f / 9f),
-                                    config = config,
-                                    source = source,
-                                    title = title
-                                )
-                            }
-                        }
+    val config = THEOplayerConfig.Builder().build()
+    when (theme) {
+        PlayerTheme.DEFAULT -> {
+            THEOplayerTheme(useDarkTheme = true) {
+                Scaffold(topBar = { AppTopBar() }) { padding ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        DefaultUI(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(16f / 9f),
+                            config = config,
+                            source = source,
+                            title = title
+                        )
                     }
                 }
             }
+        }
+
+        PlayerTheme.CUSTOM_COLORS -> {
+            CustomColorsScreen(config = config, source = source, title = title)
+        }
+
+        PlayerTheme.NITFLEX -> {
+            NitflexTheme(useDarkTheme = true) {
+                Scaffold(topBar = { AppTopBar() }) { padding ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        NitflexUI(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(16f / 9f),
+                            config = config,
+                            source = source,
+                            title = title
+                        )
+                    }
+                }
+            }
+        }
+
+        PlayerTheme.MINIMAL -> {
+            THEOplayerTheme(useDarkTheme = true) {
+                Scaffold(topBar = { AppTopBar() }) { padding ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        MinimalUI(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(16f / 9f),
+                            config = config,
+                            source = source
+                        )
+                    }
+                }
+            }
+        }
+
+        PlayerTheme.PORTRAIT -> {
+            THEOplayerTheme(useDarkTheme = true) {
+                Scaffold(topBar = { AppTopBar() }) { padding ->
+                    PortraitUI(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                        config = config,
+                        source = SourceManager.SKATING_PORTRAIT_MP4
+                    )
+                }
+            }
+        }
+
+        PlayerTheme.FESTIVE -> {
+            THEOplayerTheme(useDarkTheme = true) {
+                Scaffold(topBar = { AppTopBar() }) { padding ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        FestiveUI(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(16f / 9f),
+                            config = config,
+                            source = source,
+                            title = title
+                        )
+                    }
+                }
+            }
+        }
+
+        PlayerTheme.MODERN -> {
+            THEOplayerTheme(useDarkTheme = true) {
+                Scaffold(topBar = { AppTopBar() }) { padding ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        ModernUI(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(16f / 9f),
+                            config = config,
+                            source = source,
+                            title = title
+                        )
+                    }
+                }
+            }
+        }
+    }
 }
 
 @Composable
