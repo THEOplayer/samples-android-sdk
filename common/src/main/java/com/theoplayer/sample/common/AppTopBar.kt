@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -17,11 +18,13 @@ import com.theoplayer.android.api.THEOplayerGlobal
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppTopBar(
+    modifier: Modifier = Modifier,
     title: String = stringResource(R.string.appDisplayName),
     actions: @Composable RowScope.() -> Unit = {},
     navigateBack: (() -> Unit)? = null
 ) {
     TopAppBar(
+        modifier = modifier,
         title = { Text(title) },
         actions = {
             actions()
