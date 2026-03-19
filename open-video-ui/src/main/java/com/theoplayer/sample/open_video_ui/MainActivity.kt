@@ -29,7 +29,6 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -52,16 +51,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-private val themeAccentColors = mapOf(
-    PlayerTheme.DEFAULT to Color(0xFFFFD600),
-    PlayerTheme.CUSTOM_COLORS to Color(0xFF6200EA),
-    PlayerTheme.NITFLEX to Color(0xFFE50914),
-    PlayerTheme.MINIMAL to Color(0xFF90A4AE),
-    PlayerTheme.PORTRAIT to Color(0xFFFFFFFF),
-    PlayerTheme.FESTIVE to Color(0xFFFF0000),
-    PlayerTheme.MODERN to Color(0xFFFF0000),
-)
 
 @Serializable
 private object Start
