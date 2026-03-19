@@ -1,6 +1,10 @@
 package com.theoplayer.sample.common
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,23 +25,63 @@ fun AppTopBar(
     modifier: Modifier = Modifier,
     title: String = stringResource(R.string.appDisplayName),
     actions: @Composable RowScope.() -> Unit = {},
-    navigateBack: (() -> Unit)? = null
+    navigateBack: (() -> Unit)? = null,
+    sharedTransitionScope: SharedTransitionScope? = null,
+    animatedVisibilityScope: AnimatedVisibilityScope? = null
 ) {
     TopAppBar(
-        modifier = modifier,
-        title = { Text(title) },
+        modifier = modifier.optionalSharedElement(
+            key = "topBar",
+            sharedTransitionScope = sharedTransitionScope,
+            animatedVisibilityScope = animatedVisibilityScope
+        ),
+        title = {
+            Text(
+                modifier = Modifier.optionalSharedBounds(
+                    key = "topBarTitle",
+                    sharedTransitionScope = sharedTransitionScope,
+                    animatedVisibilityScope = animatedVisibilityScope
+                ),
+                text = title
+            )
+        },
         actions = {
             actions()
-            Text(text = "v" + THEOplayerGlobal.getVersion())
+            Text(
+                modifier = Modifier.optionalSharedBounds(
+                    key = "topBarVersion",
+                    sharedTransitionScope = sharedTransitionScope,
+                    animatedVisibilityScope = animatedVisibilityScope
+                ),
+                text = "v" + THEOplayerGlobal.getVersion()
+            )
         },
         navigationIcon = {
-            navigateBack?.let {
-                IconButton(onClick = navigateBack) {
+            if (navigateBack != null) {
+                IconButton(
+                    modifier = Modifier
+                        .optionalSharedElement(
+                            key = "topBarBackButton",
+                            sharedTransitionScope = sharedTransitionScope,
+                            animatedVisibilityScope = animatedVisibilityScope
+                        ),
+                    onClick = navigateBack
+                ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_arrow_back),
                         contentDescription = stringResource(R.string.back)
                     )
                 }
+            } else {
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .optionalSharedBounds(
+                            key = "topBarBackButton",
+                            sharedTransitionScope = sharedTransitionScope,
+                            animatedVisibilityScope = animatedVisibilityScope
+                        )
+                )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -45,4 +89,36 @@ fun AppTopBar(
             titleContentColor = Color.White,
         ),
     )
+}
+
+@Composable
+private fun Modifier.optionalSharedElement(
+    key: String,
+    sharedTransitionScope: SharedTransitionScope? = null,
+    animatedVisibilityScope: AnimatedVisibilityScope? = null
+): Modifier {
+    sharedTransitionScope ?: return this
+    animatedVisibilityScope ?: return this
+    return sharedTransitionScope.run {
+        sharedElement(
+            sharedContentState = rememberSharedContentState(key),
+            animatedVisibilityScope = animatedVisibilityScope
+        )
+    }
+}
+
+@Composable
+private fun Modifier.optionalSharedBounds(
+    key: String,
+    sharedTransitionScope: SharedTransitionScope? = null,
+    animatedVisibilityScope: AnimatedVisibilityScope? = null
+): Modifier {
+    sharedTransitionScope ?: return this
+    animatedVisibilityScope ?: return this
+    return sharedTransitionScope.run {
+        sharedBounds(
+            sharedContentState = rememberSharedContentState(key),
+            animatedVisibilityScope = animatedVisibilityScope
+        )
+    }
 }

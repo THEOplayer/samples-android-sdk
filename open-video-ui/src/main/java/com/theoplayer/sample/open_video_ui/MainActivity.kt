@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -74,6 +75,7 @@ private fun MainScreen(
     navController: NavHostController = rememberNavController(),
     transitionDurationMillis: Int = 250
 ) {
+    SharedTransitionLayout {
     NavHost(
         modifier = modifier,
         navController = navController,
@@ -105,7 +107,12 @@ private fun MainScreen(
     ) {
         composable<Start> {
             Scaffold(
-                topBar = { AppTopBar() }
+                topBar = {
+                    AppTopBar(
+                        sharedTransitionScope = this@SharedTransitionLayout,
+                        animatedVisibilityScope = this
+                    )
+                }
             ) { padding ->
                 ThemeSelectionScreen(
                     modifier = Modifier.padding(padding),
@@ -122,7 +129,13 @@ private fun MainScreen(
             val source = SourceManager.BIG_BUCK_BUNNY_HLS
             val title = "Big Buck Bunny"
             Scaffold(
-                topBar = { AppTopBar(navigateBack = { navController.popBackStack() }) }
+                topBar = {
+                    AppTopBar(
+                        navigateBack = { navController.popBackStack() },
+                        sharedTransitionScope = this@SharedTransitionLayout,
+                        animatedVisibilityScope = this,
+                    )
+                }
             ) { padding ->
                 PlayerScreen(
                     modifier = Modifier.padding(padding),
@@ -132,6 +145,7 @@ private fun MainScreen(
                 )
             }
         }
+    }
     }
 }
 
