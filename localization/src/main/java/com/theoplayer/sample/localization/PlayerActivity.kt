@@ -1,11 +1,10 @@
 package com.theoplayer.sample.localization
 
-import android.content.Context
-import android.content.res.Configuration
-import android.util.Log
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import android.util.Log
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -25,16 +24,23 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.os.ConfigurationCompat
+import androidx.core.os.LocaleListCompat
 import com.theoplayer.android.api.THEOplayerConfig
 import com.theoplayer.android.api.THEOplayerGlobal
 import com.theoplayer.android.api.THEOplayerView
@@ -45,7 +51,6 @@ import com.theoplayer.android.ui.rememberPlayer
 import com.theoplayer.android.ui.theme.THEOplayerTheme
 import com.theoplayer.sample.common.AppTopBar
 import com.theoplayer.sample.common.SourceManager
-import java.util.Locale
 
 private data class LanguageOption(
     val code: String,
@@ -65,14 +70,7 @@ private val LANGUAGES = listOf(
     LanguageOption("ar", "العربية", "\uD83C\uDDF8\uD83C\uDDE6"),
 )
 
-class PlayerActivity : ComponentActivity() {
-
-    override fun attachBaseContext(newBase: Context) {
-        val locale = Locale.forLanguageTag(selectedLocale)
-        val config = Configuration(newBase.resources.configuration)
-        config.setLocale(locale)
-        super.attachBaseContext(newBase.createConfigurationContext(config))
-    }
+class PlayerActivity : AppCompatActivity() {
 
     @OptIn(ExperimentalLayoutApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,6 +91,15 @@ class PlayerActivity : ComponentActivity() {
             val player = rememberPlayer(theoplayerView)
             val theoPlayer = theoplayerView.player
 
+            val configuration = LocalConfiguration.current
+            var selectedLocale by rememberSaveable(configuration) {
+                mutableStateOf(
+                    // Read the user's preferred locale from the app settings,
+                    // or fall back to the default language.
+                    ConfigurationCompat.getLocales(configuration).get(0)?.toLanguageTag()
+                        ?: LANGUAGES.first().code
+                )
+            }
 
             LaunchedEffect(player) {
 
@@ -220,7 +227,7 @@ class PlayerActivity : ComponentActivity() {
                                             .clickable {
                                                 if (!isSelected) {
                                                     selectedLocale = lang.code
-                                                    recreate()
+                                                    setAppLanguage(lang.code)
                                                 }
                                             }
                                             .padding(horizontal = 16.dp, vertical = 12.dp)
@@ -242,8 +249,12 @@ class PlayerActivity : ComponentActivity() {
         }
     }
 
+    private fun setAppLanguage(code: String) {
+        val locale = LocaleListCompat.forLanguageTags(code)
+        AppCompatDelegate.setApplicationLocales(locale)
+    }
+
     companion object {
         private val TAG: String = PlayerActivity::class.java.simpleName
-        private var selectedLocale: String = "en"
     }
 }
