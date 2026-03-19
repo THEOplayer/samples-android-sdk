@@ -99,7 +99,8 @@ private fun MainScreen(
             PlayerScreen(
                 source = source,
                 title = title,
-                theme = player.theme
+                theme = player.theme,
+                navigateBack = { navController.popBackStack() }
             )
         }
     }

@@ -41,12 +41,13 @@ fun PlayerScreen(
     source: SourceDescription,
     title: String,
     theme: PlayerTheme = PlayerTheme.DEFAULT,
+    navigateBack: (() -> Unit)? = null
 ) {
     val config = THEOplayerConfig.Builder().build()
     when (theme) {
         PlayerTheme.DEFAULT -> {
             THEOplayerTheme(useDarkTheme = true) {
-                Scaffold(topBar = { AppTopBar() }) { padding ->
+                Scaffold(topBar = { AppTopBar(navigateBack = navigateBack) }) { padding ->
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -67,12 +68,17 @@ fun PlayerScreen(
         }
 
         PlayerTheme.CUSTOM_COLORS -> {
-            CustomColorsScreen(config = config, source = source, title = title)
+            CustomColorsScreen(
+                config = config,
+                source = source,
+                title = title,
+                navigateBack = navigateBack
+            )
         }
 
         PlayerTheme.NITFLEX -> {
             NitflexTheme(useDarkTheme = true) {
-                Scaffold(topBar = { AppTopBar() }) { padding ->
+                Scaffold(topBar = { AppTopBar(navigateBack = navigateBack) }) { padding ->
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -94,7 +100,7 @@ fun PlayerScreen(
 
         PlayerTheme.MINIMAL -> {
             THEOplayerTheme(useDarkTheme = true) {
-                Scaffold(topBar = { AppTopBar() }) { padding ->
+                Scaffold(topBar = { AppTopBar(navigateBack = navigateBack) }) { padding ->
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -115,7 +121,7 @@ fun PlayerScreen(
 
         PlayerTheme.PORTRAIT -> {
             THEOplayerTheme(useDarkTheme = true) {
-                Scaffold(topBar = { AppTopBar() }) { padding ->
+                Scaffold(topBar = { AppTopBar(navigateBack = navigateBack) }) { padding ->
                     PortraitUI(
                         modifier = Modifier
                             .fillMaxSize()
@@ -129,7 +135,7 @@ fun PlayerScreen(
 
         PlayerTheme.FESTIVE -> {
             THEOplayerTheme(useDarkTheme = true) {
-                Scaffold(topBar = { AppTopBar() }) { padding ->
+                Scaffold(topBar = { AppTopBar(navigateBack = navigateBack) }) { padding ->
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -151,7 +157,7 @@ fun PlayerScreen(
 
         PlayerTheme.MODERN -> {
             THEOplayerTheme(useDarkTheme = true) {
-                Scaffold(topBar = { AppTopBar() }) { padding ->
+                Scaffold(topBar = { AppTopBar(navigateBack = navigateBack) }) { padding ->
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -177,12 +183,13 @@ fun PlayerScreen(
 private fun CustomColorsScreen(
     config: THEOplayerConfig,
     source: SourceDescription,
-    title: String
+    title: String,
+    navigateBack: (() -> Unit)? = null
 ) {
     var selectedPreset by remember { mutableStateOf(ColorPreset.ORANGE) }
 
     CustomColorTheme(preset = selectedPreset) {
-        Scaffold(topBar = { AppTopBar() }) { padding ->
+        Scaffold(topBar = { AppTopBar(navigateBack = navigateBack) }) { padding ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
