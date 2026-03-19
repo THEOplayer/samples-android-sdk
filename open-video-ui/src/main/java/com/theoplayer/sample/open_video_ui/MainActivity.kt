@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -75,9 +75,9 @@ private fun MainScreen(
     navController: NavHostController = rememberNavController(),
     transitionDurationMillis: Int = 250
 ) {
-    SharedTransitionLayout {
+    SharedTransitionScope { transitionModifier ->
     NavHost(
-        modifier = modifier,
+        modifier = modifier.then(transitionModifier),
         navController = navController,
         startDestination = Start,
         enterTransition = {
@@ -109,7 +109,7 @@ private fun MainScreen(
             Scaffold(
                 topBar = {
                     AppTopBar(
-                        sharedTransitionScope = this@SharedTransitionLayout,
+                        sharedTransitionScope = this@SharedTransitionScope,
                         animatedVisibilityScope = this
                     )
                 }
@@ -132,7 +132,7 @@ private fun MainScreen(
                 topBar = {
                     AppTopBar(
                         navigateBack = { navController.popBackStack() },
-                        sharedTransitionScope = this@SharedTransitionLayout,
+                        sharedTransitionScope = this@SharedTransitionScope,
                         animatedVisibilityScope = this,
                     )
                 }
