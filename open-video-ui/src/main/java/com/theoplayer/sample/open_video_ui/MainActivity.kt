@@ -76,76 +76,76 @@ private fun MainScreen(
     transitionDurationMillis: Int = 250
 ) {
     SharedTransitionScope { transitionModifier ->
-    NavHost(
-        modifier = modifier.then(transitionModifier),
-        navController = navController,
-        startDestination = Start,
-        enterTransition = {
-            slideIntoContainer(
-                AnimatedContentTransitionScope.SlideDirection.Start,
-                animationSpec = tween(transitionDurationMillis)
-            )
-        },
-        exitTransition = {
-            slideOutOfContainer(
-                AnimatedContentTransitionScope.SlideDirection.Start,
-                animationSpec = tween(transitionDurationMillis)
-            )
-        },
-        popEnterTransition = {
-            slideIntoContainer(
-                AnimatedContentTransitionScope.SlideDirection.End,
-                animationSpec = tween(transitionDurationMillis)
-            )
-        },
-        popExitTransition = {
-            slideOutOfContainer(
-                AnimatedContentTransitionScope.SlideDirection.End,
-                animationSpec = tween(transitionDurationMillis)
-            )
-        },
-    ) {
-        composable<Start> {
-            Scaffold(
-                topBar = {
-                    AppTopBar(
-                        sharedTransitionScope = this@SharedTransitionScope,
-                        animatedVisibilityScope = this
-                    )
-                }
-            ) { padding ->
-                ThemeSelectionScreen(
-                    modifier = Modifier.padding(padding),
-                    onNavigateToPlayer = { theme ->
-                        navController.navigate(
-                            route = Player(theme = theme)
+        NavHost(
+            modifier = modifier.then(transitionModifier),
+            navController = navController,
+            startDestination = Start,
+            enterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Start,
+                    animationSpec = tween(transitionDurationMillis)
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Start,
+                    animationSpec = tween(transitionDurationMillis)
+                )
+            },
+            popEnterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.End,
+                    animationSpec = tween(transitionDurationMillis)
+                )
+            },
+            popExitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.End,
+                    animationSpec = tween(transitionDurationMillis)
+                )
+            },
+        ) {
+            composable<Start> {
+                Scaffold(
+                    topBar = {
+                        AppTopBar(
+                            sharedTransitionScope = this@SharedTransitionScope,
+                            animatedVisibilityScope = this
                         )
                     }
-                )
-            }
-        }
-        composable<Player> { backStackEntry ->
-            val player: Player = backStackEntry.toRoute()
-            val source = SourceManager.BIG_BUCK_BUNNY_HLS
-            val title = "Big Buck Bunny"
-            Scaffold(
-                topBar = {
-                    AppTopBar(
-                        navigateBack = { navController.popBackStack() },
-                        sharedTransitionScope = this@SharedTransitionScope,
-                        animatedVisibilityScope = this,
+                ) { padding ->
+                    ThemeSelectionScreen(
+                        modifier = Modifier.padding(padding),
+                        onNavigateToPlayer = { theme ->
+                            navController.navigate(
+                                route = Player(theme = theme)
+                            )
+                        }
                     )
                 }
-            ) { padding ->
-                PlayerScreen(
-                    modifier = Modifier.padding(padding),
-                    source = source,
-                    title = title,
-                    theme = player.theme
-                )
+            }
+            composable<Player> { backStackEntry ->
+                val player: Player = backStackEntry.toRoute()
+                val source = SourceManager.BIG_BUCK_BUNNY_HLS
+                val title = "Big Buck Bunny"
+                Scaffold(
+                    topBar = {
+                        AppTopBar(
+                            navigateBack = { navController.popBackStack() },
+                            sharedTransitionScope = this@SharedTransitionScope,
+                            animatedVisibilityScope = this,
+                        )
+                    }
+                ) { padding ->
+                    PlayerScreen(
+                        modifier = Modifier.padding(padding),
+                        source = source,
+                        title = title,
+                        theme = player.theme
+                    )
+                }
             }
         }
-    }
     }
 }
 
