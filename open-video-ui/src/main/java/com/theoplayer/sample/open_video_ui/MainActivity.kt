@@ -14,25 +14,28 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.theoplayer.sample.common.AppTopBar
+import com.theoplayer.sample.common.SourceManager
+import kotlinx.serialization.Serializable
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,11 +44,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MaterialTheme(colorScheme = darkColorScheme()) {
-                Scaffold(
-                    topBar = { AppTopBar() }
-                ) { padding ->
-                    ThemeSelectionScreen(modifier = Modifier.padding(padding))
-                }
+                MainScreen()
             }
         }
     }
@@ -61,10 +60,56 @@ private val themeAccentColors = mapOf(
     PlayerTheme.MODERN to Color(0xFFFF0000),
 )
 
-@Composable
-private fun ThemeSelectionScreen(modifier: Modifier = Modifier) {
-    val context = LocalContext.current
+@Serializable
+private object Start
 
+@Serializable
+private data class Player(val theme: PlayerTheme)
+
+@Composable
+private fun MainScreen(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController()
+) {
+    NavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = Start
+    ) {
+        composable<Start> {
+            MaterialTheme(colorScheme = darkColorScheme()) {
+                Scaffold(
+                    topBar = { AppTopBar() }
+                ) { padding ->
+                    ThemeSelectionScreen(
+                        modifier = Modifier.padding(padding),
+                        onNavigateToPlayer = { theme ->
+                            navController.navigate(
+                                route = Player(theme = theme)
+                            )
+                        }
+                    )
+                }
+            }
+        }
+        composable<Player> { backStackEntry ->
+            val player: Player = backStackEntry.toRoute()
+            val source = SourceManager.BIG_BUCK_BUNNY_HLS
+            val title = "Big Buck Bunny"
+            PlayerScreen(
+                source = source,
+                title = title,
+                theme = player.theme
+            )
+        }
+    }
+}
+
+@Composable
+private fun ThemeSelectionScreen(
+    modifier: Modifier = Modifier,
+    onNavigateToPlayer: (theme: PlayerTheme) -> Unit = {}
+) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
@@ -73,7 +118,7 @@ private fun ThemeSelectionScreen(modifier: Modifier = Modifier) {
         items(PlayerTheme.entries.toList()) { theme ->
             ThemeCard(
                 theme = theme,
-                onClick = { PlayerActivity.play(context, theme) }
+                onClick = { onNavigateToPlayer(theme) }
             )
         }
     }

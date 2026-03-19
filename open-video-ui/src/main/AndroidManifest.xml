@@ -8,17 +8,13 @@
         android:theme="@style/DolbyTheme.Base">
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".PlayerActivity"
-            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:exported="false" />
         <meta-data
             android:name="THEOPLAYER_LICENSE"
             android:value="@string/theoplayer_test_license" />

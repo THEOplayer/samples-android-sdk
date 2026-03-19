@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.activity.compose)
     implementation(libs.ui)
     implementation(libs.ui.graphics)
+    implementation(libs.navigation)
     implementation(libs.serialization.json)
     debugImplementation(libs.ui.tooling)
     implementation(libs.ui.tooling.preview)

@@ -19,6 +19,7 @@ compose = "1.10.4"
 composeBom = "2026.02.01"
 millicast = "2.5.3"
 workRuntime = "2.11.1"
+navigation = "2.9.7"
 serialization = "1.10.0"
 
 [libraries]
@@ -53,6 +54,8 @@ ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview
 material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
 work-runtime = { module = "androidx.work:work-runtime", version.ref = "workRuntime" }
+navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigation" }
 serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 
 [plugins]

@@ -1,11 +1,5 @@
 package com.theoplayer.sample.open_video_ui
 
-import android.content.Context
-import android.content.Intent
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -41,40 +35,6 @@ import com.theoplayer.sample.common.AppTopBar
 import com.theoplayer.sample.common.SourceManager
 import com.theoplayer.sample.open_video_ui.nitflex.NitflexUI
 import com.theoplayer.sample.open_video_ui.nitflex.theme.NitflexTheme
-
-class PlayerActivity : ComponentActivity() {
-
-    companion object {
-        private const val EXTRA_THEME = "THEME"
-
-        fun play(context: Context, theme: PlayerTheme) {
-            context.startActivity(
-                Intent(context, PlayerActivity::class.java)
-                    .putExtra(EXTRA_THEME, theme.name)
-            )
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
-        super.onCreate(savedInstanceState)
-
-        val theme = intent.getStringExtra(EXTRA_THEME)
-            ?.let { PlayerTheme.valueOf(it) }
-            ?: PlayerTheme.DEFAULT
-        val source = SourceManager.BIG_BUCK_BUNNY_HLS
-        val title = "Big Buck Bunny"
-
-        setContent {
-            PlayerScreen(
-                source = source,
-                title = title,
-                theme = theme
-            )
-        }
-    }
-
-}
 
 @Composable
 fun PlayerScreen(
