@@ -44,8 +44,7 @@ fun PlayerScreen(
     when (theme) {
         PlayerTheme.DEFAULT -> {
             Box(
-                modifier = modifier
-                    .fillMaxSize(),
+                modifier = modifier,
                 contentAlignment = Alignment.Center
             ) {
                 DefaultUI(
@@ -70,8 +69,7 @@ fun PlayerScreen(
         PlayerTheme.NITFLEX -> {
             NitflexTheme(useDarkTheme = true) {
                 Box(
-                    modifier = modifier
-                        .fillMaxSize(),
+                    modifier = modifier,
                     contentAlignment = Alignment.Center
                 ) {
                     NitflexUI(
@@ -88,8 +86,7 @@ fun PlayerScreen(
 
         PlayerTheme.MINIMAL -> {
             Box(
-                modifier = modifier
-                    .fillMaxSize(),
+                modifier = modifier,
                 contentAlignment = Alignment.Center
             ) {
                 MinimalUI(
@@ -104,8 +101,7 @@ fun PlayerScreen(
 
         PlayerTheme.PORTRAIT -> {
             PortraitUI(
-                modifier = modifier
-                    .fillMaxSize(),
+                modifier = modifier,
                 config = config,
                 source = SourceManager.SKATING_PORTRAIT_MP4
             )
@@ -113,8 +109,7 @@ fun PlayerScreen(
 
         PlayerTheme.FESTIVE -> {
             Box(
-                modifier = modifier
-                    .fillMaxSize(),
+                modifier = modifier,
                 contentAlignment = Alignment.Center
             ) {
                 FestiveUI(
@@ -130,8 +125,7 @@ fun PlayerScreen(
 
         PlayerTheme.MODERN -> {
             Box(
-                modifier = modifier
-                    .fillMaxSize(),
+                modifier = modifier,
                 contentAlignment = Alignment.Center
             ) {
                 ModernUI(

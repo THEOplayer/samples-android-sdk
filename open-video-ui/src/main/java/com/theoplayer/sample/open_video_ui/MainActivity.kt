@@ -115,7 +115,9 @@ private fun MainScreen(
                     }
                 ) { padding ->
                     ThemeSelectionScreen(
-                        modifier = Modifier.padding(padding),
+                        modifier = Modifier
+                            .padding(padding)
+                            .fillMaxSize(),
                         onNavigateToPlayer = { theme ->
                             navController.navigate(
                                 route = Player(theme = theme)
@@ -138,7 +140,9 @@ private fun MainScreen(
                     }
                 ) { padding ->
                     PlayerScreen(
-                        modifier = Modifier.padding(padding),
+                        modifier = Modifier
+                            .padding(padding)
+                            .fillMaxSize(),
                         source = source,
                         title = title,
                         theme = player.theme
@@ -155,7 +159,7 @@ private fun ThemeSelectionScreen(
     onNavigateToPlayer: (theme: PlayerTheme) -> Unit = {}
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
