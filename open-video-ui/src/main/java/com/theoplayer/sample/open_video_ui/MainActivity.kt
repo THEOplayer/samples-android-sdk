@@ -77,7 +77,6 @@ private fun MainScreen(
         startDestination = Start
     ) {
         composable<Start> {
-            MaterialTheme(colorScheme = darkColorScheme()) {
                 Scaffold(
                     topBar = { AppTopBar() }
                 ) { padding ->
@@ -90,18 +89,21 @@ private fun MainScreen(
                         }
                     )
                 }
-            }
         }
         composable<Player> { backStackEntry ->
             val player: Player = backStackEntry.toRoute()
             val source = SourceManager.BIG_BUCK_BUNNY_HLS
             val title = "Big Buck Bunny"
+            Scaffold(
+                topBar = { AppTopBar(navigateBack = { navController.popBackStack() }) }
+            ) { padding ->
             PlayerScreen(
+                modifier = Modifier.padding(padding),
                 source = source,
                 title = title,
-                theme = player.theme,
-                navigateBack = { navController.popBackStack() }
+                theme = player.theme
             )
+            }
         }
     }
 }

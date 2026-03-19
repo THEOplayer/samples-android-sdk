@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,28 +29,23 @@ import androidx.compose.ui.unit.dp
 import com.theoplayer.android.api.THEOplayerConfig
 import com.theoplayer.android.api.source.SourceDescription
 import com.theoplayer.android.ui.DefaultUI
-import com.theoplayer.android.ui.theme.THEOplayerTheme
-import com.theoplayer.sample.common.AppTopBar
 import com.theoplayer.sample.common.SourceManager
 import com.theoplayer.sample.open_video_ui.nitflex.NitflexUI
 import com.theoplayer.sample.open_video_ui.nitflex.theme.NitflexTheme
 
 @Composable
 fun PlayerScreen(
+    modifier: Modifier = Modifier,
     source: SourceDescription,
     title: String,
-    theme: PlayerTheme = PlayerTheme.DEFAULT,
-    navigateBack: (() -> Unit)? = null
+    theme: PlayerTheme = PlayerTheme.DEFAULT
 ) {
     val config = THEOplayerConfig.Builder().build()
     when (theme) {
         PlayerTheme.DEFAULT -> {
-            THEOplayerTheme(useDarkTheme = true) {
-                Scaffold(topBar = { AppTopBar(navigateBack = navigateBack) }) { padding ->
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(padding),
+                        modifier = modifier
+                            .fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
                         DefaultUI(
@@ -63,26 +57,21 @@ fun PlayerScreen(
                             title = title
                         )
                     }
-                }
-            }
         }
 
         PlayerTheme.CUSTOM_COLORS -> {
             CustomColorsScreen(
                 config = config,
                 source = source,
-                title = title,
-                navigateBack = navigateBack
+                title = title
             )
         }
 
         PlayerTheme.NITFLEX -> {
             NitflexTheme(useDarkTheme = true) {
-                Scaffold(topBar = { AppTopBar(navigateBack = navigateBack) }) { padding ->
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(padding),
+                        modifier = modifier
+                            .fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
                         NitflexUI(
@@ -94,17 +83,13 @@ fun PlayerScreen(
                             title = title
                         )
                     }
-                }
             }
         }
 
         PlayerTheme.MINIMAL -> {
-            THEOplayerTheme(useDarkTheme = true) {
-                Scaffold(topBar = { AppTopBar(navigateBack = navigateBack) }) { padding ->
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(padding),
+                        modifier = modifier
+                            .fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
                         MinimalUI(
@@ -115,31 +100,21 @@ fun PlayerScreen(
                             source = source
                         )
                     }
-                }
-            }
         }
 
         PlayerTheme.PORTRAIT -> {
-            THEOplayerTheme(useDarkTheme = true) {
-                Scaffold(topBar = { AppTopBar(navigateBack = navigateBack) }) { padding ->
                     PortraitUI(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(padding),
+                        modifier = modifier
+                            .fillMaxSize(),
                         config = config,
                         source = SourceManager.SKATING_PORTRAIT_MP4
                     )
-                }
-            }
         }
 
         PlayerTheme.FESTIVE -> {
-            THEOplayerTheme(useDarkTheme = true) {
-                Scaffold(topBar = { AppTopBar(navigateBack = navigateBack) }) { padding ->
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(padding),
+                        modifier = modifier
+                            .fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
                         FestiveUI(
@@ -151,17 +126,12 @@ fun PlayerScreen(
                             title = title
                         )
                     }
-                }
-            }
         }
 
         PlayerTheme.MODERN -> {
-            THEOplayerTheme(useDarkTheme = true) {
-                Scaffold(topBar = { AppTopBar(navigateBack = navigateBack) }) { padding ->
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(padding),
+                        modifier = modifier
+                            .fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
                         ModernUI(
@@ -174,26 +144,22 @@ fun PlayerScreen(
                         )
                     }
                 }
-            }
-        }
     }
 }
 
 @Composable
 private fun CustomColorsScreen(
+    modifier: Modifier = Modifier,
     config: THEOplayerConfig,
     source: SourceDescription,
     title: String,
-    navigateBack: (() -> Unit)? = null
 ) {
     var selectedPreset by remember { mutableStateOf(ColorPreset.ORANGE) }
 
     CustomColorTheme(preset = selectedPreset) {
-        Scaffold(topBar = { AppTopBar(navigateBack = navigateBack) }) { padding ->
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding),
+                modifier = modifier
+                    .fillMaxSize(),
                 verticalArrangement = Arrangement.Center
             ) {
                 DefaultUI(
@@ -249,7 +215,6 @@ private fun CustomColorsScreen(
                     }
                 }
             }
-        }
     }
 }
 
