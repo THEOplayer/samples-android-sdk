@@ -23,6 +23,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -211,35 +212,15 @@ class PlayerActivity : AppCompatActivity() {
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 for (lang in LANGUAGES) {
-                                    val isSelected = selectedLocale == lang.code
-                                    Box(
-                                        contentAlignment = Alignment.Center,
-                                        modifier = Modifier
-                                            .clip(RoundedCornerShape(12.dp))
-                                            .background(
-                                                if (isSelected) Color(0xFF6200EA) else Color(0xFF2A2A2A)
-                                            )
-                                            .border(
-                                                width = if (isSelected) 2.dp else 1.dp,
-                                                color = if (isSelected) Color(0xFF9D46FF) else Color(0xFF444444),
-                                                shape = RoundedCornerShape(12.dp)
-                                            )
-                                            .clickable {
-                                                if (!isSelected) {
-                                                    selectedLocale = lang.code
-                                                    setAppLanguage(lang.code)
-                                                }
-                                            }
-                                            .padding(horizontal = 16.dp, vertical = 12.dp)
-                                    ) {
-                                        Text(
-                                            text = "${lang.flag}  ${lang.label}",
-                                            color = Color.White,
-                                            fontSize = 14.sp,
-                                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                                            textAlign = TextAlign.Center
-                                        )
-                                    }
+                                    LanguageButton(
+                                        flag = lang.flag,
+                                        label = lang.label,
+                                        isSelected = selectedLocale == lang.code,
+                                        onClick = {
+                                            selectedLocale = lang.code
+                                            setAppLanguage(lang.code)
+                                        }
+                                    )
                                 }
                             }
                         }
@@ -256,5 +237,42 @@ class PlayerActivity : AppCompatActivity() {
 
     companion object {
         private val TAG: String = PlayerActivity::class.java.simpleName
+    }
+}
+
+@Composable
+private fun LanguageButton(
+    modifier: Modifier = Modifier,
+    flag: String,
+    label: String,
+    isSelected: Boolean,
+    onClick: () -> Unit = {}
+) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .clip(RoundedCornerShape(12.dp))
+            .background(
+                if (isSelected) Color(0xFF6200EA) else Color(0xFF2A2A2A)
+            )
+            .border(
+                width = if (isSelected) 2.dp else 1.dp,
+                color = if (isSelected) Color(0xFF9D46FF) else Color(0xFF444444),
+                shape = RoundedCornerShape(12.dp)
+            )
+            .clickable {
+                if (!isSelected) {
+                    onClick()
+                }
+            }
+            .padding(horizontal = 16.dp, vertical = 12.dp)
+    ) {
+        Text(
+            text = "$flag  $label",
+            color = Color.White,
+            fontSize = 14.sp,
+            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+            textAlign = TextAlign.Center
+        )
     }
 }
