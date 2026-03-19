@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -53,23 +52,23 @@ import com.theoplayer.android.ui.rememberPlayer
 import com.theoplayer.android.ui.theme.THEOplayerTheme
 import com.theoplayer.sample.common.AppTopBar
 import com.theoplayer.sample.common.SourceManager
+import java.util.Locale
 
 private data class LanguageOption(
     val code: String,
-    val label: String,
     val flag: String
 )
 
 private val LANGUAGES = listOf(
-    LanguageOption("en", "English", "\uD83C\uDDEC\uD83C\uDDE7"),
-    LanguageOption("fr", "Français", "\uD83C\uDDEB\uD83C\uDDF7"),
-    LanguageOption("es", "Español", "\uD83C\uDDEA\uD83C\uDDF8"),
-    LanguageOption("de", "Deutsch", "\uD83C\uDDE9\uD83C\uDDEA"),
-    LanguageOption("nl-BE", "Nederlands (BE)", "\uD83C\uDDE7\uD83C\uDDEA"),
-    LanguageOption("it", "Italiano", "\uD83C\uDDEE\uD83C\uDDF9"),
-    LanguageOption("tr", "Türkçe", "\uD83C\uDDF9\uD83C\uDDF7"),
-    LanguageOption("ja", "日本語", "\uD83C\uDDEF\uD83C\uDDF5"),
-    LanguageOption("ar", "العربية", "\uD83C\uDDF8\uD83C\uDDE6"),
+    LanguageOption("en", "\uD83C\uDDEC\uD83C\uDDE7"),
+    LanguageOption("fr", "\uD83C\uDDEB\uD83C\uDDF7"),
+    LanguageOption("es", "\uD83C\uDDEA\uD83C\uDDF8"),
+    LanguageOption("de", "\uD83C\uDDE9\uD83C\uDDEA"),
+    LanguageOption("nl-BE", "\uD83C\uDDE7\uD83C\uDDEA"),
+    LanguageOption("it", "\uD83C\uDDEE\uD83C\uDDF9"),
+    LanguageOption("tr", "\uD83C\uDDF9\uD83C\uDDF7"),
+    LanguageOption("ja", "\uD83C\uDDEF\uD83C\uDDF5"),
+    LanguageOption("ar", "\uD83C\uDDF8\uD83C\uDDE6"),
 )
 
 class PlayerActivity : AppCompatActivity() {
@@ -215,7 +214,7 @@ class PlayerActivity : AppCompatActivity() {
                                 for (lang in LANGUAGES) {
                                     LanguageButton(
                                         flag = lang.flag,
-                                        label = lang.label,
+                                        code = lang.code,
                                         isSelected = selectedLocale == lang.code,
                                         onClick = {
                                             selectedLocale = lang.code
@@ -245,10 +244,16 @@ class PlayerActivity : AppCompatActivity() {
 private fun LanguageButton(
     modifier: Modifier = Modifier,
     flag: String,
-    label: String,
+    code: String,
     isSelected: Boolean,
     onClick: () -> Unit = {}
 ) {
+    val label = remember(code) {
+        val locale = Locale.forLanguageTag(code)
+        val name = locale.getDisplayName(locale)
+        name.replaceFirstChar { it.titlecase(locale) }
+    }
+
     TextButton(
         modifier = modifier,
         shape = RoundedCornerShape(12.dp),
@@ -260,7 +265,6 @@ private fun LanguageButton(
             containerColor = if (isSelected) Color(0xFF6200EA) else Color(0xFF2A2A2A),
             contentColor = Color.White
         ),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
         onClick = {
             if (!isSelected) onClick()
         }
