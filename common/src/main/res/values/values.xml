@@ -4,4 +4,6 @@
 
     <!-- Insert THEOplayer license -->
     <string name="theoplayer_test_license"></string>
+
+    <string name="back">Back</string>
 </resources>
