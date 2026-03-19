@@ -5,14 +5,14 @@ import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,9 +20,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -32,7 +34,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -248,28 +249,24 @@ private fun LanguageButton(
     isSelected: Boolean,
     onClick: () -> Unit = {}
 ) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
-            .clip(RoundedCornerShape(12.dp))
-            .background(
-                if (isSelected) Color(0xFF6200EA) else Color(0xFF2A2A2A)
-            )
-            .border(
-                width = if (isSelected) 2.dp else 1.dp,
-                color = if (isSelected) Color(0xFF9D46FF) else Color(0xFF444444),
-                shape = RoundedCornerShape(12.dp)
-            )
-            .clickable {
-                if (!isSelected) {
-                    onClick()
-                }
-            }
-            .padding(horizontal = 16.dp, vertical = 12.dp)
+    TextButton(
+        modifier = modifier,
+        shape = RoundedCornerShape(12.dp),
+        border = BorderStroke(
+            width = if (isSelected) 2.dp else 1.dp,
+            color = if (isSelected) Color(0xFF9D46FF) else Color(0xFF444444),
+        ),
+        colors = ButtonDefaults.textButtonColors(
+            containerColor = if (isSelected) Color(0xFF6200EA) else Color(0xFF2A2A2A),
+            contentColor = Color.White
+        ),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+        onClick = {
+            if (!isSelected) onClick()
+        }
     ) {
         Text(
             text = "$flag  $label",
-            color = Color.White,
             fontSize = 14.sp,
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
             textAlign = TextAlign.Center
