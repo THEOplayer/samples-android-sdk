@@ -19,6 +19,7 @@ compose = "1.10.4"
 composeBom = "2026.02.01"
 millicast = "2.5.3"
 workRuntime = "2.11.1"
+serialization = "1.10.0"
 
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
@@ -52,9 +53,11 @@ ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview
 material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
 work-runtime = { module = "androidx.work:work-runtime", version.ref = "workRuntime" }
+serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradle" }
 android-library = { id = "com.android.library", version.ref = "gradle" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
