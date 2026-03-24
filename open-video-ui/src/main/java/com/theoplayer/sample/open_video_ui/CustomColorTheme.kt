@@ -1,9 +1,7 @@
 package com.theoplayer.sample.open_video_ui
 
 import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 enum class ColorPreset(
@@ -126,15 +124,4 @@ enum class ColorPreset(
             onSurfaceVariant = Color(0xFFC9C1D8),
         )
     );
-}
-
-@Composable
-fun CustomColorTheme(
-    preset: ColorPreset = ColorPreset.ORANGE,
-    content: @Composable () -> Unit
-) {
-    MaterialTheme(
-        colorScheme = preset.scheme,
-        content = content
-    )
 }
