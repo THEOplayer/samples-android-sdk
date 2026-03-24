@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -38,7 +39,8 @@ fun PlayerScreen(
     modifier: Modifier = Modifier,
     source: SourceDescription,
     title: String,
-    theme: PlayerTheme = PlayerTheme.DEFAULT
+    theme: PlayerTheme = PlayerTheme.DEFAULT,
+    onColorSchemeChange: (ColorScheme) -> Unit = {}
 ) {
     val config = THEOplayerConfig.Builder().build()
     when (theme) {
@@ -62,7 +64,8 @@ fun PlayerScreen(
             CustomColorsScreen(
                 config = config,
                 source = source,
-                title = title
+                title = title,
+                onColorSchemeChange = onColorSchemeChange
             )
         }
 
@@ -147,10 +150,15 @@ private fun CustomColorsScreen(
     config: THEOplayerConfig,
     source: SourceDescription,
     title: String,
+    onColorSchemeChange: (ColorScheme) -> Unit
 ) {
     var selectedPreset by remember { mutableStateOf(ColorPreset.ORANGE) }
 
-    CustomColorTheme(preset = selectedPreset) {
+    fun setPreset(preset: ColorPreset) {
+        selectedPreset = preset
+        onColorSchemeChange(preset.scheme)
+    }
+
         Column(
             modifier = modifier
                 .fillMaxSize(),
@@ -182,7 +190,7 @@ private fun CustomColorsScreen(
                         color = preset.accentColor,
                         label = preset.label,
                         selected = preset == selectedPreset,
-                        onClick = { selectedPreset = preset }
+                        onClick = { setPreset(preset) }
                     )
                 }
             }
@@ -204,12 +212,11 @@ private fun CustomColorsScreen(
                         color = preset.accentColor,
                         label = preset.label,
                         selected = preset == selectedPreset,
-                        onClick = { selectedPreset = preset }
+                        onClick = { setPreset(preset) }
                     )
                 }
             }
         }
-    }
 }
 
 @Composable

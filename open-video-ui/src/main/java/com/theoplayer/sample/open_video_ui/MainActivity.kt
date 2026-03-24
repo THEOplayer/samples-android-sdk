@@ -9,10 +9,15 @@ import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -103,6 +108,10 @@ private fun MainScreen(
                 val player: Player = backStackEntry.toRoute()
                 val source = SourceManager.BIG_BUCK_BUNNY_HLS
                 val title = "Big Buck Bunny"
+                var colorScheme by remember { mutableStateOf<ColorScheme?>(null) }
+                MaterialTheme(
+                    colorScheme = colorScheme ?: MaterialTheme.colorScheme
+                ) {
                 Scaffold(
                     topBar = {
                         AppTopBar(
@@ -118,8 +127,10 @@ private fun MainScreen(
                             .fillMaxSize(),
                         source = source,
                         title = title,
-                        theme = player.theme
+                        theme = player.theme,
+                        onColorSchemeChange = { colorScheme = it }
                     )
+                }
                 }
             }
         }
