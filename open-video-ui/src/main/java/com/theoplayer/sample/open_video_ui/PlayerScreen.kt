@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.theoplayer.android.api.THEOplayerConfig
 import com.theoplayer.android.api.source.SourceDescription
 import com.theoplayer.android.ui.DefaultUI
+import com.theoplayer.android.ui.theme.THEOplayerTheme
 import com.theoplayer.sample.common.SourceManager
 import com.theoplayer.sample.open_video_ui.nitflex.NitflexUI
 import com.theoplayer.sample.open_video_ui.nitflex.theme.NitflexTheme
@@ -45,6 +46,7 @@ fun PlayerScreen(
     val config = THEOplayerConfig.Builder().build()
     when (theme) {
         PlayerTheme.DEFAULT -> {
+            THEOplayerTheme(useDarkTheme = true) {
             Box(
                 modifier = modifier,
                 contentAlignment = Alignment.Center
@@ -57,6 +59,7 @@ fun PlayerScreen(
                     source = source,
                     title = title
                 )
+            }
             }
         }
 
@@ -88,6 +91,7 @@ fun PlayerScreen(
         }
 
         PlayerTheme.MINIMAL -> {
+            THEOplayerTheme(useDarkTheme = true) {
             Box(
                 modifier = modifier,
                 contentAlignment = Alignment.Center
@@ -100,17 +104,21 @@ fun PlayerScreen(
                     source = source
                 )
             }
+            }
         }
 
         PlayerTheme.PORTRAIT -> {
+            THEOplayerTheme(useDarkTheme = true) {
             PortraitUI(
                 modifier = modifier,
                 config = config,
                 source = SourceManager.SKATING_PORTRAIT_MP4
             )
+            }
         }
 
         PlayerTheme.FESTIVE -> {
+            THEOplayerTheme(useDarkTheme = true) {
             Box(
                 modifier = modifier,
                 contentAlignment = Alignment.Center
@@ -124,9 +132,11 @@ fun PlayerScreen(
                     title = title
                 )
             }
+            }
         }
 
         PlayerTheme.MODERN -> {
+            THEOplayerTheme(useDarkTheme = true) {
             Box(
                 modifier = modifier,
                 contentAlignment = Alignment.Center
@@ -139,6 +149,7 @@ fun PlayerScreen(
                     source = source,
                     title = title
                 )
+            }
             }
         }
     }
