@@ -84,6 +84,10 @@ class PlayerActivity : ComponentActivity(), OnPictureInPictureEventListener {
         }
 
         if (SUPPORTS_PIP) {
+            // Keep PIP aspect ratio in sync with player.
+            updatePipAspectRatio()
+            theoplayerView.player.addEventListener(PlayerEventTypes.RESIZE) { updatePipAspectRatio() }
+
             // Add play/pause PIP actions, and keep in sync with player.
             updatePipActions()
             theoplayerView.player.addEventListener(PlayerEventTypes.PLAY) { updatePipActions() }
@@ -230,6 +234,16 @@ class PlayerActivity : ComponentActivity(), OnPictureInPictureEventListener {
             }
 
             else -> {}
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun updatePipAspectRatio() {
+        val player = theoplayerView.player
+        val videoWidth = player.videoWidth
+        val videoHeight = player.videoHeight
+        if (videoWidth > 0 && videoHeight > 0) {
+            pip.setAspectRatio(Rational(videoWidth, videoHeight))
         }
     }
 
