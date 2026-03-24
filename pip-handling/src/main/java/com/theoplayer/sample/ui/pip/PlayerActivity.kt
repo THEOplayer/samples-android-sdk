@@ -1,6 +1,13 @@
 package com.theoplayer.sample.ui.pip
 
+import android.app.PendingIntent
+import android.app.RemoteAction
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.Configuration
+import android.graphics.drawable.Icon
 import android.os.Build
 import android.os.Bundle
 import android.text.Layout
@@ -10,17 +17,23 @@ import android.util.Rational
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.core.app.PictureInPictureParamsCompat
 import androidx.core.content.ContextCompat
@@ -70,9 +83,21 @@ class PlayerActivity : ComponentActivity(), OnPictureInPictureEventListener {
             )
         }
 
+        if (SUPPORTS_PIP) {
+            // Add play/pause PIP actions, and keep in sync with player.
+            updatePipActions()
+            theoplayerView.player.addEventListener(PlayerEventTypes.PLAY) { updatePipActions() }
+            theoplayerView.player.addEventListener(PlayerEventTypes.PAUSE) { updatePipActions() }
+        }
+
         setContent {
             val player = rememberPlayer(theoplayerView)
             val theoPlayer = theoplayerView.player
+
+            // Broadcast receiver is only used if app is in PiP mode.
+            if (isInPipMode) {
+                PlayerBroadcastReceiver()
+            }
 
             LaunchedEffect(player) {
                 // Coupling the orientation of the device with the fullscreen state.
@@ -208,8 +233,81 @@ class PlayerActivity : ComponentActivity(), OnPictureInPictureEventListener {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun updatePipActions() {
+        val player = theoplayerView.player
+        val isPaused = player.isPaused || player.isEnded
+        pip.setActions(
+            listOf(
+                if (isPaused) {
+                    createRemoteAction(
+                        R.drawable.play_arrow,
+                        R.string.playAction,
+                        EXTRA_CONTROL_PLAY
+                    )
+                } else {
+                    createRemoteAction(
+                        R.drawable.pause,
+                        R.string.pauseAction,
+                        EXTRA_CONTROL_PAUSE
+                    )
+                }
+            )
+        )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createRemoteAction(
+        @DrawableRes iconResId: Int,
+        @StringRes titleResId: Int,
+        controlType: Int,
+    ): RemoteAction = RemoteAction(
+        Icon.createWithResource(this, iconResId),
+        getString(titleResId),
+        getString(titleResId),
+        PendingIntent.getBroadcast(
+            this,
+            controlType,
+            Intent(ACTION_PLAYER_CONTROL).apply {
+                setPackage(packageName)
+                putExtra(EXTRA_CONTROL_TYPE, controlType)
+            },
+            PendingIntent.FLAG_IMMUTABLE,
+        )
+    )
+
+    @Composable
+    fun PlayerBroadcastReceiver() {
+        val context = LocalContext.current
+        val theoplayer = theoplayerView.player
+        DisposableEffect(theoplayer) {
+            val broadcastReceiver = object : BroadcastReceiver() {
+                override fun onReceive(context: Context, intent: Intent) {
+                    if (intent.action != ACTION_PLAYER_CONTROL) return
+                    when (intent.getIntExtra(EXTRA_CONTROL_TYPE, 0)) {
+                        EXTRA_CONTROL_PLAY -> theoplayer.play()
+                        EXTRA_CONTROL_PAUSE -> theoplayer.pause()
+                    }
+                }
+            }
+            ContextCompat.registerReceiver(
+                context,
+                broadcastReceiver,
+                IntentFilter(ACTION_PLAYER_CONTROL),
+                ContextCompat.RECEIVER_NOT_EXPORTED
+            )
+            onDispose { context.unregisterReceiver(broadcastReceiver) }
+        }
+    }
+
     companion object {
         private val TAG: String = PlayerActivity::class.java.simpleName
         private val SUPPORTS_PIP = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+
+        // Intent extras for broadcast controls from Picture-in-Picture mode.
+        private const val ACTION_PLAYER_CONTROL = "player_control"
+        private const val EXTRA_CONTROL_TYPE = "control_type"
+        private const val EXTRA_CONTROL_PLAY = 1
+        private const val EXTRA_CONTROL_PAUSE = 2
     }
 }

@@ -4,6 +4,9 @@
     <string name="pipMenuItem">Picture-in-Picture</string>
     <string name="pipNotSupported">Picture-in-Picture is not supported on this device</string>
 
+    <string name="playAction">Play</string>
+    <string name="pauseAction">Pause</string>
+
     <string name="defaultPosterUrl">https://cdn.theoplayer.com/video/elephants-dream/playlist.png</string>
     <string name="defaultSourceUrl">https://cdn.theoplayer.com/video/elephants-dream/playlist.m3u8</string>
 </resources>
