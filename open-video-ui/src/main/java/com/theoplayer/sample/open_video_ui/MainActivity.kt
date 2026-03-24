@@ -112,25 +112,25 @@ private fun MainScreen(
                 MaterialTheme(
                     colorScheme = colorScheme ?: MaterialTheme.colorScheme
                 ) {
-                Scaffold(
-                    topBar = {
-                        AppTopBar(
-                            navigateBack = { navController.popBackStack() },
-                            sharedTransitionScope = this@SharedTransitionScope,
-                            animatedVisibilityScope = this,
+                    Scaffold(
+                        topBar = {
+                            AppTopBar(
+                                navigateBack = { navController.popBackStack() },
+                                sharedTransitionScope = this@SharedTransitionScope,
+                                animatedVisibilityScope = this,
+                            )
+                        }
+                    ) { padding ->
+                        PlayerScreen(
+                            modifier = Modifier
+                                .padding(padding)
+                                .fillMaxSize(),
+                            source = source,
+                            title = title,
+                            theme = player.theme,
+                            onColorSchemeChange = { colorScheme = it }
                         )
                     }
-                ) { padding ->
-                    PlayerScreen(
-                        modifier = Modifier
-                            .padding(padding)
-                            .fillMaxSize(),
-                        source = source,
-                        title = title,
-                        theme = player.theme,
-                        onColorSchemeChange = { colorScheme = it }
-                    )
-                }
                 }
             }
         }

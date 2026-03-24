@@ -159,64 +159,64 @@ private fun CustomColorsScreen(
         onColorSchemeChange(preset.scheme)
     }
 
-        Column(
-            modifier = modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center
+    Column(
+        modifier = modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center
+    ) {
+        DefaultUI(
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(16f / 9f),
+            config = config,
+            source = source,
+            title = title
+        )
+        Text(
+            text = "Accent color",
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.padding(start = 16.dp, top = 24.dp, bottom = 8.dp)
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            DefaultUI(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(16f / 9f),
-                config = config,
-                source = source,
-                title = title
-            )
-            Text(
-                text = "Accent color",
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.padding(start = 16.dp, top = 24.dp, bottom = 8.dp)
-            )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                ColorPreset.entries.filter { !it.fullTheme }.forEach { preset ->
-                    ColorSwatch(
-                        color = preset.accentColor,
-                        label = preset.label,
-                        selected = preset == selectedPreset,
-                        onClick = { setPreset(preset) }
-                    )
-                }
-            }
-            Text(
-                text = "Full theme",
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
-            )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                ColorPreset.entries.filter { it.fullTheme }.forEach { preset ->
-                    ColorSwatch(
-                        color = preset.accentColor,
-                        label = preset.label,
-                        selected = preset == selectedPreset,
-                        onClick = { setPreset(preset) }
-                    )
-                }
+            ColorPreset.entries.filter { !it.fullTheme }.forEach { preset ->
+                ColorSwatch(
+                    color = preset.accentColor,
+                    label = preset.label,
+                    selected = preset == selectedPreset,
+                    onClick = { setPreset(preset) }
+                )
             }
         }
+        Text(
+            text = "Full theme",
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            ColorPreset.entries.filter { it.fullTheme }.forEach { preset ->
+                ColorSwatch(
+                    color = preset.accentColor,
+                    label = preset.label,
+                    selected = preset == selectedPreset,
+                    onClick = { setPreset(preset) }
+                )
+            }
+        }
+    }
 }
 
 @Composable
