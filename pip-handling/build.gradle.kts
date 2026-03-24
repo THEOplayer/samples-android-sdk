@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.compose.runtime)
     implementation(platform(libs.compose.bom))
     implementation(libs.core.ktx)
+    implementation(libs.core.pip)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
     implementation(libs.ui)

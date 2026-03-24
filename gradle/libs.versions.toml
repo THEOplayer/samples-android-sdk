@@ -13,6 +13,7 @@ compileSdk = "36"
 targetSdk = "36"
 material = "1.13.0"
 coreKtx = "1.18.0"
+corePip = "1.0.0-alpha02"
 lifecycleRuntimeKtx = "2.10.0"
 activityCompose = "1.13.0"
 compose = "1.10.5"
@@ -43,6 +44,7 @@ theoplayer-connector-cast = { group = "com.theoplayer.theoplayer-sdk-android", n
 millicast-sdk = { group = "com.millicast", name = "millicast-sdk-android", version.ref = "millicast" }
 theoplayer-connector-mediasession = { group = "com.theoplayer.android-connector", name = "mediasession", version.ref = "theoplayer" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+core-pip = { group = "androidx.core", name = "core-pip", version.ref = "corePip" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }

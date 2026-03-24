@@ -1,6 +1,6 @@
 package com.theoplayer.sample.ui.pip
 
-import android.app.PictureInPictureParams
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.text.Layout
@@ -18,13 +18,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.core.app.PictureInPictureModeChangedInfo
+import androidx.core.app.PictureInPictureParamsCompat
+import androidx.core.content.ContextCompat
+import androidx.core.pip.PictureInPictureDelegate
+import androidx.core.pip.PictureInPictureDelegate.OnPictureInPictureEventListener
+import androidx.core.pip.VideoPlaybackPictureInPicture
 import androidx.core.text.buildSpannedString
 import androidx.core.text.inSpans
 import com.theoplayer.android.api.THEOplayerConfig
@@ -38,9 +40,10 @@ import com.theoplayer.android.ui.theme.THEOplayerTheme
 import com.theoplayer.sample.common.AppTopBar
 import com.theoplayer.sample.common.SourceManager
 
-class PlayerActivity : ComponentActivity() {
+class PlayerActivity : ComponentActivity(), OnPictureInPictureEventListener {
 
-    private var theoplayerView: THEOplayerView? = null
+    private lateinit var theoplayerView: THEOplayerView
+    private lateinit var pip: VideoPlaybackPictureInPicture
     private var isInPipMode by mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,31 +52,26 @@ class PlayerActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
-        addOnPictureInPictureModeChangedListener { info: PictureInPictureModeChangedInfo ->
-            isInPipMode = info.isInPictureInPictureMode
+        theoplayerView = THEOplayerView(this, THEOplayerConfig.Builder().build()).apply {
+            // Keep the device screen on.
+            keepScreenOn = true
         }
+        pip = VideoPlaybackPictureInPicture(this).apply {
+            setPlayerView(theoplayerView)
+            setAspectRatio(Rational(16, 9))
 
-        // On API 31+, tell the system to auto enter PiP when the user navigates away.
-        // This gives a smoother animation than manually calling enterPictureInPictureMode().
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val params = PictureInPictureParams.Builder()
-                .setAspectRatio(Rational(16, 9))
-                .setAutoEnterEnabled(true)
-                .build()
-            setPictureInPictureParams(params)
+            // On API 31+, tell the system to auto enter PiP when the user navigates away.
+            // This gives a smoother animation than manually calling enterPictureInPictureMode().
+            setEnabled(true)
+
+            addOnPictureInPictureEventListener(
+                ContextCompat.getMainExecutor(this@PlayerActivity),
+                this@PlayerActivity
+            )
         }
 
         setContent {
-            val context = LocalContext.current
-            val theoplayerView = remember(context) {
-                THEOplayerView(context, THEOplayerConfig.Builder().build()).apply {
-                    // Keep the device screen on.
-                    keepScreenOn = true
-                }.also { this@PlayerActivity.theoplayerView = it }
-            }
-
             val player = rememberPlayer(theoplayerView)
-
             val theoPlayer = theoplayerView.player
 
             LaunchedEffect(player) {
@@ -170,11 +168,6 @@ class PlayerActivity : ComponentActivity() {
         }
     }
 
-    override fun onUserLeaveHint() {
-        super.onUserLeaveHint()
-        tryEnterPictureInPictureMode()
-    }
-
     private fun tryEnterPictureInPictureMode() {
         if (SUPPORTS_PIP) {
             // Hide toolbar early for a smooth PiP transition.
@@ -184,9 +177,7 @@ class PlayerActivity : ComponentActivity() {
             // and as a fallback on API < 31.
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || !isInPictureInPictureMode) {
                 enterPictureInPictureMode(
-                    PictureInPictureParams.Builder()
-                        .setAspectRatio(Rational(16, 9))
-                        .build()
+                    PictureInPictureParamsCompat.Builder().build()
                 )
             }
         } else {
@@ -196,6 +187,24 @@ class PlayerActivity : ComponentActivity() {
                 }
             }
             Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onPictureInPictureEvent(
+        event: PictureInPictureDelegate.Event,
+        config: Configuration?
+    ) {
+        when (event) {
+            PictureInPictureDelegate.Event.ENTER_ANIMATION_START,
+            PictureInPictureDelegate.Event.ENTERED -> {
+                isInPipMode = true
+            }
+
+            PictureInPictureDelegate.Event.EXITED -> {
+                isInPipMode = false
+            }
+
+            else -> {}
         }
     }
 
