@@ -5,7 +5,6 @@ import android.os.Build
 import android.util.Rational
 import android.os.Bundle
 import android.text.Layout
-import android.text.SpannableString
 import android.text.style.AlignmentSpan
 import android.util.Log
 import android.widget.Toast
@@ -24,6 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.core.text.buildSpannedString
+import androidx.core.text.inSpans
 import com.theoplayer.android.api.THEOplayerConfig
 import com.theoplayer.android.api.THEOplayerGlobal
 import com.theoplayer.android.api.THEOplayerSettings
@@ -188,13 +189,11 @@ class PlayerActivity : ComponentActivity() {
                 )
             }
         } else {
-            val toastMessage = SpannableString.valueOf(getString(R.string.pipNotSupported))
-            toastMessage.setSpan(
-                AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER),
-                0,
-                toastMessage.length,
-                0
-            )
+            val toastMessage = buildSpannedString {
+                inSpans(AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER)) {
+                    append(getString(R.string.pipNotSupported))
+                }
+            }
             Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show()
         }
     }

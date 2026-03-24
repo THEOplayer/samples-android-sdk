@@ -3,10 +3,11 @@ package com.theoplayer.demo.simpleott.model
 import android.content.Context
 import android.content.DialogInterface
 import android.text.Layout
-import android.text.SpannableString
 import android.text.style.AlignmentSpan
 import android.util.Log
 import android.widget.Toast
+import androidx.core.text.buildSpannedString
+import androidx.core.text.inSpans
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.theoplayer.android.api.THEOplayerGlobal
@@ -95,11 +96,11 @@ class OfflineSourceDownloader(
         }
 
         if (wiFiNetworkInfo.isDownloadOnlyOnWiFi && !wiFiNetworkInfo.isConnectedToWiFi) {
-            val toastMessage = SpannableString.valueOf(context.getString(R.string.wifiDisconnectedWarning))
-            toastMessage.setSpan(
-                AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER),
-                0, toastMessage.length, 0
-            )
+            val toastMessage = buildSpannedString {
+                inSpans(AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER)) {
+                    append(context.getString(R.string.wifiDisconnectedWarning))
+                }
+            }
             Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show()
         } else {
             offlineSource.startCachingTask()
