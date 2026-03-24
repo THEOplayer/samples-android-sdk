@@ -47,19 +47,19 @@ fun PlayerScreen(
     when (theme) {
         PlayerTheme.DEFAULT -> {
             THEOplayerTheme(useDarkTheme = true) {
-            Box(
-                modifier = modifier,
-                contentAlignment = Alignment.Center
-            ) {
-                DefaultUI(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(16f / 9f),
-                    config = config,
-                    source = source,
-                    title = title
-                )
-            }
+                Box(
+                    modifier = modifier,
+                    contentAlignment = Alignment.Center
+                ) {
+                    DefaultUI(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(16f / 9f),
+                        config = config,
+                        source = source,
+                        title = title
+                    )
+                }
             }
         }
 
@@ -92,64 +92,64 @@ fun PlayerScreen(
 
         PlayerTheme.MINIMAL -> {
             THEOplayerTheme(useDarkTheme = true) {
-            Box(
-                modifier = modifier,
-                contentAlignment = Alignment.Center
-            ) {
-                MinimalUI(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(16f / 9f),
-                    config = config,
-                    source = source
-                )
-            }
+                Box(
+                    modifier = modifier,
+                    contentAlignment = Alignment.Center
+                ) {
+                    MinimalUI(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(16f / 9f),
+                        config = config,
+                        source = source
+                    )
+                }
             }
         }
 
         PlayerTheme.PORTRAIT -> {
             THEOplayerTheme(useDarkTheme = true) {
-            PortraitUI(
-                modifier = modifier,
-                config = config,
-                source = SourceManager.SKATING_PORTRAIT_MP4
-            )
+                PortraitUI(
+                    modifier = modifier,
+                    config = config,
+                    source = SourceManager.SKATING_PORTRAIT_MP4
+                )
             }
         }
 
         PlayerTheme.FESTIVE -> {
             THEOplayerTheme(useDarkTheme = true) {
-            Box(
-                modifier = modifier,
-                contentAlignment = Alignment.Center
-            ) {
-                FestiveUI(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(16f / 9f),
-                    config = config,
-                    source = source,
-                    title = title
-                )
-            }
+                Box(
+                    modifier = modifier,
+                    contentAlignment = Alignment.Center
+                ) {
+                    FestiveUI(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(16f / 9f),
+                        config = config,
+                        source = source,
+                        title = title
+                    )
+                }
             }
         }
 
         PlayerTheme.MODERN -> {
             THEOplayerTheme(useDarkTheme = true) {
-            Box(
-                modifier = modifier,
-                contentAlignment = Alignment.Center
-            ) {
-                ModernUI(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(16f / 9f),
-                    config = config,
-                    source = source,
-                    title = title
-                )
-            }
+                Box(
+                    modifier = modifier,
+                    contentAlignment = Alignment.Center
+                ) {
+                    ModernUI(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(16f / 9f),
+                        config = config,
+                        source = source,
+                        title = title
+                    )
+                }
             }
         }
     }
