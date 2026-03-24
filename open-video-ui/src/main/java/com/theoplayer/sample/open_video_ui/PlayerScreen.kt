@@ -1,6 +1,6 @@
 package com.theoplayer.sample.open_video_ui
 
-import androidx.compose.foundation.border
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -242,14 +242,10 @@ private fun ColorSwatch(
         modifier = Modifier.clickable(onClick = onClick)
     ) {
         Surface(
-            modifier = Modifier
-                .size(40.dp)
-                .then(
-                    if (selected) Modifier.border(2.dp, Color.White, CircleShape)
-                    else Modifier
-                ),
+            modifier = Modifier.size(40.dp),
             shape = CircleShape,
             color = color,
+            border = if (selected) BorderStroke(2.dp, Color.White) else null,
             content = {}
         )
         Spacer(modifier = Modifier.width(4.dp))
