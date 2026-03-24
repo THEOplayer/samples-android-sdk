@@ -2,32 +2,33 @@ package com.theoplayer.sample.ui.pip
 
 import android.app.PictureInPictureParams
 import android.os.Build
-import android.util.Rational
 import android.os.Bundle
 import android.text.Layout
 import android.text.style.AlignmentSpan
 import android.util.Log
+import android.util.Rational
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.core.app.PictureInPictureModeChangedInfo
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.core.app.PictureInPictureModeChangedInfo
 import androidx.core.text.buildSpannedString
 import androidx.core.text.inSpans
 import com.theoplayer.android.api.THEOplayerConfig
 import com.theoplayer.android.api.THEOplayerGlobal
-import com.theoplayer.android.api.THEOplayerSettings
 import com.theoplayer.android.api.THEOplayerView
 import com.theoplayer.android.api.event.player.ErrorEvent
 import com.theoplayer.android.api.event.player.PlayerEventTypes
@@ -40,7 +41,7 @@ import com.theoplayer.sample.common.SourceManager
 class PlayerActivity : ComponentActivity() {
 
     private var theoplayerView: THEOplayerView? = null
-    private val isInPipMode = mutableStateOf(false)
+    private var isInPipMode by mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Enable all debug logs from THEOplayer.
@@ -49,7 +50,7 @@ class PlayerActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         addOnPictureInPictureModeChangedListener { info: PictureInPictureModeChangedInfo ->
-            isInPipMode.value = info.isInPictureInPictureMode
+            isInPipMode = info.isInPictureInPictureMode
         }
 
         // On API 31+, tell the system to auto enter PiP when the user navigates away.
@@ -145,7 +146,7 @@ class PlayerActivity : ComponentActivity() {
             THEOplayerTheme(useDarkTheme = true) {
                 Scaffold(
                     topBar = {
-                        if (!isInPipMode.value) AppTopBar(
+                        if (!isInPipMode) AppTopBar(
                             actions = {
                                 IconButton(onClick = { tryEnterPictureInPictureMode() }) {
                                     Icon(
@@ -177,7 +178,7 @@ class PlayerActivity : ComponentActivity() {
     private fun tryEnterPictureInPictureMode() {
         if (SUPPORTS_PIP) {
             // Hide toolbar early for a smooth PiP transition.
-            isInPipMode.value = true
+            isInPipMode = true
             // On API 31+, auto enter handles the transition when navigating away,
             // but we still call enterPictureInPictureMode for explicit triggers (e.g. PiP button)
             // and as a fallback on API < 31.
