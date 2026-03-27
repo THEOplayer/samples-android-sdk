@@ -2,6 +2,7 @@ package com.theoplayer.sample.playback.offline
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,8 +41,10 @@ internal class OfflineSourceAdapter(
             viewBinding.root
         ) {
         private val context: Context = viewBinding.root.context
+        private var isDrmSource: Boolean = false
 
         fun bind(offlineSource: OfflineSource) {
+            isDrmSource = offlineSource.isDrmSource
             // View tag is used to determine if requested poster already loaded and shown.
             // If so, there's no need to reload it.
             if (offlineSource.poster != viewBinding.posterImageView.tag) {
@@ -100,6 +103,10 @@ internal class OfflineSourceAdapter(
                 )
             }
             handleStatusChange(offlineSource.cachingTaskStatus.value)
+            offlineSource.cachingTaskSizeText.observe((context as LifecycleOwner)) { sizeText: String? ->
+                handleSizeTextChange(sizeText)
+            }
+            handleSizeTextChange(offlineSource.cachingTaskSizeText.value)
         }
 
         private fun handleStateUpToDateChange(isUpToDate: Boolean?) {
@@ -121,9 +128,20 @@ internal class OfflineSourceAdapter(
             )
         }
 
+        private fun handleSizeTextChange(sizeText: String?) {
+            if (sizeText != null) {
+                viewBinding.sizeOverlayTextView.text = sizeText
+                viewBinding.sizeOverlayTextView.visibility = View.VISIBLE
+            } else {
+                viewBinding.sizeOverlayTextView.visibility = View.GONE
+            }
+        }
+
         private fun handleStatusChange(status: CachingTaskStatus?) {
             var status = status
             status = status ?: CachingTaskStatus.EVICTED
+            // The renew license button is only relevant for DRM sources.
+            val renewLicenseVisible = if (isDrmSource) View.VISIBLE else View.GONE
             when (status) {
                 CachingTaskStatus.IDLE -> {
                     viewBinding.startButton.visibility = View.VISIBLE
@@ -131,7 +149,7 @@ internal class OfflineSourceAdapter(
                     viewBinding.removeButton.visibility = View.VISIBLE
                     viewBinding.progressBar.visibility = View.VISIBLE
                     viewBinding.progressTextView.visibility = View.VISIBLE
-                    viewBinding.renewLicenseButton.visibility = View.VISIBLE
+                    viewBinding.renewLicenseButton.visibility = renewLicenseVisible
                     viewBinding.container.strokeColor = 0
                 }
                 CachingTaskStatus.LOADING -> {
@@ -149,7 +167,7 @@ internal class OfflineSourceAdapter(
                     viewBinding.removeButton.visibility = View.VISIBLE
                     viewBinding.progressBar.visibility = View.VISIBLE
                     viewBinding.progressTextView.visibility = View.VISIBLE
-                    viewBinding.renewLicenseButton.visibility = View.VISIBLE
+                    viewBinding.renewLicenseButton.visibility = renewLicenseVisible
                     viewBinding.container.strokeColor = 0
                 }
                 CachingTaskStatus.ERROR -> {
@@ -158,9 +176,9 @@ internal class OfflineSourceAdapter(
                     viewBinding.removeButton.visibility = View.VISIBLE
                     viewBinding.progressBar.visibility = View.VISIBLE
                     viewBinding.progressTextView.visibility = View.VISIBLE
-                    viewBinding.renewLicenseButton.visibility = View.VISIBLE
+                    viewBinding.renewLicenseButton.visibility = renewLicenseVisible
                     viewBinding.container.strokeColor =
-                        context.resources.getColor(R.color.theoError)
+                        ContextCompat.getColor(context, R.color.dolbyError)
                 }
                 CachingTaskStatus.EVICTED -> {
                     viewBinding.startButton.visibility = View.VISIBLE
@@ -169,6 +187,7 @@ internal class OfflineSourceAdapter(
                     viewBinding.progressBar.visibility = View.GONE
                     viewBinding.progressTextView.visibility = View.GONE
                     viewBinding.renewLicenseButton.visibility = View.GONE
+                    viewBinding.sizeOverlayTextView.visibility = View.GONE
                     viewBinding.container.strokeColor = 0
                 }
             }

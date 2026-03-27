@@ -13,6 +13,7 @@ import com.theoplayer.android.api.cache.CacheStatus
 import com.theoplayer.android.api.event.EventListener
 import com.theoplayer.android.api.event.cache.CacheEventTypes
 import com.theoplayer.android.api.event.cache.CacheStateChangeEvent
+import com.theoplayer.sample.common.SourceManager
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -24,22 +25,22 @@ class OfflineSourceViewModel(application: Application) : AndroidViewModel(applic
         OfflineSource(
             getApplication<Application>().getString(R.string.bigBuckBunnyTitle),
             getApplication<Application>().getString(R.string.bigBuckBunnyPoster),
-            getApplication<Application>().getString(R.string.bigBuckBunnySourceUrl)
+            SourceManager.BIG_BUCK_BUNNY_DASH
         ),
         OfflineSource(
             getApplication<Application>().getString(R.string.sintelTitle),
             getApplication<Application>().getString(R.string.sintelPoster),
-            getApplication<Application>().getString(R.string.sintelSourceUrl)
+            SourceManager.SINTEL_HLS
         ),
         OfflineSource(
             getApplication<Application>().getString(R.string.tearsOfStealTitle),
             getApplication<Application>().getString(R.string.tearsOfStealPoster),
-            getApplication<Application>().getString(R.string.tearsOfStealSourceUrl)
+            SourceManager.TEARS_OF_STEEL_DRM_PERSISTENT
         ),
         OfflineSource(
             getApplication<Application>().getString(R.string.bipBopTitle),
             getApplication<Application>().getString(R.string.bipBopPoster),
-            getApplication<Application>().getString(R.string.bipBopSourceUrl)
+            SourceManager.BIP_BOP_HLS
         )
     )
 

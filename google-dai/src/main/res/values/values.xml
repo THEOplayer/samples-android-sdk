@@ -1,5 +1,4 @@
 <resources>
-    <string name="appName">GoogleDAI</string>
-    <string name="appDisplayName">THEO Google DAI</string>
+    <string name="appDisplayName">Google DAI</string>
 </resources>
 

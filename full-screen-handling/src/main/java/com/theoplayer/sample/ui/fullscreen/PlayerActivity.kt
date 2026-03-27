@@ -3,109 +3,195 @@ package com.theoplayer.sample.ui.fullscreen
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.theoplayer.android.api.THEOplayerConfig
 import com.theoplayer.android.api.THEOplayerGlobal
+import com.theoplayer.android.api.THEOplayerView
 import com.theoplayer.android.api.event.player.ErrorEvent
 import com.theoplayer.android.api.event.player.PlayerEventTypes
 import com.theoplayer.android.api.fullscreen.FullScreenChangeListener
-import com.theoplayer.android.api.fullscreen.FullScreenManager
-import com.theoplayer.android.api.player.Player
+import com.theoplayer.android.ui.DefaultUI
+import com.theoplayer.android.ui.rememberPlayer
+import com.theoplayer.android.ui.theme.THEOplayerTheme
+import com.theoplayer.sample.common.AppTopBar
 import com.theoplayer.sample.common.SourceManager
-import com.theoplayer.sample.ui.fullscreen.databinding.ActivityPlayerBinding
 
-class PlayerActivity : AppCompatActivity() {
-    private lateinit var viewBinding: ActivityPlayerBinding
-    private lateinit var theoPlayer: Player
-    private lateinit var theoFullScreenManager: FullScreenManager
+class PlayerActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.TheoTheme_Base)
+        // Enable all debug logs from THEOplayer.
+        THEOplayerGlobal.getSharedInstance(this).logger.enableAllTags()
+
         super.onCreate(savedInstanceState)
 
-        // Inflating view and obtaining an instance of the binding class.
-        viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_player)
+        setContent {
+            val context = LocalContext.current
+            val theoplayerView = remember(context) {
+                THEOplayerView(context, THEOplayerConfig.Builder().build()).apply {
+                    keepScreenOn = true
+                }
+            }
+            val player = rememberPlayer(theoplayerView)
+            val theoPlayer = theoplayerView.player
+            val theoFullScreenManager = theoplayerView.fullScreenManager
 
-        // Gathering THEO objects references.
-        theoPlayer = viewBinding.theoPlayerView.player
-        theoFullScreenManager = viewBinding.theoPlayerView.fullScreenManager
+            LaunchedEffect(player) {
+                // Coupling the orientation of the device with the fullscreen state.
+                // The player will go fullscreen when the device is rotated to landscape
+                // and will also exit fullscreen when the device is rotated back to portrait.
+                theoFullScreenManager.isFullScreenOrientationCoupled = true
 
-        // Enable all debug logs from THEOplayer.
-        val theoDebugLogger = THEOplayerGlobal.getSharedInstance(this).logger
-        theoDebugLogger.enableAllTags()
+                // Always go into a particular orientation when in fullscreen.
+                // For all possible values see `ActivityInfo.SCREEN_ORIENTATION_*`.
+                theoFullScreenManager.fullscreenOrientation = ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE
 
-        // Keep the device screen on.
-        viewBinding.theoPlayerView.keepScreenOn = true
+                // Setting custom fullscreen activity which allows to change behavior
+                // and/or look of the fullscreen activity.
+                theoFullScreenManager.fullscreenActivity = CustomFullScreenActivity::class.java
 
-        // Configuring action bar.
-        setSupportActionBar(viewBinding.toolbarLayout.toolbar)
+                // Configuring the player with a SourceDescription object.
+                theoPlayer.source = SourceManager.BIP_BOP_HLS
 
-        // Configure UI behavior and default values.
-        viewBinding.fullScreenButton.setOnClickListener { theoFullScreenManager.requestFullScreen() }
+                // Set autoplay to start video whenever player is visible.
+                theoPlayer.isAutoplay = true
 
-        // Configuring THEOplayer playback with default parameters.
-        configureTHEOplayer()
-    }
+                // Attach event listeners.
+                theoPlayer.addEventListener(PlayerEventTypes.SOURCECHANGE) {
+                    Log.i(TAG, "Event: SOURCECHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.CURRENTSOURCECHANGE) {
+                    Log.i(TAG, "Event: CURRENTSOURCECHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.LOADEDDATA) {
+                    Log.i(TAG, "Event: LOADEDDATA")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.LOADEDMETADATA) {
+                    Log.i(TAG, "Event: LOADEDMETADATA")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.DURATIONCHANGE) {
+                    Log.i(TAG, "Event: DURATIONCHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.TIMEUPDATE) {
+//                    Log.i(TAG, "Event: TIMEUPDATE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.PLAY) {
+                    Log.i(TAG, "Event: PLAY")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.PLAYING) {
+                    Log.i(TAG, "Event: PLAYING")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.PAUSE) {
+                    Log.i(TAG, "Event: PAUSE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.SEEKING) {
+                    Log.i(TAG, "Event: SEEKING")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.SEEKED) {
+                    Log.i(TAG, "Event: SEEKED")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.WAITING) {
+                    Log.i(TAG, "Event: WAITING")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.READYSTATECHANGE) {
+                    Log.i(TAG, "Event: READYSTATECHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.PRESENTATIONMODECHANGE) {
+                    Log.i(TAG, "Event: PRESENTATIONMODECHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.VOLUMECHANGE) {
+                    Log.i(TAG, "Event: VOLUMECHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.ENDED) {
+                    Log.i(TAG, "Event: ENDED")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
+                    Log.i(TAG, "Event: ERROR, error=" + event.errorObject)
+                }
 
-    private fun configureTHEOplayer() {
-        // Coupling the orientation of the device with the fullscreen state.
-        // The player will go fullscreen when the device is rotated to landscape
-        // and will also exit fullscreen when the device is rotated back to portrait.
-        viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true
+                // Adding listeners to THEOplayer fullscreen change events.
+                theoFullScreenManager.addFullScreenChangeListener(object : FullScreenChangeListener {
+                    override fun onEnterFullScreen() {
+                        Log.i(TAG, "Event: FULL_SCREEN_ENTERED")
+                    }
 
-        // Always go into a particular orientation when in fullscreen.
-        // For all possible values see `ActivityInfo.SCREEN_ORIENTATION_*`.
-        viewBinding.theoPlayerView.fullScreenManager.fullscreenOrientation = ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE
+                    override fun onExitFullScreen() {
+                        Log.i(TAG, "Event: FULL_SCREEN_EXITED")
+                    }
+                })
+            }
 
-        // Setting custom full screen activity which allows to change behavior
-        // and/or look of the full screen activity.
-        theoFullScreenManager.fullscreenActivity = CustomFullScreenActivity::class.java
+            THEOplayerTheme(useDarkTheme = true) {
+                Scaffold(
+                    topBar = { AppTopBar() }
+                ) { padding ->
+                    Column(
+                        modifier = Modifier
+                            .padding(padding)
+                            .verticalScroll(rememberScrollState())
+                            .padding(12.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = stringResource(R.string.defaultHeader),
+                            style = MaterialTheme.typography.titleMedium,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 12.dp)
+                        )
 
-        theoPlayer.isAutoplay = true
+                        DefaultUI(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(16f / 9f),
+                            player = player
+                        )
 
-        // Configuring THEOplayer with defined SourceDescription object.
-        theoPlayer.source = SourceManager.BIP_BOP_HLS
+                        Text(
+                            text = stringResource(R.string.defaultDescription),
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 12.dp)
+                        )
 
-        // Adding listeners to THEOplayer basic playback events.
-        theoPlayer.addEventListener(PlayerEventTypes.PLAY) { Log.i(TAG, "Event: PLAY") }
-        theoPlayer.addEventListener(PlayerEventTypes.PLAYING) { Log.i(TAG, "Event: PLAYING") }
-        theoPlayer.addEventListener(PlayerEventTypes.PAUSE) { Log.i(TAG, "Event: PAUSE") }
-        theoPlayer.addEventListener(PlayerEventTypes.ENDED) { Log.i(TAG, "Event: ENDED") }
-        theoPlayer.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
-            Log.i(TAG, "Event: ERROR, error=" + event.errorObject)
+                        Button(
+                            onClick = { theoFullScreenManager.requestFullScreen() },
+                            modifier = Modifier.padding(top = 12.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(com.theoplayer.sample.common.R.color.dolbyPurple),
+                                contentColor = Color.White
+                            )
+                        ) {
+                            Text(text = stringResource(R.string.fullScreenLabel))
+                        }
+                    }
+                }
+            }
         }
-
-        // Adding listeners to THEOplayer basic full screen changes events.
-        theoFullScreenManager.addFullScreenChangeListener(object : FullScreenChangeListener {
-            override fun onEnterFullScreen() {
-                Log.i(TAG, "Event: FULL_SCREEN_ENTERED")
-            }
-
-            override fun onExitFullScreen() {
-                Log.i(TAG, "Event: FULL_SCREEN_EXITED")
-            }
-        })
-    }
-
-    // In order to work properly and in sync with the activity lifecycle changes (e.g. device
-    // is rotated, new activity is started or app is moved to background) we need to call
-    // the "onResume", "onPause" and "onDestroy" methods of the THEOplayerView when the matching
-    // activity methods are called.
-    override fun onPause() {
-        super.onPause()
-        viewBinding.theoPlayerView.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewBinding.theoPlayerView.onResume()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewBinding.theoPlayerView.onDestroy()
     }
 
     companion object {
-        private val TAG = PlayerActivity::class.java.simpleName
+        private val TAG: String = PlayerActivity::class.java.simpleName
     }
 }

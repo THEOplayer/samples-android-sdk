@@ -150,8 +150,4 @@ class PlayerActivity : AppCompatActivity() {
         super.onDestroy()
         viewBinding.theoPlayerView.onDestroy()
     }
-
-    companion object {
-        private val TAG: String = PlayerActivity::class.java.simpleName
-    }
 }

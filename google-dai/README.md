@@ -1,24 +1,64 @@
-# Reference Apps - THEO Google DAI
+# Google DAI
 
-## Prerequisite
+A sample demonstrating how to integrate [Google DAI] (Dynamic Ad Insertion) with [OptiView Player]
+(formerly THEOplayer) to play SSAI streams.
 
-Please read through the quick start section of the [Basic Playback] application before continuing.
+[`PlayerActivity`](src/main/java/com/theoplayer/sample/ads/googledai/PlayerActivity.kt) sets up Compose
+with `DefaultUI` and configures a source with a Google DAI ad description for SSAI.
+The THEOplayer DAI integration handles stream stitching and ad tracking automatically.
 
-## THEO Google DAI
+## Quick Start
 
-The purpose of this app is to demonstrate how to use [Google DAI] ads module in [THEOplayer]
-to insert advertisement to video playback.
+1. Open this repository in Android Studio.
+2. Select the `google-dai` run configuration.
+3. Build and run on a device or emulator.
 
-All information on how to use these APIs can be found in the [PlayerActivity](src/main/java/com/theoplayer/sample/ads/googledai/PlayerActivity.kt).
+### THEOplayer dependency
+
+This project uses THEOplayer from the [official Maven repository](https://maven.theoplayer.com/#/releases).
+
+The repository is declared in the project-level `settings.gradle.kts`:
+
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        maven { url = uri("https://maven.theoplayer.com/releases") }
+    }
+}
+```
+
+Dependencies are managed through a [version catalog](../gradle/libs.versions.toml) and declared
+in the module-level [`build.gradle.kts`](build.gradle.kts):
+
+```kotlin
+dependencies {
+    implementation(libs.theoplayer)
+    implementation(libs.theoplayer.ui)
+    implementation(libs.theoplayer.connector.dai)
+}
+```
+
+### License key
+
+To play your own streams, add a THEOplayer license from the [THEOportal] in
+[`common/src/main/res/values/values.xml`](../common/src/main/res/values/values.xml):
+
+```xml
+<string name="theoplayer_license">YOUR_LICENSE_HERE</string>
+```
+
+The license is picked up automatically via the `<meta-data>` tag in
+[`AndroidManifest.xml`](src/main/AndroidManifest.xml).
+
+### Streams
+
+Video sources are defined in [`SourceManager`](../common/src/main/java/com/theoplayer/sample/common/SourceManager.kt).
 
 ## License
 
-This project is licensed under the BSD 3 Clause License - see the [LICENSE] file for details.
+This project is licensed under the BSD 3 Clause License - see the [LICENSE](../LICENSE) file for details.
 
-[//]: # (Links and Guides reference)
-[THEOplayer]: https://www.theoplayer.com/
-[Basic Playback]: ../basic-playback/README.md
+[OptiView Player]: https://optiview.dolby.com/
+[Open Video UI]: https://optiview.dolby.com/docs/open-video-ui/android/
 [Google DAI]: https://developers.google.com/ad-manager/dynamic-ad-insertion/
-
-[//]: # (Project files reference)
-[LICENSE]: ../LICENSE
+[THEOportal]: https://portal.theoplayer.com/

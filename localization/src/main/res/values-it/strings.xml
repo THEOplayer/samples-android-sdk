@@ -1,0 +1,38 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Italian -->
+    <string name="theoplayer_ui_btn_play">Riproduci</string>
+    <string name="theoplayer_ui_btn_pause">Pausa</string>
+    <string name="theoplayer_ui_btn_replay">Riproduci di nuovo</string>
+    <string name="theoplayer_ui_btn_chromecast_start">Avvia trasmissione</string>
+    <string name="theoplayer_ui_btn_chromecast_stop">Interrompi trasmissione</string>
+    <string name="theoplayer_ui_btn_fullscreen_enter">Schermo intero</string>
+    <string name="theoplayer_ui_btn_fullscreen_exit">Esci da schermo intero</string>
+    <string name="theoplayer_ui_btn_menu_close">Chiudi</string>
+    <string name="theoplayer_ui_btn_back">Indietro</string>
+    <string name="theoplayer_ui_btn_mute">Disattiva audio</string>
+    <string name="theoplayer_ui_btn_unmute">Attiva audio</string>
+    <plurals name="theoplayer_ui_btn_seek_forward">
+        <item quantity="one">Avanti di <xliff:g example="5" id="seek_offset">%1$d</xliff:g> secondo</item>
+        <item quantity="other">Avanti di <xliff:g example="5" id="seek_offset">%1$d</xliff:g> secondi</item>
+    </plurals>
+    <plurals name="theoplayer_ui_btn_seek_backward">
+        <item quantity="one">Indietro di <xliff:g example="5" id="seek_offset">%1$d</xliff:g> secondo</item>
+        <item quantity="other">Indietro di <xliff:g example="5" id="seek_offset">%1$d</xliff:g> secondi</item>
+    </plurals>
+    <string name="theoplayer_ui_btn_live">IN DIRETTA</string>
+
+    <string name="theoplayer_ui_menu_language">Lingua</string>
+    <string name="theoplayer_ui_menu_settings">Impostazioni</string>
+    <string name="theoplayer_ui_menu_audio">Audio</string>
+    <string name="theoplayer_ui_menu_subtitles">Sottotitoli</string>
+    <string name="theoplayer_ui_menu_playback_rate">Velocità di riproduzione</string>
+    <string name="theoplayer_ui_menu_quality">Qualità</string>
+
+    <string name="theoplayer_ui_audio_none">Nessuno</string>
+    <string name="theoplayer_ui_subtitles_off">Disattivato</string>
+    <string name="theoplayer_ui_playback_rate_normal">Normale</string>
+    <string name="theoplayer_ui_quality_automatic">Automatica</string>
+    <string name="theoplayer_ui_error_title">Si è verificato un errore</string>
+    <string name="theoplayer_ui_pip_enter">Picture-in-picture</string>
+    <string name="theoplayer_ui_pip_exit">Esci da picture-in-picture</string>
+</resources>

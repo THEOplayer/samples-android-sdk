@@ -1,5 +1,5 @@
 <resources>
-    <string name="appDisplayName">THEO Background Playback</string>
+    <string name="appDisplayName">Background Playback</string>
     <string name="play">Play</string>
     <string name="pause">Pause</string>
     <string name="prev">Previous</string>

@@ -1,0 +1,38 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Turkish -->
+    <string name="theoplayer_ui_btn_play">Oynat</string>
+    <string name="theoplayer_ui_btn_pause">Duraklat</string>
+    <string name="theoplayer_ui_btn_replay">Tekrar oynat</string>
+    <string name="theoplayer_ui_btn_chromecast_start">Yayını başlat</string>
+    <string name="theoplayer_ui_btn_chromecast_stop">Yayını durdur</string>
+    <string name="theoplayer_ui_btn_fullscreen_enter">Tam ekran</string>
+    <string name="theoplayer_ui_btn_fullscreen_exit">Tam ekrandan çık</string>
+    <string name="theoplayer_ui_btn_menu_close">Kapat</string>
+    <string name="theoplayer_ui_btn_back">Geri</string>
+    <string name="theoplayer_ui_btn_mute">Sesi kapat</string>
+    <string name="theoplayer_ui_btn_unmute">Sesi aç</string>
+    <plurals name="theoplayer_ui_btn_seek_forward">
+        <item quantity="one"><xliff:g example="5" id="seek_offset">%1$d</xliff:g> saniye ileri sar</item>
+        <item quantity="other"><xliff:g example="5" id="seek_offset">%1$d</xliff:g> saniye ileri sar</item>
+    </plurals>
+    <plurals name="theoplayer_ui_btn_seek_backward">
+        <item quantity="one"><xliff:g example="5" id="seek_offset">%1$d</xliff:g> saniye geri sar</item>
+        <item quantity="other"><xliff:g example="5" id="seek_offset">%1$d</xliff:g> saniye geri sar</item>
+    </plurals>
+    <string name="theoplayer_ui_btn_live">CANLI</string>
+
+    <string name="theoplayer_ui_menu_language">Dil</string>
+    <string name="theoplayer_ui_menu_settings">Ayarlar</string>
+    <string name="theoplayer_ui_menu_audio">Ses</string>
+    <string name="theoplayer_ui_menu_subtitles">Altyazılar</string>
+    <string name="theoplayer_ui_menu_playback_rate">Oynatma hızı</string>
+    <string name="theoplayer_ui_menu_quality">Kalite</string>
+
+    <string name="theoplayer_ui_audio_none">Yok</string>
+    <string name="theoplayer_ui_subtitles_off">Kapalı</string>
+    <string name="theoplayer_ui_playback_rate_normal">Normal</string>
+    <string name="theoplayer_ui_quality_automatic">Otomatik</string>
+    <string name="theoplayer_ui_error_title">Bir hata oluştu</string>
+    <string name="theoplayer_ui_pip_enter">Pencere içinde pencere</string>
+    <string name="theoplayer_ui_pip_exit">Pencere içinde pencereden çık</string>
+</resources>

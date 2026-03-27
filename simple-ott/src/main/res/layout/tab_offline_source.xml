@@ -1,16 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ListView
-            android:id="@+id/offlineSourceList"
-            style="@style/TheoTheme.ListView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:background="@color/dolbyDarkSurface"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/spaceMargin"
+            android:paddingVertical="@dimen/spaceMarginSmall">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/downloadOnWifi"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:textColor="@color/dolbyWhite" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/downloadOnWiFiSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/offlineSourceList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:padding="@dimen/spaceMarginSmall" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/removeAllButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/spaceMargin"
+            android:text="@string/removeAllCachingTasks"
+            android:textColor="@color/dolbyBlack"
+            app:backgroundTint="@color/dolbyPurpleOpaque" />
 
     </LinearLayout>
 

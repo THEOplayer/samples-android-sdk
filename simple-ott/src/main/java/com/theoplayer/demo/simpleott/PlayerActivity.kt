@@ -1,157 +1,267 @@
 package com.theoplayer.demo.simpleott
 
-import android.annotation.TargetApi
-import android.app.PictureInPictureParams
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.theoplayer.android.api.THEOplayerConfig
 import com.theoplayer.android.api.THEOplayerGlobal
+import com.theoplayer.android.api.THEOplayerView
 import com.theoplayer.android.api.event.player.ErrorEvent
 import com.theoplayer.android.api.event.player.PlayerEventTypes
-import com.theoplayer.android.api.player.Player
 import com.theoplayer.android.api.source.SourceDescription
 import com.theoplayer.android.api.source.TypedSource
 import com.theoplayer.android.api.source.metadata.ChromecastMetadataDescription
-import com.theoplayer.demo.simpleott.databinding.ActivityPlayerBinding
+import com.theoplayer.android.ui.DefaultUI
+import com.theoplayer.android.ui.rememberPlayer
+import com.theoplayer.android.ui.theme.THEOplayerTheme
 import com.theoplayer.demo.simpleott.model.StreamSource
+import com.theoplayer.sample.common.AppTopBar
 
-class PlayerActivity : AppCompatActivity() {
-    private lateinit var viewBinding: ActivityPlayerBinding
-    private lateinit var theoPlayer: Player
+class PlayerActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        THEOplayerGlobal.getSharedInstance(this).logger.enableAllTags()
         super.onCreate(savedInstanceState)
 
-        // Inflating view and obtaining an instance of the binding class.
-        viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_player)
+        val sourceUrl = intent.getStringExtra(PLAYER_PARAM__SOURCE_URL) ?: ""
+        val title = intent.getStringExtra(PLAYER_PARAM__TITLE) ?: ""
+        val description = intent.getStringExtra(PLAYER_PARAM__DESCRIPTION) ?: ""
 
-        // Gathering THEO objects references.
-        theoPlayer = viewBinding.theoPlayerView.player
-
-        // Enable all debug logs from THEOplayer.
-        val theoDebugLogger = THEOplayerGlobal.getSharedInstance(this).logger
-        theoDebugLogger.enableAllTags()
-
-        // Configuring THEOplayer playback with parameters from intent.
-        configureTHEOplayer(
-            intent.getStringExtra(PLAYER_PARAM__SOURCE)!!,
-            intent.getStringExtra(PLAYER_PARAM__TITLE)!!
-        )
-    }
-
-    private fun configureTHEOplayer(source: String, title: String) {
-        // Coupling the orientation of the device with the fullscreen state.
-        // The player will go fullscreen when the device is rotated to landscape
-        // and will also exit fullscreen when the device is rotated back to portrait.
-        viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled = true
-
-        // Creating a TypedSource builder that defines the location of a single stream source.
-        val typedSource = TypedSource.Builder(source)
-
-        // Creating a ChromecastMetadataDescription builder that defines stream metadata to be
-        // displayed on cast sender and receiver while casting.
-        val chromecastMetadata = ChromecastMetadataDescription.Builder()
-            .title(title)
-
-        // Creating a SourceDescription that contains the tab_settings to be applied as a new
-        // THEOplayer source.
-        val sourceDescription = SourceDescription.Builder(typedSource.build())
-            .metadata(chromecastMetadata.build())
-        theoPlayer.isAutoplay = true
-
-        // Configuring THEOplayer with defined SourceDescription object to be played automatically.
-        theoPlayer.source = sourceDescription.build()
-
-        // Adding listeners to THEOplayer basic playback events.
-        theoPlayer.addEventListener(PlayerEventTypes.PLAY) {
-            Log.i(TAG, "Event: PLAY")
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.PLAYING) {
-            Log.i(TAG, "Event: PLAYING")
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.PAUSE) {
-            Log.i(TAG, "Event: PAUSE")
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.ENDED) {
-            Log.i(TAG, "Event: ENDED")
-        }
-        theoPlayer.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
-            Log.i(TAG, "Event: ERROR, error=" + event.errorObject)
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.O)
-    override fun onPictureInPictureModeChanged(
-        isInPictureInPictureMode: Boolean,
-        newConfig: Configuration
-    ) {
-        viewBinding.theoPlayerView.fullScreenManager.isFullScreenOrientationCoupled =
-            !isInPictureInPictureMode
-        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
-    }
-
-    override fun onUserLeaveHint() {
-        if (SUPPORTS_PIP) {
-            if (!theoPlayer.isPaused) {
-                enterPictureInPictureMode(PictureInPictureParams.Builder().build())
+        setContent {
+            val theoplayerView = remember {
+                THEOplayerView(this, THEOplayerConfig.Builder().build()).apply {
+                    keepScreenOn = true
+                }
             }
-        } else {
-            ToastUtils.toastMessage(this, R.string.pipNotSupported)
-        }
-    }
+            val player = rememberPlayer(theoplayerView)
+            val theoPlayer = theoplayerView.player
 
-    // In order to work properly and in sync with the activity lifecycle changes (e.g. device
-    // is rotated, new activity is started or app is moved to background) we need to call
-    // the "onResume", "onPause" and "onDestroy" methods of the THEOplayerView when the matching
-    // activity methods are called.
-    override fun onPause() {
-        super.onPause()
-        if (SUPPORTS_PIP && !isInPictureInPictureMode) {
-            viewBinding.theoPlayerView.onPause()
-        }
-    }
+            var currentSourceUrl by remember { mutableStateOf(sourceUrl) }
+            var currentTitle by remember { mutableStateOf(title) }
+            var currentDescription by remember { mutableStateOf(description) }
 
-    override fun onResume() {
-        super.onResume()
-        if (SUPPORTS_PIP && !isInPictureInPictureMode) {
-            try {
-                viewBinding.theoPlayerView.onResume()
-            } catch (exception: Exception) {
-                Log.i(TAG, "", exception)
+            // One-time setup: event listeners
+            LaunchedEffect(player) {
+                theoplayerView.fullScreenManager.isFullScreenOrientationCoupled = true
+
+                theoPlayer.addEventListener(PlayerEventTypes.SOURCECHANGE) {
+                    Log.i(TAG, "Event: SOURCECHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.CURRENTSOURCECHANGE) {
+                    Log.i(TAG, "Event: CURRENTSOURCECHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.LOADEDDATA) {
+                    Log.i(TAG, "Event: LOADEDDATA")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.LOADEDMETADATA) {
+                    Log.i(TAG, "Event: LOADEDMETADATA")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.DURATIONCHANGE) {
+                    Log.i(TAG, "Event: DURATIONCHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.PLAY) {
+                    Log.i(TAG, "Event: PLAY")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.PLAYING) {
+                    Log.i(TAG, "Event: PLAYING")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.PAUSE) {
+                    Log.i(TAG, "Event: PAUSE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.SEEKING) {
+                    Log.i(TAG, "Event: SEEKING")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.SEEKED) {
+                    Log.i(TAG, "Event: SEEKED")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.WAITING) {
+                    Log.i(TAG, "Event: WAITING")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.READYSTATECHANGE) {
+                    Log.i(TAG, "Event: READYSTATECHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.PRESENTATIONMODECHANGE) {
+                    Log.i(TAG, "Event: PRESENTATIONMODECHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.VOLUMECHANGE) {
+                    Log.i(TAG, "Event: VOLUMECHANGE")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.ENDED) {
+                    Log.i(TAG, "Event: ENDED")
+                }
+                theoPlayer.addEventListener(PlayerEventTypes.ERROR) { event: ErrorEvent ->
+                    Log.i(TAG, "Event: ERROR, error=" + event.errorObject)
+                }
+            }
+
+            // Set source whenever it changes
+            LaunchedEffect(currentSourceUrl) {
+                theoPlayer.source = SourceDescription.Builder(
+                    TypedSource.Builder(currentSourceUrl).build()
+                )
+                    .metadata(
+                        ChromecastMetadataDescription.Builder()
+                            .title(currentTitle)
+                            .build()
+                    )
+                    .build()
+                theoPlayer.isAutoplay = true
+            }
+
+            val relatedSources = remember(currentSourceUrl) {
+                MainActivity.ON_DEMAND_SOURCES.filter { it.source != currentSourceUrl }
+            }
+
+            THEOplayerTheme(useDarkTheme = true) {
+                Scaffold(
+                    topBar = { AppTopBar() }
+                ) { padding ->
+                    Column(
+                        modifier = Modifier
+                            .padding(padding)
+                            .fillMaxSize()
+                    ) {
+                        DefaultUI(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(16f / 9f),
+                            player = player
+                        )
+
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f),
+                            contentPadding = PaddingValues(16.dp)
+                        ) {
+                            item {
+                                Text(
+                                    text = currentTitle,
+                                    style = MaterialTheme.typography.headlineSmall,
+                                    color = Color.White,
+                                    modifier = Modifier.padding(bottom = 4.dp)
+                                )
+                            }
+
+                            if (currentDescription.isNotEmpty()) {
+                                item {
+                                    Text(
+                                        text = currentDescription,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = Color.Gray,
+                                        modifier = Modifier.padding(bottom = 16.dp)
+                                    )
+                                }
+                            }
+
+                            item {
+                                Text(
+                                    text = stringResource(R.string.relatedContent),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = Color.White,
+                                    modifier = Modifier.padding(vertical = 8.dp)
+                                )
+                            }
+
+                            items(relatedSources) { source ->
+                                RelatedContentItem(source) {
+                                    currentSourceUrl = source.source
+                                    currentTitle = source.title
+                                    currentDescription = source.description
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewBinding.theoPlayerView.onDestroy()
     }
 
     companion object {
         private val TAG = PlayerActivity::class.java.simpleName
-        private const val PLAYER_PARAM__SOURCE = "SOURCE"
+        private const val PLAYER_PARAM__SOURCE_URL = "SOURCE_URL"
         private const val PLAYER_PARAM__TITLE = "TITLE"
-        private val SUPPORTS_PIP = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+        private const val PLAYER_PARAM__DESCRIPTION = "DESCRIPTION"
 
-        /**
-         * Allows to start playback of given `streamSource`.
-         *
-         *
-         * There's no need to configure THEOplayer source with any caching task. THEOplayer will find
-         * automatically caching task for played source if any exists.
-         *
-         * @param context - The current context.
-         * @param streamSource - The stream source to be played.
-         */
-        fun play(context: Context, streamSource: StreamSource) {
+        fun play(context: Context, sourceUrl: String, title: String, description: String = "") {
             val playIntent = Intent(context, PlayerActivity::class.java)
-            playIntent.putExtra(PLAYER_PARAM__SOURCE, streamSource.source)
-            playIntent.putExtra(PLAYER_PARAM__TITLE, streamSource.title)
+            playIntent.putExtra(PLAYER_PARAM__SOURCE_URL, sourceUrl)
+            playIntent.putExtra(PLAYER_PARAM__TITLE, title)
+            playIntent.putExtra(PLAYER_PARAM__DESCRIPTION, description)
             context.startActivity(playIntent)
+        }
+    }
+}
+
+@Composable
+private fun RelatedContentItem(source: StreamSource, onClick: () -> Unit) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
+            .clickable(onClick = onClick),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Row(
+            modifier = Modifier.padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(source.imageResId),
+                contentDescription = source.title,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(64.dp)
+                    .clip(RoundedCornerShape(8.dp))
+            )
+            Column(modifier = Modifier.padding(start = 12.dp)) {
+                Text(
+                    text = source.title,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.Black
+                )
+                Text(
+                    text = source.description,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color.DarkGray
+                )
+            }
         }
     }
 }

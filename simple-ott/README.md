@@ -1,66 +1,59 @@
-# Reference Apps - THEO Simple OTT
+# Simple OTT
 
-## Prerequisite
+A production-style OTT sample app built with [OptiView Player] (formerly THEOplayer),
+featuring tabbed browsing, offline downloads, and Chromecast support.
 
-Please read through the quick start section of the [Basic Playback] application before continuing.
+## Quick Start
 
-## THEO Simple OTT
+1. Open this repository in Android Studio.
+2. Select the `simple-ott` run configuration.
+3. Build and run on a device or emulator.
 
-The purpose of this app is to demonstrate how [THEOplayer] could be used in a "real" production-like
-application.
+### THEOplayer dependency
 
-## Application Architecture
+This project uses THEOplayer from the [official Maven repository](https://maven.theoplayer.com/#/releases).
 
-Application presents view of four tabs:
+The repository is declared in the project-level `settings.gradle.kts`:
 
-  * **LIVE** - where live streams can be played
-  * **ON DEMAND** - where VoD streams can be played
-  * **OFFLINE** - where available VoD streams can be downloaded nad played
-  * **SETTINGS** - where all downloaded streams can be removed and download preferences can be set
-
-![Architecture Diagram](guides/images/architecture_diagram.png "Architecture Diagram")
-
-Streams presented on tabs are defined in [stream_sources.json] file stored in application raw
-resources. They can be easily updated. Every tab that displays streams has its own section in this
-JSON configuration. The stream sources JSON configuration should be structured as follows:
-
-```
-{
-  "live": StreamSource[],
-  "onDemand": StreamSource[],
-  "offline": StreamSource[]
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        maven { url = uri("https://maven.theoplayer.com/releases") }
+    }
 }
 ```
 
-where `StreamSource` has following structure:
+Dependencies are managed through a [version catalog](../gradle/libs.versions.toml) and declared
+in the module-level [`build.gradle.kts`](build.gradle.kts):
 
-```
-{
-  "title": "Stream Title",
-  "description": "Some Stream Description",
-  "image": "@drawable/streamImage",
-  "source": "hxxps://some.host.com/some-asset.m3u8"
+```kotlin
+dependencies {
+    implementation(libs.theoplayer)
+    implementation(libs.theoplayer.ui)
+    implementation(libs.theoplayer.connector.cast)
 }
 ```
 
-Please note that `image` should keep reference to existing drawable resource.
+### License key
 
+To play your own streams, add a THEOplayer license from the [THEOportal] in
+[`common/src/main/res/values/values.xml`](../common/src/main/res/values/values.xml):
 
-## Streams/Content Rights:
+```xml
+<string name="theoplayer_license">YOUR_LICENSE_HERE</string>
+```
 
-The DRM streams used in this app (if any) are provided by our Partner: [EZ DRM] and hold all
-the rights for the content. These streams are DRM protected and cannot be used for any other purposes.
+The license is picked up automatically via the `<meta-data>` tag in
+[`AndroidManifest.xml`](src/main/AndroidManifest.xml).
 
+### Streams
+
+Video sources are defined in [`SourceManager`](../common/src/main/java/com/theoplayer/sample/common/SourceManager.kt).
 
 ## License
 
-This project is licensed under the BSD 3 Clause License - see the [LICENSE] file for details.
+This project is licensed under the BSD 3 Clause License - see the [LICENSE](../LICENSE) file for details.
 
-
-[//]: # (Links and Guides reference)
-[THEOplayer]: https://www.theoplayer.com/
-[Basic Playback]: ../basic-playback/README.md
-
-[//]: # (Project files reference)
-[LICENSE]: ../LICENSE
-[stream_sources.json]: src/main/res/raw/stream_sources.json
+[OptiView Player]: https://optiview.dolby.com/
+[Open Video UI]: https://optiview.dolby.com/docs/open-video-ui/android/
+[THEOportal]: https://portal.theoplayer.com/

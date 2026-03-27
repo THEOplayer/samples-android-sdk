@@ -1,0 +1,38 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Spanish -->
+    <string name="theoplayer_ui_btn_play">Reproducir</string>
+    <string name="theoplayer_ui_btn_pause">Pausar</string>
+    <string name="theoplayer_ui_btn_replay">Repetir</string>
+    <string name="theoplayer_ui_btn_chromecast_start">Iniciar transmisión</string>
+    <string name="theoplayer_ui_btn_chromecast_stop">Detener transmisión</string>
+    <string name="theoplayer_ui_btn_fullscreen_enter">Pantalla completa</string>
+    <string name="theoplayer_ui_btn_fullscreen_exit">Salir de pantalla completa</string>
+    <string name="theoplayer_ui_btn_menu_close">Cerrar</string>
+    <string name="theoplayer_ui_btn_back">Atrás</string>
+    <string name="theoplayer_ui_btn_mute">Silenciar</string>
+    <string name="theoplayer_ui_btn_unmute">Activar sonido</string>
+    <plurals name="theoplayer_ui_btn_seek_forward">
+        <item quantity="one">Avanzar <xliff:g example="5" id="seek_offset">%1$d</xliff:g> segundo</item>
+        <item quantity="other">Avanzar <xliff:g example="5" id="seek_offset">%1$d</xliff:g> segundos</item>
+    </plurals>
+    <plurals name="theoplayer_ui_btn_seek_backward">
+        <item quantity="one">Retroceder <xliff:g example="5" id="seek_offset">%1$d</xliff:g> segundo</item>
+        <item quantity="other">Retroceder <xliff:g example="5" id="seek_offset">%1$d</xliff:g> segundos</item>
+    </plurals>
+    <string name="theoplayer_ui_btn_live">EN VIVO</string>
+
+    <string name="theoplayer_ui_menu_language">Idioma</string>
+    <string name="theoplayer_ui_menu_settings">Ajustes</string>
+    <string name="theoplayer_ui_menu_audio">Audio</string>
+    <string name="theoplayer_ui_menu_subtitles">Subtítulos</string>
+    <string name="theoplayer_ui_menu_playback_rate">Velocidad de reproducción</string>
+    <string name="theoplayer_ui_menu_quality">Calidad</string>
+
+    <string name="theoplayer_ui_audio_none">Ninguno</string>
+    <string name="theoplayer_ui_subtitles_off">Desactivado</string>
+    <string name="theoplayer_ui_playback_rate_normal">Normal</string>
+    <string name="theoplayer_ui_quality_automatic">Automática</string>
+    <string name="theoplayer_ui_error_title">Se produjo un error</string>
+    <string name="theoplayer_ui_pip_enter">Imagen en imagen</string>
+    <string name="theoplayer_ui_pip_exit">Salir de imagen en imagen</string>
+</resources>

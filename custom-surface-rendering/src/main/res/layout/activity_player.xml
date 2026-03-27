@@ -6,7 +6,8 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -21,19 +22,21 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                app:title="@string/appDisplayName" />
+                app:title="Custom Surface Rendering" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="36dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <com.theoplayer.android.api.THEOplayerView
                 android:id="@+id/theoPlayerView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:foreground="@drawable/player_border"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/customSurfaceViewContainer"
                 app:layout_constraintVertical_weight="1" />
@@ -42,7 +45,7 @@
                 android:id="@+id/btn_set_surface_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="SurfaceView"
+                android:text="@string/surfaceview"
                 android:padding="2dp"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/theoPlayerView"
@@ -54,7 +57,7 @@
                 android:id="@+id/btn_set_texture_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="TextureView"
+                android:text="@string/textureview"
                 android:padding="2dp"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/theoPlayerView"
@@ -65,7 +68,7 @@
                 android:id="@+id/btn_set_surface_control"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="SurfaceControl"
+                android:text="@string/surfacecontrol"
                 android:padding="2dp"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/theoPlayerView"
@@ -76,10 +79,11 @@
                 android:id="@+id/customSurfaceViewContainer"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:foreground="@drawable/player_border"
                 app:layout_constraintTop_toBottomOf="@id/theoPlayerView"
                 app:layout_constraintBottom_toTopOf="@id/customTextureViewContainer"
                 app:layout_constraintVertical_weight="1"
-                android:background="#AAAAAA" />
+                android:background="#000000" />
 
             <Button
                 android:id="@+id/btn_set_custom_surface_view"
@@ -87,16 +91,17 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@id/customSurfaceViewContainer"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="Custom SurfaceView" />
+                android:text="@string/custom_surfaceview" />
 
             <FrameLayout
                 android:id="@+id/customTextureViewContainer"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:foreground="@drawable/player_border"
                 app:layout_constraintTop_toBottomOf="@id/customSurfaceViewContainer"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintVertical_weight="1"
-                android:background="#DDDDDD" />
+                android:background="#000000" />
 
             <Button
                 android:id="@+id/btn_set_custom_texture_view"
@@ -104,7 +109,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@id/customTextureViewContainer"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="Custom TextureView" />
+                android:text="@string/custom_textureview" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

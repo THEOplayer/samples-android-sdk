@@ -1,15 +1,20 @@
 package com.theoplayer.sample.common
 
+import com.theoplayer.android.api.ads.theoads.TheoAdDescription
+import com.theoplayer.android.api.millicast.MillicastSource
 import com.theoplayer.android.api.source.GoogleDaiTypedSource
 import com.theoplayer.android.api.source.SourceDescription
 import com.theoplayer.android.api.source.SourceType
 import com.theoplayer.android.api.source.TypedSource
 import com.theoplayer.android.api.source.addescription.GoogleImaAdDescription
+import com.theoplayer.android.api.source.drm.ClearkeyKeySystemConfiguration
 import com.theoplayer.android.api.source.drm.DRMConfiguration
 import com.theoplayer.android.api.source.drm.KeySystemConfiguration
+import com.theoplayer.android.api.source.drm.LicenseType
 import com.theoplayer.android.api.source.metadata.ChromecastMetadataDescription
 import com.theoplayer.android.api.source.ssai.dai.GoogleDaiLiveConfiguration
 import com.theoplayer.android.api.source.ssai.dai.GoogleDaiVodConfiguration
+import com.theoplayer.android.api.theolive.TheoLiveSource
 import java.util.Collections
 
 
@@ -28,7 +33,7 @@ class SourceManager private constructor() {
             SourceDescription
                 .Builder(
                     TypedSource
-                        .Builder("https://cdn.theoplayer.com/video/big_buck_bunny/big_buck_bunny.m3u8")
+                        .Builder("https://cdn.theoplayer.com/video/big_buck_bunny/big_buck_bunny_corrected.m3u8")
                         .build()
                 )
                 .build()
@@ -168,6 +173,132 @@ class SourceManager private constructor() {
                 GoogleDaiTypedSource.Builder(liveHlsConfiguration.build())
                     .type(SourceType.HLS)
                     .build()
+            ).build()
+        }
+        val CLEARKEY: SourceDescription by lazy {
+            SourceDescription.Builder(
+                TypedSource.Builder("https://storage.googleapis.com/shaka-demo-assets/angel-one-clearkey/dash.mpd")
+                    .drm(
+                        DRMConfiguration.Builder().clearkey(
+                            ClearkeyKeySystemConfiguration.Builder("https://cwip-shaka-proxy.appspot.com/clearkey?_u3wDe7erb7v8Lqt8A3QDQ=ABEiM0RVZneImaq7zN3u_w")
+                                .build()
+                        ).build()
+                    ).build()
+            ).build()
+        }
+        val HLS_RADIO_WITH_ID3_METADATA: SourceDescription by lazy {
+            SourceDescription.Builder(
+                TypedSource.Builder("https://cdn.theoplayer.com/video/indexcom/index.m3u8")
+                    .build()
+            ).build()
+        }
+        val HLS_WITH_PROGRAM_DATE_TIME: SourceDescription by lazy {
+            SourceDescription.Builder(
+                TypedSource.Builder("https://cdn.theoplayer.com/video/star_wars_episode_vii-the_force_awakens_official_comic-con_2015_reel_(2015)/index-daterange.m3u8")
+                    .build()
+            ).build()
+        }
+        val HLS_WITH_DATE_RANGE: SourceDescription by lazy {
+            SourceDescription.Builder(
+                TypedSource.Builder("https://cdn.theoplayer.com/video/star_wars_episode_vii-the_force_awakens_official_comic-con_2015_reel_(2015)/index-daterange.m3u8")
+                    .hlsDateRange(true)
+                    .build()
+            ).build()
+        }
+        val DASH_WITH_EMSG: SourceDescription by lazy {
+            SourceDescription.Builder(
+                TypedSource.Builder("https://livesim.dashif.org/livesim2/scte35_2/testpic_2s/Manifest.mpd")
+                    .build()
+            ).build()
+        }
+        val DASH_WITH_SCTE35: SourceDescription by lazy {
+            SourceDescription.Builder(
+                TypedSource.Builder("https://demo.unified-streaming.com/k8s/live/scte35.isml/.mpd")
+                    .build()
+            ).build()
+        }
+        val BIG_BUCK_BUNNY_DASH: SourceDescription by lazy {
+            SourceDescription.Builder(
+                TypedSource.Builder("https://cdn.theoplayer.com/video/dash/big_buck_bunny/BigBuckBunny_10s_simple_2014_05_09.mpd")
+                    .build()
+            ).build()
+        }
+        val SINTEL_HLS: SourceDescription by lazy {
+            SourceDescription.Builder(
+                TypedSource.Builder("https://cdn.theoplayer.com/video/sintel/nosubs.m3u8")
+                    .build()
+            ).build()
+        }
+        val STAR_WARS_HLS: SourceDescription by lazy {
+            SourceDescription.Builder(
+                TypedSource.Builder("https://cdn.theoplayer.com/video/star_wars_episode_vii-the_force_awakens_official_comic-con_2015_reel_(2015)/index.m3u8")
+                    .build()
+            ).build()
+        }
+        val ELEPHANTS_DREAM_HLS: SourceDescription by lazy {
+            SourceDescription.Builder(
+                TypedSource.Builder("https://cdn.theoplayer.com/video/elephants-dream/playlist.m3u8")
+                    .build()
+            ).build()
+        }
+        val TEARS_OF_STEEL_HLS: SourceDescription by lazy {
+            SourceDescription.Builder(
+                TypedSource.Builder("https://cdn.theoplayer.com/video/tears_of_steel/index.m3u8")
+                    .build()
+            ).build()
+        }
+        val TEARS_OF_STEEL_DRM_PERSISTENT: SourceDescription by lazy {
+            SourceDescription.Builder(
+                TypedSource.Builder("https://cdn.theoplayer.com/video/dash/tos-dash-widevine/tos_h264_main.mpd")
+                    .drm(
+                        DRMConfiguration.Builder()
+                            .widevine(
+                                // Note that license has to have PERSISTENT type configured
+                                // to be cached and to allow offline playback.
+                                KeySystemConfiguration.Builder("https://widevine-dash.ezdrm.com/proxy?pX=62448C")
+                                    .licenseType(LicenseType.PERSISTENT)
+                                    .build()
+                            ).build()
+                    ).build()
+            ).build()
+        }
+        // This video is provided by cottonbro studio (https://www.pexels.com/video/the-art-of-skateboarding-2791956/)
+        val SKATING_PORTRAIT_MP4: SourceDescription by lazy {
+            SourceDescription.Builder(
+                TypedSource.Builder("https://cdn.theoplayer.com/video/skating-portrait.mp4")
+                    .build()
+            ).build()
+        }
+        val THEOADS: SourceDescription by lazy {
+            SourceDescription.Builder(
+                TypedSource.Builder("https://example.com/manifest.m3u8")
+                    .type(SourceType.HLS)
+                    .hlsDateRange(true) // The flag needs to be set to `true` as the ad markers are done using `EXT-X-DATERANGE` tags.
+                    .build()
+            ).ads(
+                TheoAdDescription(
+                    networkCode = "network-code-here",
+                    customAssetKey = "asset-key-here",
+                    backdropDoubleBox = "https://example.com/double.box.svg",
+                    backdropLShape = "https://example.com/L-shape.svg"
+                )
+            ).build()
+        }
+        val THEOLIVE: SourceDescription by lazy {
+            SourceDescription.Builder(
+                TheoLiveSource(
+                    src = "ar5c53uzm3si4h4zgkzrju44h",
+                )
+            ).build()
+        }
+        val MILLICAST: SourceDescription by lazy {
+            SourceDescription.Builder(
+                MillicastSource(
+                    src = "multiview",
+                    streamAccountId = "k9Mwad",
+                    apiUrl = "https://director.millicast.com/api/director/subscribe",
+//                    subscriberToken = "<token>" // This is only required for subscribing to secure streams and should be omitted otherwise.
+                )
             ).build()
         }
     }

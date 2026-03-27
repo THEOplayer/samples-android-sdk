@@ -8,31 +8,43 @@ import com.theoplayer.android.api.event.EventListener
 import com.theoplayer.android.api.event.cache.task.CachingTaskEventTypes
 import com.theoplayer.android.api.event.cache.task.CachingTaskProgressEvent
 import com.theoplayer.android.api.event.cache.task.CachingTaskStateChangeEvent
+import com.theoplayer.android.api.source.SourceDescription
 
 class OfflineSource internal constructor(
     val title: String,
     val poster: String,
-    val sourceUrl: String
+    val sourceDescription: SourceDescription
 ) {
+    val sourceUrl: String get() = sourceDescription.sources[0].src
+    val isDrmSource: Boolean get() = sourceDescription.sources.any { it.drm != null }
     private var cachingTask: CachingTask? = null
     val cachingTaskStatus: MutableLiveData<CachingTaskStatus?> = MutableLiveData()
     val isStateUpToDate: MutableLiveData<Boolean?> = MutableLiveData()
     val cachingTaskProgress: MutableLiveData<Double?> = MutableLiveData()
+    val cachingTaskSizeText: MutableLiveData<String?> = MutableLiveData()
+
+    private var progressEventCount = 0
 
     fun setCachingTask(cachingTask: CachingTask?) {
         this.cachingTask = cachingTask
         isStateUpToDate.value = false
+        progressEventCount = 0
         cachingTaskStatus.value = cachingTask?.status ?: CachingTaskStatus.EVICTED
         cachingTaskProgress.value = cachingTask?.percentageCached ?: 0.0
+        updateSizeText(cachingTask)
         if (cachingTask != null) {
             cachingTask.addEventListener(
                 CachingTaskEventTypes.CACHING_TASK_PROGRESS,
                 EventListener { event: CachingTaskProgressEvent? ->
                     Log.i(
                         TAG,
-                        "Event: CACHING_TASK_PROGRESS, title='" + title + "', progress=" + cachingTask.percentageCached
+                        "Event: CACHING_TASK_PROGRESS, title='" + title + "', progress=" + cachingTask.percentageCached + "', bytes=" + cachingTask.bytes,
                     )
-                    cachingTaskProgress.setValue(cachingTask.percentageCached)
+                    cachingTaskProgress.value = cachingTask.percentageCached
+                    progressEventCount++
+                    if (progressEventCount % 5 == 0) {
+                        updateSizeText(cachingTask)
+                    }
                 })
             cachingTask.addEventListener(
                 CachingTaskEventTypes.CACHING_TASK_STATE_CHANGE,
@@ -43,10 +55,24 @@ class OfflineSource internal constructor(
                     )
                     cachingTaskStatus.value = cachingTask.status
                     cachingTaskProgress.value = cachingTask.percentageCached
-                    isStateUpToDate.setValue(true)
+                    updateSizeText(cachingTask)
+                    isStateUpToDate.value = true
                 })
         }
         isStateUpToDate.value = true
+    }
+
+    private fun updateSizeText(cachingTask: CachingTask?) {
+        if (cachingTask == null || cachingTask.status == CachingTaskStatus.EVICTED) {
+            cachingTaskSizeText.value = null
+            return
+        }
+        val cached = cachingTask.bytesCached
+        if (cached > 0) {
+            cachingTaskSizeText.value = formatBytes(cached)
+        } else {
+            cachingTaskSizeText.value = null
+        }
     }
 
     fun startCachingTask() {
@@ -82,5 +108,14 @@ class OfflineSource internal constructor(
 
     companion object {
         private val TAG = OfflineSource::class.java.simpleName
+
+        private fun formatBytes(bytes: Long): String {
+            return when {
+                bytes >= 1_000_000_000 -> String.format("%.1f GB", bytes / 1_000_000_000.0)
+                bytes >= 1_000_000 -> String.format("%.1f MB", bytes / 1_000_000.0)
+                bytes >= 1_000 -> String.format("%.0f KB", bytes / 1_000.0)
+                else -> String.format("%.0f B", bytes)
+            }
+        }
     }
 }
