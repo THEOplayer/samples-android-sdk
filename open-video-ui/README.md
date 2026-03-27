@@ -9,15 +9,47 @@ You can find more information about Open Video UI [here](https://optiview.dolby.
 
 ## Themes
 
-| Theme | Description |
-|-------|-------------|
-| **Default** | The stock `DefaultUI` with no customization. Shows what you get out of the box with `THEOplayerTheme`. |
-| **Custom Colors** | Wraps `DefaultUI` in a custom `MaterialTheme` to change the accent color. |
-| **Nitflex** | A fully custom Netflix-inspired skin built with `UIController`.|
-| **Minimal** | A barebones player using `UIController` with only a play/pause button and a seek bar. Useful as a starting point for embedding a player with minimal controls. |
-| **Portrait** | A fullscreen vertical player with TikTok-style side action buttons (like, comment, share).|
-| **Festive** | A holiday-themed player with red/green Christmas colors.|
-| **Modern** | A YouTube-inspired layout with pill-shaped grouped controls.|
+### Default
+
+The stock `DefaultUI` with no customization. Shows what you get out of the box with `THEOplayerTheme`.
+
+<img src="images/default-ui.png" width="600" alt="Default theme">
+
+### Custom Colors
+
+Wraps `DefaultUI` in a custom `MaterialTheme` to change the accent color.
+
+<img src="images/custom-colors.png" width="600" alt="Custom Colors theme">
+
+### Nitflex
+
+A fully custom Netflix-inspired skin built with `UIController`.
+
+<img src="images/nitflex.png" width="600" alt="Nitflex theme">
+
+### Minimal
+
+A barebones player using `UIController` with only a play/pause button and a seek bar. Useful as a starting point for embedding a player with minimal controls.
+
+<img src="images/minimal-ui.png" width="600" alt="Minimal theme">
+
+### Portrait
+
+A fullscreen vertical player with TikTok-style side action buttons (like, comment, share).
+
+<img src="images/portrait.png" height="277" alt="Portrait theme">
+
+### Festive
+
+A holiday-themed player with red/green Christmas colors.
+
+<img src="images/festive.png" width="600" alt="Festive theme">
+
+### Modern
+
+A YouTube-inspired layout with pill-shaped grouped controls.
+
+<img src="images/modern-ui.png" width="600" alt="Modern theme">
 
 ## Quick Start
 
