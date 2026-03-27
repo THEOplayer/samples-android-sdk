@@ -30,6 +30,8 @@
     <string name="theoplayer_ui_subtitles_off">オフ</string>
     <string name="theoplayer_ui_playback_rate_normal">標準</string>
     <string name="theoplayer_ui_quality_automatic">自動</string>
+    <string name="theoplayer_ui_quality_automatic_with_height">自動 (<xliff:g example="720" id="quality_height">%1$d</xliff:g>p)</string>
+    <string name="theoplayer_ui_quality_with_height"><xliff:g example="720" id="quality_height">%1$d</xliff:g>p</string>
     <string name="theoplayer_ui_error_title">エラーが発生しました</string>
     <string name="theoplayer_ui_pip_enter">ピクチャーインピクチャー</string>
     <string name="theoplayer_ui_pip_exit">ピクチャーインピクチャーを終了</string>

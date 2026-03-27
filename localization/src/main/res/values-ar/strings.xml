@@ -32,6 +32,8 @@
     <string name="theoplayer_ui_subtitles_off">إيقاف</string>
     <string name="theoplayer_ui_playback_rate_normal">عادي</string>
     <string name="theoplayer_ui_quality_automatic">تلقائي</string>
+    <string name="theoplayer_ui_quality_automatic_with_height">تلقائي (<xliff:g example="720" id="quality_height">%1$d</xliff:g>p)</string>
+    <string name="theoplayer_ui_quality_with_height"><xliff:g example="720" id="quality_height">%1$d</xliff:g>p</string>
     <string name="theoplayer_ui_error_title">حدث خطأ</string>
     <string name="theoplayer_ui_pip_enter">صورة داخل صورة</string>
     <string name="theoplayer_ui_pip_exit">الخروج من صورة داخل صورة</string>

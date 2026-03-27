@@ -32,6 +32,8 @@
     <string name="theoplayer_ui_subtitles_off">Off</string>
     <string name="theoplayer_ui_playback_rate_normal">Normal</string>
     <string name="theoplayer_ui_quality_automatic">Automatic</string>
+    <string name="theoplayer_ui_quality_automatic_with_height">Automatic (<xliff:g example="720" id="quality_height">%1$d</xliff:g>p)</string>
+    <string name="theoplayer_ui_quality_with_height"><xliff:g example="720" id="quality_height">%1$d</xliff:g>p</string>
     <string name="theoplayer_ui_error_title">An error occurred</string>
     <string name="theoplayer_ui_pip_enter">Enter picture-in-picture</string>
     <string name="theoplayer_ui_pip_exit">Exit picture-in-picture</string>

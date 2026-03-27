@@ -32,6 +32,8 @@
     <string name="theoplayer_ui_subtitles_off">Uit</string>
     <string name="theoplayer_ui_playback_rate_normal">Normaal</string>
     <string name="theoplayer_ui_quality_automatic">Automatisch</string>
+    <string name="theoplayer_ui_quality_automatic_with_height">Automatisch (<xliff:g example="720" id="quality_height">%1$d</xliff:g>p)</string>
+    <string name="theoplayer_ui_quality_with_height"><xliff:g example="720" id="quality_height">%1$d</xliff:g>p</string>
     <string name="theoplayer_ui_error_title">Er is een fout opgetreden</string>
     <string name="theoplayer_ui_pip_enter">Beeld-in-beeld</string>
     <string name="theoplayer_ui_pip_exit">Beeld-in-beeld sluiten</string>
