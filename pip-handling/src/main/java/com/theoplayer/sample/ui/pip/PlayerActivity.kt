@@ -56,7 +56,12 @@ import com.theoplayer.sample.common.SourceManager
 class PlayerActivity : ComponentActivity(), OnPictureInPictureEventListener {
 
     private lateinit var theoplayerView: THEOplayerView
+
+    // AndroidX helper that bridges THEOplayerView with the native PiP API.
+    // It handles sourceRectHint (smooth transition animation) and auto-enter on API 31+.
     private lateinit var pip: VideoPlaybackPictureInPicture
+
+    // Compose state that drives UI changes (e.g. hiding the toolbar) when entering/exiting PiP.
     private var isInPipMode by mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -219,6 +224,8 @@ class PlayerActivity : ComponentActivity(), OnPictureInPictureEventListener {
         }
     }
 
+    // Called by the AndroidX PiP delegate when the PiP state changes.
+    // Updates Compose state to show/hide the toolbar accordingly.
     override fun onPictureInPictureEvent(
         event: PictureInPictureDelegate.Event,
         config: Configuration?
@@ -247,6 +254,8 @@ class PlayerActivity : ComponentActivity(), OnPictureInPictureEventListener {
         }
     }
 
+    // Updates the RemoteActions shown in the PiP window overlay.
+    // Shows a play button when paused/ended, or a pause button when playing.
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updatePipActions() {
         val player = theoplayerView.player
@@ -270,6 +279,8 @@ class PlayerActivity : ComponentActivity(), OnPictureInPictureEventListener {
         )
     }
 
+    // Creates a RemoteAction that sends a broadcast Intent when tapped in the PiP window.
+    // The broadcast is picked up by PlayerBroadcastReceiver to control the player.
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createRemoteAction(
         @DrawableRes iconResId: Int,
@@ -290,6 +301,8 @@ class PlayerActivity : ComponentActivity(), OnPictureInPictureEventListener {
         )
     )
 
+    // Registers a BroadcastReceiver while in PiP mode to handle play/pause actions
+    // sent by the RemoteActions. Automatically unregistered when leaving PiP.
     @Composable
     fun PlayerBroadcastReceiver() {
         val context = LocalContext.current
