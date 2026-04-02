@@ -1,6 +1,7 @@
 [versions]
 appcompat = "1.7.1"
 constraintlayout = "2.2.1"
+desugarJdkLibs = "2.1.5"
 gson = "2.13.2"
 media = "1.7.1"
 recyclerview = "1.4.0"
@@ -26,6 +27,7 @@ serialization = "1.10.0"
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
+desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarJdkLibs" }
 gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
