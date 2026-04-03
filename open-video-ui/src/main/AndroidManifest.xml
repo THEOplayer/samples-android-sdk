@@ -9,6 +9,7 @@
         android:required="false" />
 
     <application
+        android:banner="@drawable/tv_banner"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/appDisplayName"
         android:roundIcon="@mipmap/ic_launcher_round"

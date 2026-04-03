@@ -17,6 +17,7 @@
         android:required="false" />
 
     <application
+        android:banner="@drawable/tv_banner"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/appDisplayName"
         android:theme="@style/DolbyTheme.Base">
