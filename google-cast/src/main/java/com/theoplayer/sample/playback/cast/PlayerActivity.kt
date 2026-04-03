@@ -1,5 +1,6 @@
 package com.theoplayer.sample.playback.cast
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
@@ -15,6 +16,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.mediarouter.app.MediaRouteButton
 import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.theoplayer.android.api.THEOplayerConfig
 import com.theoplayer.android.api.THEOplayerGlobal
 import com.theoplayer.android.api.THEOplayerView
@@ -36,8 +39,25 @@ class PlayerActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        // Check if Cast API is available on the device (Google Play Services is available, CastContext can be initialized, and device is not an Android TV).
+         fun isCastAvailable(context: Context): Boolean {
+            when (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context)) {
+                ConnectionResult.SUCCESS -> {
+                    try {
+                        CastContext.getSharedInstance(context)
+                        return true
+                    } catch (_: Exception) {
+                        return false
+                    }
+                }
+                else -> return false
+            }
+        }
+
         // Initialize Chromecast immediately, for automatic receiver discovery to work correctly.
-        CastContext.getSharedInstance(this)
+        if (isCastAvailable(applicationContext)) {
+            CastContext.getSharedInstance(this)
+        }
 
         // Enable all debug logs from THEOplayer.
         THEOplayerGlobal.getSharedInstance(this).logger.enableAllTags()
@@ -185,7 +205,9 @@ class PlayerActivity : FragmentActivity() {
                                 // CastButtonFactory.setUpMediaRouteButton() method.
                                 factory = { _ ->
                                     MediaRouteButton(context).apply {
-                                        CastButtonFactory.setUpMediaRouteButton(context, this)
+                                        if (isCastAvailable(applicationContext)) {
+                                            CastButtonFactory.setUpMediaRouteButton(context, this)
+                                        }
                                     }
                                 }
                             )
