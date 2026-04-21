@@ -21,6 +21,7 @@ import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.tasks.TaskExecutors
 import com.theoplayer.android.api.THEOplayerConfig
 import com.theoplayer.android.api.THEOplayerGlobal
 import com.theoplayer.android.api.THEOplayerView
@@ -37,11 +38,8 @@ import com.theoplayer.android.ui.rememberPlayer
 import com.theoplayer.android.ui.theme.THEOplayerTheme
 import com.theoplayer.sample.common.AppTopBar
 import com.theoplayer.sample.common.SourceManager
-import java.util.concurrent.Executors
 
 class PlayerActivity : FragmentActivity() {
-    private val castExecutor = Executors.newSingleThreadExecutor()
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         // Enable all debug logs from THEOplayer.
@@ -220,7 +218,7 @@ class PlayerActivity : FragmentActivity() {
                 googleApi.isGooglePlayServicesAvailable(applicationContext)
             if (googlePlayServicesAvailability == ConnectionResult.SUCCESS) {
                 try {
-                    CastContext.getSharedInstance(applicationContext, castExecutor)
+                    CastContext.getSharedInstance(applicationContext, TaskExecutors.MAIN_THREAD)
                         .addOnSuccessListener { isCastAvailable = true }
                         .addOnFailureListener { e -> Log.e(TAG, "Failed to get CastContext", e) }
                 } catch (e: Exception) {
@@ -231,11 +229,6 @@ class PlayerActivity : FragmentActivity() {
             }
         }
         return isCastAvailable
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        castExecutor.shutdown()
     }
 
     companion object {
