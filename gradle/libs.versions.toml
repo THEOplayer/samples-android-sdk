@@ -16,6 +16,7 @@ material = "1.13.0"
 coreKtx = "1.18.0"
 corePip = "1.0.0-alpha02"
 lifecycleRuntimeKtx = "2.10.0"
+kotlinxCoroutinesPlayServices = "1.10.2"
 activityCompose = "1.13.0"
 compose = "1.10.5"
 composeBom = "2026.03.00"
@@ -31,6 +32,7 @@ desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref 
 gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlinx-coroutines-playServices = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutinesPlayServices" }
 lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycleRuntimeKtx" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 media = { module = "androidx.media:media", version.ref = "media" }

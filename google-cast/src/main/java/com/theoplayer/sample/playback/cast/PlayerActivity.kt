@@ -38,6 +38,8 @@ import com.theoplayer.android.ui.rememberPlayer
 import com.theoplayer.android.ui.theme.THEOplayerTheme
 import com.theoplayer.sample.common.AppTopBar
 import com.theoplayer.sample.common.SourceManager
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.tasks.await
 
 class PlayerActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -219,8 +221,9 @@ class PlayerActivity : FragmentActivity() {
             if (googlePlayServicesAvailability == ConnectionResult.SUCCESS) {
                 try {
                     CastContext.getSharedInstance(applicationContext, TaskExecutors.MAIN_THREAD)
-                        .addOnSuccessListener { isCastAvailable = true }
-                        .addOnFailureListener { e -> Log.e(TAG, "Failed to get CastContext", e) }
+                        .await()
+                    isCastAvailable = true
+                } catch (_: CancellationException) {
                 } catch (e: Exception) {
                     Log.e(TAG, "Failed to obtain CastContext", e)
                 }
