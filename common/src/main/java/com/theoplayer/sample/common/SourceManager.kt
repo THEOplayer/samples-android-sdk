@@ -1,7 +1,5 @@
 package com.theoplayer.sample.common
 
-import com.theoplayer.android.api.ads.theoads.TheoAdDescription
-import com.theoplayer.android.api.millicast.MillicastSource
 import com.theoplayer.android.api.source.GoogleDaiTypedSource
 import com.theoplayer.android.api.source.SourceDescription
 import com.theoplayer.android.api.source.SourceType
@@ -18,8 +16,7 @@ import com.theoplayer.android.api.theolive.TheoLiveSource
 import java.util.Collections
 
 
-class SourceManager private constructor() {
-    companion object {
+object SourceManager {
         val BIP_BOP_HLS: SourceDescription by lazy {
             SourceDescription
                 .Builder(
@@ -269,21 +266,7 @@ class SourceManager private constructor() {
                     .build()
             ).build()
         }
-        val THEOADS: SourceDescription by lazy {
-            SourceDescription.Builder(
-                TypedSource.Builder("https://example.com/manifest.m3u8")
-                    .type(SourceType.HLS)
-                    .hlsDateRange(true) // The flag needs to be set to `true` as the ad markers are done using `EXT-X-DATERANGE` tags.
-                    .build()
-            ).ads(
-                TheoAdDescription(
-                    networkCode = "network-code-here",
-                    customAssetKey = "asset-key-here",
-                    backdropDoubleBox = "https://example.com/double.box.svg",
-                    backdropLShape = "https://example.com/L-shape.svg"
-                )
-            ).build()
-        }
+
         val THEOLIVE: SourceDescription by lazy {
             SourceDescription.Builder(
                 TheoLiveSource(
@@ -291,15 +274,4 @@ class SourceManager private constructor() {
                 )
             ).build()
         }
-        val MILLICAST: SourceDescription by lazy {
-            SourceDescription.Builder(
-                MillicastSource(
-                    src = "multiview",
-                    streamAccountId = "k9Mwad",
-                    apiUrl = "https://director.millicast.com/api/director/subscribe",
-//                    subscriberToken = "<token>" // This is only required for subscribing to secure streams and should be omitted otherwise.
-                )
-            ).build()
-        }
-    }
 }

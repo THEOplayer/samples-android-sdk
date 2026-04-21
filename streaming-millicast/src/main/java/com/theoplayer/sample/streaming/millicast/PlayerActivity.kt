@@ -57,7 +57,7 @@ class PlayerActivity : ComponentActivity() {
                 theoplayerView.settings.setAllowBackgroundPlayback(true)
 
                 // Configuring the player with a SourceDescription object.
-                theoPlayer.source = SourceManager.MILLICAST
+                theoPlayer.source = MillicastSourceManager.MILLICAST
 
                 //  Set autoplay to start video whenever player is visible.
                 theoPlayer.isAutoplay = true

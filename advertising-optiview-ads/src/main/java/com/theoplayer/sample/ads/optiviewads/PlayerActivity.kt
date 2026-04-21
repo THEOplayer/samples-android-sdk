@@ -52,7 +52,7 @@ class PlayerActivity : ComponentActivity() {
 
             LaunchedEffect(player) {
                 // Configuring the player with a SourceDescription object.
-                theoPlayer.source = SourceManager.THEOADS
+                theoPlayer.source = OptiviewAdsSourceManager.THEOADS
 
                 //  Set autoplay to start video whenever player is visible.
                 theoPlayer.isAutoplay = true
