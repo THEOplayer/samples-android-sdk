@@ -228,7 +228,12 @@ class PlayerActivity : FragmentActivity() {
                     Log.e(TAG, "Failed to obtain CastContext", e)
                 }
             } else {
-                Log.i(TAG, "Google Play Services are not available. ${googleApi.getErrorString(googlePlayServicesAvailability)}")
+                Log.i(
+                    TAG,
+                    "Google Play Services are not available. ${
+                        googleApi.getErrorString(googlePlayServicesAvailability)
+                    }"
+                )
             }
         }
         return isCastAvailable
