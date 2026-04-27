@@ -6,10 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
@@ -19,6 +21,7 @@ import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.tasks.TaskExecutors
 import com.theoplayer.android.api.THEOplayerConfig
 import com.theoplayer.android.api.THEOplayerGlobal
 import com.theoplayer.android.api.THEOplayerView
@@ -35,11 +38,10 @@ import com.theoplayer.android.ui.rememberPlayer
 import com.theoplayer.android.ui.theme.THEOplayerTheme
 import com.theoplayer.sample.common.AppTopBar
 import com.theoplayer.sample.common.SourceManager
-import java.util.concurrent.Executors
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.tasks.await
 
 class PlayerActivity : FragmentActivity() {
-    private val  castExecutor = Executors.newSingleThreadExecutor()
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         // Enable all debug logs from THEOplayer.
@@ -47,11 +49,9 @@ class PlayerActivity : FragmentActivity() {
 
         super.onCreate(savedInstanceState)
 
-        val isCastAvailable = mutableStateOf(false)
-        checkChromeCastAvailable(isCastAvailable)
-
         setContent {
             val context = LocalContext.current
+            val isCastAvailable = checkChromeCastAvailable()
             val theoplayerView = remember(context) {
                 THEOplayerView(context, THEOplayerConfig.Builder().build()).apply {
                     keepScreenOn = true
@@ -183,7 +183,7 @@ class PlayerActivity : FragmentActivity() {
                 Scaffold(
                     topBar = {
                         AppTopBar(actions = {
-                            if (isCastAvailable.value) {
+                            if (isCastAvailable) {
                                 AndroidView(
                                     // This is a custom MediaRouterButton that is used to control the
                                     // connection with the Cast Receiver device. Open Video UI already
@@ -211,26 +211,32 @@ class PlayerActivity : FragmentActivity() {
         }
     }
 
-    private fun checkChromeCastAvailable(isCastAvailable: MutableState<Boolean>) {
+    @Composable
+    private fun checkChromeCastAvailable(): Boolean {
+        var isCastAvailable by remember { mutableStateOf(false) }
         val googleApi = GoogleApiAvailability.getInstance()
-        val googlePlayServicesAvailability =
-            googleApi.isGooglePlayServicesAvailable(applicationContext)
-        if (googlePlayServicesAvailability == ConnectionResult.SUCCESS) {
-            try {
-                CastContext.getSharedInstance(applicationContext, castExecutor)
-                    .addOnSuccessListener { isCastAvailable.value = true }
-                    .addOnFailureListener { e -> Log.e(TAG, "Failed to get CastContext", e) }
-            } catch (e: Exception) {
-                Log.e(TAG, "Failed to obtain CastContext", e)
+        LaunchedEffect(googleApi) {
+            val googlePlayServicesAvailability =
+                googleApi.isGooglePlayServicesAvailable(applicationContext)
+            if (googlePlayServicesAvailability == ConnectionResult.SUCCESS) {
+                try {
+                    CastContext.getSharedInstance(applicationContext, TaskExecutors.MAIN_THREAD)
+                        .await()
+                    isCastAvailable = true
+                } catch (_: CancellationException) {
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to obtain CastContext", e)
+                }
+            } else {
+                Log.i(
+                    TAG,
+                    "Google Play Services are not available. ${
+                        googleApi.getErrorString(googlePlayServicesAvailability)
+                    }"
+                )
             }
-        } else {
-            Log.i(TAG, "Google Play Services are not available. ${googleApi.getErrorString(googlePlayServicesAvailability)}")
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        castExecutor.shutdown()
+        return isCastAvailable
     }
 
     companion object {
