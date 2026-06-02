@@ -13,7 +13,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.FragmentActivity
 import androidx.mediarouter.app.MediaRouteButton
@@ -26,8 +25,8 @@ import com.theoplayer.android.api.THEOplayerConfig
 import com.theoplayer.android.api.THEOplayerGlobal
 import com.theoplayer.android.api.THEOplayerView
 import com.theoplayer.android.api.cast.CastConfiguration
-import com.theoplayer.android.api.cast.CastIntegrationFactory
 import com.theoplayer.android.api.cast.CastStrategy
+import com.theoplayer.android.api.cast.cast
 import com.theoplayer.android.api.cast.chromecast.ChromecastConnectionCallback
 import com.theoplayer.android.api.event.chromecast.ChromecastEventTypes
 import com.theoplayer.android.api.event.player.ErrorEvent
@@ -42,46 +41,42 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
 
 class PlayerActivity : FragmentActivity() {
+
+    private val config =
+        THEOplayerConfig.Builder()
+            .cast(
+                CastConfiguration.Builder()
+                    .castStrategy(CastStrategy.MANUAL)
+                    .build()
+            ).build()
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         // Enable all debug logs from THEOplayer.
         THEOplayerGlobal.getSharedInstance(this).logger.enableAllTags()
 
-        super.onCreate(savedInstanceState)
+        // We need to call THEOplayerView constructor as soon as possible as it calls
+        // cast integration upon creation. In their turn, cast integration initializes
+        // cast framework and this initialization should happen as early as possible in the
+        // application lifecycle.
+        val theoPlayerView = THEOplayerView(this, config).apply {
+            keepScreenOn = true
+            // Allow background playback on the player to prevent Chromecast receiver from
+            // pausing when the app is backgrounded.
+            settings.setAllowBackgroundPlayback(true)
+        }
 
         setContent {
-            val context = LocalContext.current
-            val isCastAvailable = checkChromeCastAvailable()
-            val theoplayerView = remember(context) {
-                THEOplayerView(context, THEOplayerConfig.Builder().build()).apply {
-                    keepScreenOn = true
-
-                    // Allow background playback on the player to prevent Chromecast receiver from
-                    // pausing when the app is backgrounded.
-                    settings.setAllowBackgroundPlayback(true)
-
-                    // THEOplayer automatically adds all available integrations to the player.
-                    // Alternatively, you can set autoIntegrations(false) on your player configuration
-                    // and add them manually.
-                    val configuration = CastConfiguration.Builder()
-                        .castStrategy(CastStrategy.MANUAL)
-                        .build()
-                    val castIntegration = CastIntegrationFactory.createCastIntegration(
-                        this, configuration
-                    )
-                    player.addIntegration(castIntegration)
-                }
-            }
-
-            val player = rememberPlayer(theoplayerView)
-            val theoPlayer = theoplayerView.player
-            val theoChromecast = theoplayerView.cast.chromecast
+            val player = rememberPlayer(theoPlayerView)
+            val theoPlayer = player.player!!
+            val theoChromecast = player.cast!!.chromecast
 
             LaunchedEffect(player) {
                 // Coupling the orientation of the device with the fullscreen state.
                 // The player will go fullscreen when the device is rotated to landscape
                 // and will also exit fullscreen when the device is rotated back to portrait.
-                theoplayerView.fullScreenManager.isFullScreenOrientationCoupled = true
+                player.theoplayerView!!.fullScreenManager.isFullScreenOrientationCoupled = true
 
                 // Configuring THEOplayer with defined SourceDescription object.
                 theoPlayer.source = SourceManager.BIG_BUCK_BUNNY_HLS_WITH_CAST_METADATA
@@ -179,6 +174,7 @@ class PlayerActivity : FragmentActivity() {
                 })
             }
 
+            val isCastAvailable = checkChromeCastAvailable()
             THEOplayerTheme(useDarkTheme = true) {
                 Scaffold(
                     topBar = {
@@ -190,7 +186,7 @@ class PlayerActivity : FragmentActivity() {
                                     // provides a default MediaRouterButton implementation, but you can
                                     // also create your own custom button by using the
                                     // CastButtonFactory.setUpMediaRouteButton() method.
-                                    factory = { _ ->
+                                    factory = { context ->
                                         MediaRouteButton(context).also {
                                             CastButtonFactory.setUpMediaRouteButton(context, it)
                                         }
