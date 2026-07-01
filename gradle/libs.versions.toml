@@ -7,6 +7,7 @@ media = "1.8.0"
 recyclerview = "1.4.0"
 theoplayer = "11.5.0"
 theoplayer-open-video-ui = "1.14.1"
+theoplayer-connector-mediasession = "11.1.0"
 gradle = "9.2.1"
 kotlin = "2.4.0"
 minSdk = "24"
@@ -46,7 +47,7 @@ theoplayer-integration-theoads = { group = "com.theoplayer.theoplayer-sdk-androi
 theoplayer-integration-millicast = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-millicast", version.ref = "theoplayer" }
 theoplayer-integration-cast = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-cast", version.ref = "theoplayer" }
 millicast-sdk = { group = "com.millicast", name = "millicast-sdk-android", version.ref = "millicast" }
-theoplayer-connector-mediasession = { group = "com.theoplayer.android-connector", name = "mediasession", version.ref = "theoplayer" }
+theoplayer-connector-mediasession = { group = "com.theoplayer.android-connector", name = "mediasession", version.ref = "theoplayer-connector-mediasession" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 core-pip = { group = "androidx.core", name = "core-pip", version.ref = "corePip" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
