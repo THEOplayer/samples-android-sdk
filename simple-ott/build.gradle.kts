@@ -63,5 +63,5 @@ dependencies {
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.theoplayer)
     implementation(libs.theoplayer.ui)
-    implementation(libs.theoplayer.connector.cast)
+    implementation(libs.theoplayer.integration.cast)
 }

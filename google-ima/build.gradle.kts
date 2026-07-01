@@ -60,5 +60,5 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.theoplayer)
     implementation(libs.theoplayer.ui)
-    implementation(libs.theoplayer.connector.ima)
+    implementation(libs.theoplayer.integration.ima)
 }

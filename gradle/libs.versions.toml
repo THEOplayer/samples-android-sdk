@@ -39,12 +39,12 @@ media = { module = "androidx.media:media", version.ref = "media" }
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 theoplayer = { group = "com.theoplayer.theoplayer-sdk-android", name = "core", version.ref = "theoplayer" }
 theoplayer-ui = { group = "com.theoplayer.android-ui", name = "android-ui", version.ref = "theoplayer-open-video-ui" }
-theoplayer-connector-ima = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-ima", version.ref = "theoplayer" }
-theoplayer-connector-dai = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-dai", version.ref = "theoplayer" }
-theoplayer-connector-mediatailor = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-mediatailor", version.ref = "theoplayer" }
-theoplayer-connector-theoads = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-theoads", version.ref = "theoplayer" }
-theoplayer-connector-millicast = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-millicast", version.ref = "theoplayer" }
-theoplayer-connector-cast = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-cast", version.ref = "theoplayer" }
+theoplayer-integration-ima = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-ima", version.ref = "theoplayer" }
+theoplayer-integration-dai = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-dai", version.ref = "theoplayer" }
+theoplayer-integration-mediatailor = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-mediatailor", version.ref = "theoplayer" }
+theoplayer-integration-theoads = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-ads-theoads", version.ref = "theoplayer" }
+theoplayer-integration-millicast = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-millicast", version.ref = "theoplayer" }
+theoplayer-integration-cast = { group = "com.theoplayer.theoplayer-sdk-android", name = "integration-cast", version.ref = "theoplayer" }
 millicast-sdk = { group = "com.millicast", name = "millicast-sdk-android", version.ref = "millicast" }
 theoplayer-connector-mediasession = { group = "com.theoplayer.android-connector", name = "mediasession", version.ref = "theoplayer" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
