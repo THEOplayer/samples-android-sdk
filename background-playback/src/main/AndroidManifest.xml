@@ -23,6 +23,7 @@
         android:theme="@style/DolbyTheme.Base">
         <activity
             android:name=".PlayerActivity"
+            android:launchMode="singleTask"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
             android:exported="true">
             <intent-filter>
